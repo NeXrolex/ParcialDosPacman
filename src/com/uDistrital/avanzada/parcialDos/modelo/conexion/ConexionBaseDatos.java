@@ -31,7 +31,6 @@ public class ConexionBaseDatos implements IConexion {
     @Override
     public Connection conexion() {
         try {
-
             //Establecemos la conexion con la base de datos
             cn = DriverManager.getConnection(URLBD, usuario, contrasena);
             //Usamos los parametros asignados anteriormente
