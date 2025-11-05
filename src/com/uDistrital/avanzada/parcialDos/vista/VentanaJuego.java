@@ -52,6 +52,8 @@ public class VentanaJuego extends JFrame {
 
         panelBotones.add(botonIniciar);
         panelBotones.add(botonSalir);
+        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Specs/ImagesAndGifs/fantasma.png"));
+        setIconImage(icono);
         setLayout(new BorderLayout());
         add(panelJuego, BorderLayout.CENTER);
         add(panelBotones, BorderLayout.SOUTH);
