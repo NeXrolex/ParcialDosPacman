@@ -6,8 +6,13 @@ package com.uDistrital.avanzada.parcialDos.control;
 
 /**
  *
- * @author santi
+ * @author Steven
  */
 public class ControlGeneral {
-    
+
+    private ControlVista cVista;
+
+    public ControlGeneral() {
+        this.cVista = new ControlVista(this);
+    }
 }
