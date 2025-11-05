@@ -14,9 +14,9 @@ public interface IRead<T> {
     //Usamos t porque hacemos referencia a un generico
     /**
      * consulta un elemento
-     * 
+     * @param elemento Elemento
      * @return generico consultado
      */
-    public T consultar();
+    public T consultar(T elemento);
     
 }

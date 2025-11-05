@@ -12,6 +12,18 @@ package com.uDistrital.avanzada.parcialDos.modelo;
 public class UsuarioVO extends Persona {
     
     private String contrasena;
+    private int puntaje;
+
+    /**
+     * Constructor simple
+     * 
+     * @param nombre Nombre del usuario
+     */
+    public UsuarioVO(String nombre) {
+        super(nombre);
+    }
+    
+    
     
     /**
      * Constructor que asigna valores de un usuario
@@ -19,10 +31,13 @@ public class UsuarioVO extends Persona {
      * @param nombre Nombre del usuario
      * @param contrasena Contrasena del usuario
      */
-    public UsuarioVO(String nombre, String contrasena) {
+    public UsuarioVO(String nombre, String contrasena, int puntaje) {
         super(nombre);
         this.contrasena = contrasena;
+        this.puntaje = puntaje;
     }
+    
+    
     
     /**
      * Obtiene la contrasena
@@ -41,6 +56,26 @@ public class UsuarioVO extends Persona {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
+    
+    /**
+     * Obtiene el puntaje del jugador
+     * 
+     * @return Puntaje 
+     */
+    public int getPuntaje() {
+        return puntaje;
+    }
+    
+    /**
+     * Asigna un puntaje
+     * 
+     * @param puntaje Puntaje a asignar
+     */
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
+    
+    
     
     
 }
