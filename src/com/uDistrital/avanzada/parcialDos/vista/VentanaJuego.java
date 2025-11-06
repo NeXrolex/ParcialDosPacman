@@ -2,8 +2,11 @@ package com.uDistrital.avanzada.parcialDos.vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
+ * Ventana principal del juego
  *
  * @author Steven
  */
@@ -12,14 +15,23 @@ public class VentanaJuego extends JFrame {
     private JPanel panelJuego, panelBotones;
     private JLabel labelPacman;
     private JButton botonIniciar, botonSalir;
-    private int centrarX;
-    private int centrarY;
+    private List<JLabel> labelsFrutas; // Labels de las frutas
 
     public VentanaJuego() {
         setTitle("Pac-Man");
         setSize(900, 700);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        labelsFrutas = new ArrayList<>();
+
+        inicializarComponentes();
+
+        setLocationRelativeTo(null);
+    }
+
+    private void inicializarComponentes() {
+        // Panel de juego
         panelJuego = new JPanel(null);
         panelJuego.setBackground(new Color(0, 0, 20));
         panelJuego.setBorder(BorderFactory.createTitledBorder(
@@ -31,9 +43,13 @@ public class VentanaJuego extends JFrame {
                 new Color(0, 0, 255)
         ));
         panelJuego.setFocusable(true);
-        ImageIcon imgPlaceholder = new ImageIcon(getClass().getResource("/Specs/ImagesAndGifs/placeholder24px.png"));
+
+        ImageIcon imgPlaceholder = new ImageIcon(
+                getClass().getResource("/Specs/ImagesAndGifs/placeholder24px.png")
+        );
         labelPacman = new JLabel(imgPlaceholder);
-        labelPacman.setSize(imgPlaceholder.getIconWidth(), imgPlaceholder.getIconHeight());
+        labelPacman.setSize(imgPlaceholder.getIconWidth(),
+                imgPlaceholder.getIconHeight());
         panelJuego.add(labelPacman);
 
         panelBotones = new JPanel();
@@ -52,23 +68,17 @@ public class VentanaJuego extends JFrame {
 
         panelBotones.add(botonIniciar);
         panelBotones.add(botonSalir);
-        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Specs/ImagesAndGifs/fantasma.png"));
+
+        Image icono = Toolkit.getDefaultToolkit().getImage(
+                getClass().getResource("/Specs/ImagesAndGifs/fantasma.png")
+        );
         setIconImage(icono);
+
         setLayout(new BorderLayout());
         add(panelJuego, BorderLayout.CENTER);
         add(panelBotones, BorderLayout.SOUTH);
-        setLocationRelativeTo(null);
     }
 
-    /**
-     * Metodo encargado de configurar la creacion de botones de manera
-     * personalizada
-     *
-     * @param texto Texto del botón
-     * @param comando Comando de acción
-     * @param color Color de fondo
-     * @return Botón configurado
-     */
     private JButton crearBoton(String texto, Color color) {
         JButton boton = new JButton(texto);
         boton.setFont(new Font("Arial", Font.BOLD, 15));
@@ -81,6 +91,64 @@ public class VentanaJuego extends JFrame {
         return boton;
     }
 
+    public JLabel agregarFruta(String rutaImagen, int x, int y) {
+        try {
+            ImageIcon iconoFruta = new ImageIcon(
+                    getClass().getResource(rutaImagen)
+            );
+
+            Image img = iconoFruta.getImage();
+            Image imgEscalada = img.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            iconoFruta = new ImageIcon(imgEscalada);
+
+            JLabel labelFruta = new JLabel(iconoFruta);
+            labelFruta.setBounds(x, y, 30, 30);
+
+            panelJuego.add(labelFruta);
+            labelsFrutas.add(labelFruta);
+
+            panelJuego.repaint();
+
+            return labelFruta;
+
+        } catch (Exception e) {
+
+            JLabel labelFruta = new JLabel("🍒");
+            labelFruta.setBounds(x, y, 30, 30);
+            labelFruta.setFont(new Font("Arial", Font.BOLD, 20));
+            labelFruta.setForeground(Color.RED);
+
+            panelJuego.add(labelFruta);
+            labelsFrutas.add(labelFruta);
+
+            panelJuego.repaint();
+
+            return labelFruta;
+        }
+    }
+
+    public void eliminarFruta(JLabel labelFruta) {
+        if (labelFruta != null) {
+            panelJuego.remove(labelFruta);
+            labelsFrutas.remove(labelFruta);
+            panelJuego.repaint();
+        }
+    }
+
+    public void limpiarFrutas() {
+        for (JLabel label : labelsFrutas) {
+            panelJuego.remove(label);
+        }
+        labelsFrutas.clear();
+        panelJuego.repaint();
+    }
+
+    public void mostrarExito(String mensaje) {
+    JOptionPane.showMessageDialog(this, 
+        mensaje, 
+        "Juego Terminado", 
+        JOptionPane.INFORMATION_MESSAGE);
+}
     public JPanel getPanelJuego() {
         return panelJuego;
     }
@@ -97,4 +165,7 @@ public class VentanaJuego extends JFrame {
         return botonSalir;
     }
 
+    public List<JLabel> getLabelsFrutas() {
+        return labelsFrutas;
+    }
 }
