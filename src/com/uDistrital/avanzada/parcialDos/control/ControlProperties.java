@@ -5,7 +5,9 @@
 package com.uDistrital.avanzada.parcialDos.control;
 
 import com.uDistrital.avanzada.parcialDos.modelo.DAO.PropertiesDAO;
+import com.uDistrital.avanzada.parcialDos.modelo.FrutaVO;
 import java.io.File;
+import java.util.List;
 
 /**
  * Maneja la logica y flujo de informacion 
@@ -47,5 +49,8 @@ public class ControlProperties {
     */
    public void establecerValoresBaseDatos(){
        propertiesDAO.configurarConexionBDDesdeArchivo();
+   }
+   public List<FrutaVO> cargarFrutas() {
+       return propertiesDAO.cargarFrutas();
    }
 }
