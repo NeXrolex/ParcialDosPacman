@@ -30,32 +30,22 @@ public class ControlProperties {
     public void setArchivoProperties(File archivo) {
         propertiesDAO.setArchivoProperties(archivo);
     }
-
-    /**
-     * Obtiene la referencia de la url de la 
-     * base de datos
-     * 
-     * @return url base de datos
-     */
-    public String getDbUrl() {
-        return propertiesDAO.consultar("URLBD");
-    }
     
     /**
-     * Obtiene el usuario de la base de datos
+     * Busca un valor en el archivo de propiedades 
      * 
-     * @return Usuario base de datos
+     * @param clave Clave a buscar
+     * @return 
      */
-    public String getDbUser() {
-        return propertiesDAO.consultar("USERBD");
-    }
-    
-    /**
-     * Obtiene la contrasena de la base de datos
-     * 
-     * @return Contrasena base de datos
-     */
-    public String getDbPassword() {
-        return propertiesDAO.consultar("PASSBD");
-    }
+   public String buscarClave(String clave){
+       return propertiesDAO.consultar(clave);
+   }
+   
+   /**
+    * Establece los valores de la base de datos
+    * 
+    */
+   public void establecerValoresBaseDatos(){
+       propertiesDAO.configurarConexionBDDesdeArchivo();
+   }
 }

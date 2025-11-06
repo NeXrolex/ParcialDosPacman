@@ -4,6 +4,7 @@
  */
 package com.uDistrital.avanzada.parcialDos.modelo.DAO;
 
+import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
 import com.uDistrital.avanzada.parcialDos.modelo.interfaces.IRead;
 import java.io.File;
@@ -17,9 +18,14 @@ import java.util.Properties;
 public class PropertiesDAO implements IRead<String> {
     
     private ConexionProperties conexionProps;
-    private File archivoActual;
-
+    private File archivoActual;//Archivo actual
+    
+    /**
+     * Constructor que intancia a la conexion properties 
+     * para poder acciones comunes en los dao
+     */
     public PropertiesDAO() {
+        //Intancia la conexion a los properties
         this.conexionProps = new ConexionProperties();
     }
     /**
@@ -36,13 +42,6 @@ public class PropertiesDAO implements IRead<String> {
         }
         this.archivoActual = archivo;
     }
-   /**
-     * Consulta el valor asociado a una clave específica dentro del archivo 
-     * .properties.
-     * 
-     * @param clave Clave a buscar (por ejemplo: "URLBD", "USERBD", "PASSBD").
-     * @return Valor encontrado o null si no existe.
-     */
     /**
      * Consulta el valor asociado a una clave específica dentro del .properties.
      * Cada vez que se invoca: vuelve a pasar el File a ConexionProperties y 
@@ -53,18 +52,50 @@ public class PropertiesDAO implements IRead<String> {
      */
     @Override
     public String consultar(String clave) {
-        if (archivoActual == null) {
-            throw new IllegalStateException();
-        }
-
-        // Abrimos SIEMPRE con el archivo actual antes de consultar
+        Properties p = cargarTodas();
+        String v = p.getProperty(clave);
+        return v != null ? v.trim() : null;
+    }
+    
+    /**
+     * Carga toda la informacion del archivo de propiedades
+     * Util para buscar claves
+     * @return 
+     */
+    public Properties cargarTodas() {
+        if (archivoActual == null)
+            throw new IllegalStateException("No se ha seteado archivo"
+                    + " .properties.");
         conexionProps.setArchivo(archivoActual);
-        Properties props = conexionProps.conexion();//carga desde el File actual
-        if (props == null) {
-            throw new IllegalStateException();
+        Properties props = conexionProps.conexion();
+        if (props == null || props.isEmpty())
+            throw new IllegalStateException("El archivo .properties está "
+                    + "vacío.");
+        return props;
+    }
+    /**
+     * Necesario para establecer conexiones a la base de datos, antes 
+     * de iniciar una comunicacion con la base de datos establece los
+     * valores para iniciar una conexion
+     * 
+     */
+     public void configurarConexionBDDesdeArchivo() {
+        Properties props = cargarTodas();
+
+        String url = props.getProperty("URLBD");
+        String user = props.getProperty("USERBD");
+        String pass = props.getProperty("PASSBD");
+
+        if (url == null || user == null || pass == null ||
+            url.trim().isEmpty() || user.trim().isEmpty() ||
+                pass.trim().isEmpty()) {
+            throw new IllegalStateException("Faltan una o más claves "
+                    + "requeridas en el archivo .properties "
+                    + "(URLBD, USERBD, PASSBD).");
         }
 
-        return props.containsKey(clave) ? props.getProperty(clave).trim(): null;
+        // Se configuran directamente los valores en la clase de conexión
+        ConexionBaseDatos.configurar(url.trim(), user.trim(), pass.trim());
     }
 
     

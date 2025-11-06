@@ -4,6 +4,8 @@
  */
 package com.uDistrital.avanzada.parcialDos.modelo;
 
+import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
+
 /**
  * Representa a un usario en el sistema
  *
@@ -21,6 +23,7 @@ public class UsuarioVO extends Persona {
      */
     public UsuarioVO(String nombre) {
         super(nombre);
+        
     }
     
     

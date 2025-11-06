@@ -20,10 +20,7 @@ public class ConexionProperties implements IConexion {
 
     private File archivo;
 
-    /**
-     * Constructor vacio
-     *
-     */
+     // Constructor vacio
     public ConexionProperties() {
     }
 
@@ -57,8 +54,7 @@ public class ConexionProperties implements IConexion {
             }
 
             Properties props = new Properties();
-            /* Usamos try para despues de su uso se cierre el archivo, 
-        importante para las buenas parcticas*/
+            //Usamos try para despues de su uso se cierre el archivo, importante para las buenas parcticas
             try (FileInputStream aux = new FileInputStream(archivo)) {
                 props.load(aux);
                 return props;
