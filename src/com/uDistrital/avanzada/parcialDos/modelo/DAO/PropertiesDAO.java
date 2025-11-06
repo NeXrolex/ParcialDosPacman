@@ -4,10 +4,13 @@
  */
 package com.uDistrital.avanzada.parcialDos.modelo.DAO;
 
+import com.uDistrital.avanzada.parcialDos.modelo.FrutaVO;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
 import com.uDistrital.avanzada.parcialDos.modelo.interfaces.IRead;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -96,6 +99,45 @@ public class PropertiesDAO implements IRead<String> {
 
         // Se configuran directamente los valores en la clase de conexión
         ConexionBaseDatos.configurar(url.trim(), user.trim(), pass.trim());
+    }
+     /**
+     * Carga todas las frutas desde el archivo properties
+     * 
+     * @return Lista de frutas disponibles
+     */
+    public List<FrutaVO> cargarFrutas() {
+        List<FrutaVO> frutas = new ArrayList<>();
+        Properties props = cargarTodas();
+        
+        // Obtener el total de frutas
+        String totalStr = props.getProperty("TOTAL_FRUTAS");
+        if (totalStr == null) {
+            throw new IllegalStateException("No se encontró TOTAL_FRUTAS en properties");
+        }
+        
+        int total = Integer.parseInt(totalStr.trim());
+        
+        // Cargar cada fruta
+        for (int i = 1; i <= total; i++) {
+            String clave = "FRUTA_" + i;
+            String valor = props.getProperty(clave);
+            
+            if (valor != null && !valor.trim().isEmpty()) {
+                // Formato: nombre,puntos,rutaImagen
+                String[] partes = valor.split(",");
+                
+                if (partes.length == 3) {
+                    String nombre = partes[0].trim();
+                    int puntos = Integer.parseInt(partes[1].trim());
+                    String rutaImagen = partes[2].trim();
+                    
+                    FrutaVO fruta = new FrutaVO(nombre, puntos, rutaImagen);
+                    frutas.add(fruta);
+                }
+            }
+        }
+        
+        return frutas;
     }
 
     
