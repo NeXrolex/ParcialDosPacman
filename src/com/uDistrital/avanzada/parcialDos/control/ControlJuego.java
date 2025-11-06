@@ -36,8 +36,8 @@ public class ControlJuego {
     /**
      * Genera 4 frutas aleatorias en posiciones aleatorias del panel
      * 
-     * @param anchoPanel Ancho del panel de juego
-     * @param altoPanel Alto del panel de juego
+     * @param anchoPanel 
+     * @param altoPanel 
      */
     public void generarFrutas(int anchoPanel, int altoPanel) {
         if (frutasDisponibles.isEmpty()) {
@@ -49,18 +49,18 @@ public class ControlJuego {
         frutasEnJuego.clear();
         
         for (int i = 0; i < 4; i++) {
-            // Seleccionar fruta aleatoria del catálogo
+
             int indice = rand.nextInt(frutasDisponibles.size());
             FrutaVO frutaOriginal = frutasDisponibles.get(indice);
             
-            // Crear una copia para no modificar la original
+
             FrutaVO fruta = new FrutaVO(
                 frutaOriginal.getNombre(),
                 frutaOriginal.getPuntos(),
                 frutaOriginal.getRutaImagen()
             );
             
-            // Posición aleatoria (evitando bordes)
+
             fruta.setX(50 + rand.nextInt(anchoPanel - 100));
             fruta.setY(50 + rand.nextInt(altoPanel - 100));
             
@@ -74,8 +74,7 @@ public class ControlJuego {
         
         for (FrutaVO fruta : frutasEnJuego) {
             if (!fruta.isComida()) {
-                // Colisión rectangular simple
-                // Asumiendo que cada fruta tiene 30x30 píxeles
+
                 int frutaAncho = 30;
                 int frutaAlto = 30;
                 
@@ -87,7 +86,7 @@ public class ControlJuego {
                     fruta.setComida(true);
                     puntajeTotal += fruta.getPuntos();
                     frutasComidas++;
-                    return fruta; // Retorna la fruta comida
+                    return fruta; 
                 }
             }
         }
@@ -95,27 +94,16 @@ public class ControlJuego {
         return null;
     }
     
-    /**
-     * Verifica si el juego terminó (4 frutas comidas)
-     * 
-     * @return true si se comieron las 4 frutas
-     */
     public boolean juegoTerminado() {
         return frutasComidas >= 4;
     }
     
-    /**
-     * Calcula el tiempo transcurrido en milisegundos
-     * 
-     * @return Tiempo en milisegundos
-     */
+
     public long getTiempoTranscurrido() {
         return System.currentTimeMillis() - tiempoInicio;
     }
     
-    /**
-     * Reinicia el estado del juego
-     */
+
     public void reiniciar() {
         frutasEnJuego.clear();
         puntajeTotal = 0;
@@ -123,7 +111,7 @@ public class ControlJuego {
         tiempoInicio = 0;
     }
     
-    // Getters
+
     public List<FrutaVO> getFrutasEnJuego() { 
         return frutasEnJuego; 
     }
