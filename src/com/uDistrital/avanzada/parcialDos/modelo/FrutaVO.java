@@ -4,6 +4,8 @@
  */
 package com.uDistrital.avanzada.parcialDos.modelo;
 
+import javax.swing.JLabel;
+
 /**
  * Representa una fruta o item del juego
  *
@@ -14,9 +16,10 @@ public class FrutaVO {
     private String nombre;
     private int puntos;
     private String rutaImagen;
-    private int x; // posición en el panel
+    private int x; 
     private int y;
-    private boolean comida; // si ya fue comida
+    private boolean comida;
+    private JLabel label;
 
     public FrutaVO(String nombre, int puntos, String rutaImagen) {
         this.nombre = nombre;
@@ -60,5 +63,13 @@ public class FrutaVO {
 
     public void setComida(boolean comida) {
         this.comida = comida;
+    }
+
+    public JLabel getLabel() {
+        return label;
+    }
+
+    public void setLabel(JLabel label) {
+        this.label = label;
     }
 }
