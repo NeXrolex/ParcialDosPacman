@@ -1,4 +1,4 @@
-package com.uDistrital.avanzada.parcialDos.vista;
+package usuario.com.uDistrital.avanzada.parcialDos.vista;
 
 import javax.swing.*;
 import java.awt.*;

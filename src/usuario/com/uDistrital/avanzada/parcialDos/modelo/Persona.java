@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialDos.modelo;
+package usuario.com.uDistrital.avanzada.parcialDos.modelo;
 
 /**
  * Representa a una persona en el sistema

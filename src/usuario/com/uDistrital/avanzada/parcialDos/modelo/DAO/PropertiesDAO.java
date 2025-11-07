@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialDos.modelo.DAO;
+package usuario.com.uDistrital.avanzada.parcialDos.modelo.DAO;
 
-import com.uDistrital.avanzada.parcialDos.modelo.FrutaVO;
-import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
-import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
-import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;
-import com.uDistrital.avanzada.parcialDos.modelo.interfaces.IRead;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.FrutaVO;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.interfaces.IRead;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

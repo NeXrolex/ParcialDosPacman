@@ -2,15 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialDos.modelo.DAO;
+package usuario.com.uDistrital.avanzada.parcialDos.modelo.DAO;
 
-import com.uDistrital.avanzada.parcialDos.modelo.UsuarioVO;
-import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
-import com.uDistrital.avanzada.parcialDos.modelo.interfaces.*;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.UsuarioVO;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.interfaces.ICreate;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.interfaces.IRead;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.interfaces.IUpdateDelete;
 
 /**
  * Cumple las funciones DAO para hacer consultas, incersiones, eliminaciones y
@@ -73,7 +75,6 @@ public class UsuarioDAO implements ICreate, IRead, IUpdateDelete {
      * @param elemento Usuario
      * @return null o Usuario encontrado
      */
-    @Override
     public Object consultar(Object elemento) {
         if (!(elemento instanceof String)) {
 
