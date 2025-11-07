@@ -27,9 +27,10 @@ public class ControlVista implements ActionListener, KeyListener {
     private int y = 0;
     private int maxX;
     private int maxY;
-    private int movPixeles = 24;
+    private int movPixeles = 16;
     private Timer timer;
     private boolean juegoActivo = false;
+    private Timer timerTiempo;
 
     public ControlVista(ControlGeneral general) {
         this.controlGeneral = general;
@@ -82,6 +83,17 @@ public class ControlVista implements ActionListener, KeyListener {
             return;
         }
 
+        List<String[]> recursos = controlGeneral.cargarGif();
+
+        for (String[] recurso : recursos) {
+            String clave = recurso[0];
+            String ruta = recurso[1];
+
+            if ("GIF_PACMAN".equalsIgnoreCase(clave)) {
+                ventanaPrincipal.establecerGifPacman(ruta);
+            }
+        }
+
         ventanaPrincipal.setMensajeEstadoExito("Properties cargado correctamente");
 
         Timer delay = new Timer(1000, e -> {
@@ -123,12 +135,14 @@ public class ControlVista implements ActionListener, KeyListener {
     }
 
     private void iniciarJuego() {
+
         velX = 0;
         velY = 0;
         juegoActivo = true;
 
         ventanaPrincipal.limpiarFrutas();
         controlGeneral.reiniciarJuego();
+        actualizarTiempo();
 
         centrarPacman();
 
@@ -139,6 +153,12 @@ public class ControlVista implements ActionListener, KeyListener {
         mostrarFrutas();
 
         ventanaPrincipal.darFocoPanelJuego();
+        if (timerTiempo != null && timerTiempo.isRunning()) {
+            timerTiempo.stop();
+        }
+
+        timerTiempo = new Timer(1000, e -> actualizarTiempo());
+        timerTiempo.start();
     }
 
     private void mostrarFrutas() {
@@ -168,7 +188,7 @@ public class ControlVista implements ActionListener, KeyListener {
 
         if (frutaComida != null) {
             ventanaPrincipal.eliminarFruta(frutaComida.getLabel());
-
+            actualizarPuntaje();
             if (controlGeneral.juegoTerminado()) {
                 finalizarJuego();
             }
@@ -179,15 +199,27 @@ public class ControlVista implements ActionListener, KeyListener {
         juegoActivo = false;
         velX = 0;
         velY = 0;
-
         int puntaje = controlGeneral.getPuntajeTotal();
         long tiempo = controlGeneral.getTiempoTranscurrido();
-
         String mensaje = "¡Juego Terminado!\n"
                 + "Puntaje: " + puntaje + "\n"
                 + "Tiempo: " + (tiempo / 1000) + " segundos";
-
+        
+        if (timerTiempo != null) {
+            timerTiempo.stop();
+        }
         ventanaPrincipal.mostrarDialogo(mensaje, "Juego Terminado", 1);
+
+    }
+
+    private void actualizarPuntaje() {
+        int puntaje = controlGeneral.getPuntajeTotal();
+        ventanaPrincipal.getLblPuntaje().setText(String.valueOf(puntaje));
+    }
+
+    public void actualizarTiempo() {
+        long tiempo = controlGeneral.getTiempoTranscurrido() / 1000;
+        ventanaPrincipal.getLblTiempo().setText("Tiempo: " + tiempo + " s");
     }
 
     @Override
