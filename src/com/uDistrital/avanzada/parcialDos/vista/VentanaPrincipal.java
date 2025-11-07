@@ -17,9 +17,9 @@ public class VentanaPrincipal extends JFrame {
 
     private CardLayout cardLayout;
 
-    private JPanel panelInicio, panelBotones, panelJuego, panelContenedor, panelPuntaje;
+    private JPanel panelInicio, panelBotones, panelJuego, panelContenedor, panelPuntaje, panelCentroPuntaje, panelCentro, panelTitulo, panelBotonesInicio;
     private JButton btnCargarProperties, botonSalir, botonIniciar, btnSalirInicio;
-    private JLabel lblEstado, lblTextPuntaje, labelPacman, lblPuntaje, lblTiempo;
+    private JLabel lblEstado, lblTextPuntaje, labelPacman, lblPuntaje, lblTiempo, lblMensaje, lblTitulo, placeholderPuntaje;
     private JFileChooser fileChooser;
 
     private List<JLabel> labelsFrutas;
@@ -72,9 +72,9 @@ public class VentanaPrincipal extends JFrame {
         panelInicio.setBackground(new Color(0, 0, 20));
         panelInicio.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JPanel panelTitulo = new JPanel();
+        panelTitulo = new JPanel();
         panelTitulo.setBackground(new Color(0, 0, 20));
-        JLabel lblTitulo = new JLabel("PAC-MAN");
+        lblTitulo = new JLabel("PAC-MAN");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 36));
         lblTitulo.setForeground(Color.BLACK);
         lblTitulo.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
@@ -82,11 +82,11 @@ public class VentanaPrincipal extends JFrame {
         lblTitulo.setOpaque(true);
         panelTitulo.add(lblTitulo);
 
-        JPanel panelCentro = new JPanel();
+        panelCentro = new JPanel();
         panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
         panelCentro.setBackground(new Color(0, 0, 20));
 
-        JLabel lblMensaje = new JLabel("Seleccione el archivo de configuración");
+        lblMensaje = new JLabel("Seleccione el archivo de configuración");
         lblMensaje.setFont(new Font("Arial", Font.PLAIN, 16));
         lblMensaje.setForeground(Color.WHITE);
         lblMensaje.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -102,7 +102,7 @@ public class VentanaPrincipal extends JFrame {
         panelCentro.add(lblEstado);
         panelCentro.add(Box.createVerticalGlue());
 
-        JPanel panelBotonesInicio = new JPanel();
+        panelBotonesInicio = new JPanel();
         panelBotonesInicio.setBackground(new Color(0, 0, 20));
         panelBotonesInicio.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
@@ -122,6 +122,15 @@ public class VentanaPrincipal extends JFrame {
         panelPuntaje = new JPanel(new BorderLayout());
         panelPuntaje.setBackground(new Color(0, 0, 20));
 
+        lblTiempo = new JLabel("Tiempo: 0", SwingConstants.LEFT);
+        lblTiempo.setFont(new Font("Arial", Font.BOLD, 16));
+        lblTiempo.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        lblTiempo.setForeground(Color.WHITE);
+
+        panelPuntaje.add(lblTiempo, BorderLayout.WEST);
+        panelCentroPuntaje = new JPanel(new GridLayout(2, 1, 0, 0));
+        panelCentroPuntaje.setBackground(new Color(0, 0, 20));
+
         lblTextPuntaje = new JLabel("Puntaje", SwingConstants.CENTER);
         lblTextPuntaje.setFont(new Font("Arial", Font.BOLD, 16));
         lblTextPuntaje.setForeground(Color.WHITE);
@@ -130,13 +139,18 @@ public class VentanaPrincipal extends JFrame {
         lblTextPuntaje.setFont(new Font("Arial", Font.BOLD, 16));
         lblPuntaje.setForeground(Color.WHITE);
 
-        lblTiempo = new JLabel("Tiempo: 0");
-        lblTiempo.setFont(new Font("Arial", Font.BOLD, 16));
-        lblTiempo.setForeground(Color.WHITE);
+        panelCentroPuntaje.add(lblTextPuntaje);
+        panelCentroPuntaje.add(lblPuntaje);
 
-        panelPuntaje.add(lblTextPuntaje, BorderLayout.NORTH);
-        panelPuntaje.add(lblTiempo, BorderLayout.WEST);
-        panelPuntaje.add(lblPuntaje, BorderLayout.SOUTH);
+        panelPuntaje.add(panelCentroPuntaje, BorderLayout.CENTER);
+
+        /**
+         * Este label es para equilibrar el tiempo y el puntaje, pues sin él, el
+         * puntaje no se ve centrado y daña la estetica del programa
+         */
+        placeholderPuntaje = new JLabel("Tiempo: 0");
+        placeholderPuntaje.setForeground(new Color(0, 0, 20)); // invisible
+        panelPuntaje.add(placeholderPuntaje, BorderLayout.EAST);
 
         panelJuego = new JPanel(null);
         panelJuego.setBackground(new Color(0, 0, 20));
@@ -344,8 +358,8 @@ public class VentanaPrincipal extends JFrame {
     public JLabel getLblTiempo() {
         return lblTiempo;
     }
-    
-    public void limpiarTiempo(){
+
+    public void limpiarTiempo() {
         lblTiempo.setText("");
     }
 }
