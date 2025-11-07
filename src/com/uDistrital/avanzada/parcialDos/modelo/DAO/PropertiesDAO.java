@@ -7,6 +7,7 @@ package com.uDistrital.avanzada.parcialDos.modelo.DAO;
 import com.uDistrital.avanzada.parcialDos.modelo.FrutaVO;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
+import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;
 import com.uDistrital.avanzada.parcialDos.modelo.interfaces.IRead;
 import java.io.File;
 import java.util.ArrayList;
@@ -112,7 +113,8 @@ public class PropertiesDAO implements IRead<String> {
         // Obtener el total de frutas
         String totalStr = props.getProperty("TOTAL_FRUTAS");
         if (totalStr == null) {
-            throw new IllegalStateException("No se encontró TOTAL_FRUTAS en properties");
+            throw new IllegalStateException("No se encontró "
+                    + "TOTAL_FRUTAS en properties");
         }
         
         int total = Integer.parseInt(totalStr.trim());
@@ -138,6 +140,31 @@ public class PropertiesDAO implements IRead<String> {
         }
         
         return frutas;
+    }
+    /**
+     * Saca los elementos que estan en los properties y asigana los 
+     * valores para poder conectar a los socket  
+     * 
+     */
+    public void configurarConexionSocketDesdeArchivo() {
+        Properties props = cargarTodas();
+
+        String ip = props.getProperty("IP_SOCKET");
+        String port = props.getProperty("PUERTO_SOCKET");
+
+        if (ip == null || port == null || ip.trim().isEmpty() || port.trim()
+                .isEmpty()) {
+            throw new IllegalStateException("Faltan claves de conexión de"
+                    + " socket (IP_SOCKET, PUERTO_SOCKET).");
+        }
+
+        try {
+            int puerto = Integer.parseInt(port.trim());
+            ConexionSocket.configurarSocket(ip.trim(), puerto);
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("PUERTO_SOCKET no es un"
+                    + " número válido.", e);
+        }
     }
 
     
