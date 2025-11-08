@@ -86,6 +86,19 @@ public class ControlSocket {
     }
 
     /**
+     * Envia un mensaje de movimeientos al servidor para que lo traduzca 
+     * y lo representa en en ltablero del pacman
+     *
+     * @param comando Movimientos a enviar
+     */
+    public void enviarMovimiento(String comando) {
+        if (comando == null || comando.trim().isEmpty()) {
+            return;
+        }
+        enviarUTF(comando.trim());
+    }
+
+    /**
      * Busca si esta conectado en el socket
      *
      * @return True si esta conectado o false
