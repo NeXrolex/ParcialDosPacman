@@ -4,7 +4,7 @@
  */
 package com.uDistrital.avanzada.parcialDos.modelo.DAO;
 
-import com.uDistrital.avanzada.parcialDos.modelo.FrutaVO;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;

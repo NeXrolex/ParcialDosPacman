@@ -1,7 +1,7 @@
-package com.uDistrital.avanzada.parcialDos.control;
+package usuario.com.uDistrital.avanzada.parcialDos.control;
 
 import com.uDistrital.avanzada.parcialDos.modelo.DAO.PropertiesDAO;
-import com.uDistrital.avanzada.parcialDos.modelo.FrutaVO;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 import java.io.File;
 import java.util.List;
 
@@ -44,6 +44,15 @@ public class ControlProperties {
      */
     public void establecerValoresBaseDatos() {
         propertiesDAO.configurarConexionBDDesdeArchivo();
+    }
+    
+    /**
+     * Establece los valores para conectarse al socket por
+     * medio de los properties
+     * 
+     */
+    public void establecerValoresSocket(){
+        propertiesDAO.configurarConexionSocketDesdeArchivo();
     }
 
     public List<FrutaVO> cargarFrutas() {

@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialDos.control;
+package usuario.com.uDistrital.avanzada.parcialDos.control;
 
-import com.uDistrital.avanzada.parcialDos.modelo.FrutaVO;
+import servidor.com.udistrital.avanzada.parcialDos.control.ControlJuego;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 import java.io.File;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class ControlGeneral {
         try {
             cProperties.setArchivoProperties(archivo);
             cProperties.establecerValoresBaseDatos();
+            cProperties.establecerValoresSocket();
             return true;
         } catch (Exception e) {
             return false;
