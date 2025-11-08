@@ -1,14 +1,11 @@
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
-import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 import usuario.com.uDistrital.avanzada.parcialDos.vista.VentanaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.util.List;
-import javax.swing.Timer;
 
 /**
  * Controlador de la vista - maneja SOLO LÓGICA PURA NO contiene referencias a
@@ -31,9 +28,7 @@ public class ControlVista implements ActionListener, KeyListener {
 
         ventanaPrincipal.getBtnCargarConfig().addActionListener(this);
         ventanaPrincipal.getBtnSalirInicio().addActionListener(this);
-
-        ventanaPrincipal.getBotonIniciar().addActionListener(this);
-        ventanaPrincipal.getBotonSalir().addActionListener(this);
+        
         ventanaPrincipal.getPanelJuego().addKeyListener(this);
 
         ventanaPrincipal.setVisible(true);
@@ -65,43 +60,7 @@ public class ControlVista implements ActionListener, KeyListener {
             return;
         }
 
-        boolean exitoFrutas = controlGeneral.cargarFrutas();
-
-        if (!exitoFrutas) {
-            ventanaPrincipal.setMensajeEstadoError("Error al cargar el properties");
-            return;
-        }
-
-        List<String[]> recursos = controlGeneral.cargarGif();
-
-        for (String[] recurso : recursos) {
-            String clave = recurso[0];
-            String ruta = recurso[1];
-
-            if ("GIF_PACMAN".equalsIgnoreCase(clave)) {
-                ventanaPrincipal.establecerGifPacman(ruta);
-            }
-        }
-
         ventanaPrincipal.setMensajeEstadoExito("Properties cargado correctamente");
-
-        Timer delay = new Timer(1000, e -> {
-            ventanaPrincipal.mostrarPantallaJuego();
-            inicializarTimer();
-        });
-        delay.setRepeats(false);
-        delay.start();
-    }
-
-    private void inicializarTimer() {
-        this.timer = new Timer(50, e -> {
-            // LÓGICA: Solo mover si el juego está activo
-            if (juegoActivo) {
-                moverPacman();
-                verificarColisiones();
-            }
-        });
-        this.timer.start();
     }
 
     @Override
@@ -115,15 +74,8 @@ public class ControlVista implements ActionListener, KeyListener {
             System.exit(0);
             return;
         }
-
-        if (src == ventanaPrincipal.getBotonIniciar()) {
-            iniciarJuego();
-        } else if (src == ventanaPrincipal.getBotonSalir()) {
-            System.exit(0);
-        }
     }
 
-   
     @Override
     public void keyPressed(KeyEvent e) {
 
