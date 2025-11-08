@@ -4,7 +4,7 @@
  */
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
-import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
