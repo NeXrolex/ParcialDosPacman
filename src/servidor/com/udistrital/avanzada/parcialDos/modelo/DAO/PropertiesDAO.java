@@ -4,7 +4,6 @@
  */
 package servidor.com.udistrital.avanzada.parcialDos.modelo.DAO;
 
-import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
 import com.uDistrital.avanzada.parcialDos.modelo.interfaces.IRead;
 import java.io.File;
 import java.util.ArrayList;
@@ -12,9 +11,11 @@ import java.util.List;
 import java.util.Properties;
 import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
 
 /**
  * Lee los valores del archivo de propiedades del servidor
+ * cumple el contrado de servicios para hacer la conexion
  *
  * @author Alex
  */
