@@ -39,7 +39,7 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.getTxtAreaMovimientos().addKeyListener(this);
 
         ventana.setVisible(true);
-        ventana.mostrarPantallaConexion();
+        ventana.mostrarPantallaLogin();
     }
 
     @Override
