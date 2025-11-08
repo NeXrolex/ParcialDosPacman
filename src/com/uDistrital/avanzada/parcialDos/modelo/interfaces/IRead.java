@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package usuario.com.uDistrital.avanzada.parcialDos.modelo.interfaces;
+package com.uDistrital.avanzada.parcialDos.modelo.interfaces;
 
 /**
  * Contrato de servicios para extraer datos
