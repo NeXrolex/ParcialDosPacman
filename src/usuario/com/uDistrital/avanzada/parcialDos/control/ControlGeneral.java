@@ -4,10 +4,7 @@
  */
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
-import servidor.com.udistrital.avanzada.parcialDos.control.ControlJuego;
-import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 import java.io.File;
-import java.util.List;
 
 /**
  * Controlador principal que coordina todo el sistema Actúa como intermediario
@@ -19,12 +16,10 @@ public class ControlGeneral {
 
     private ControlVista cVista;
     private ControlProperties cProperties;
-    private ControlJuego cJuego;
     private ControlSocket cSocket;
 
     public ControlGeneral() {
         this.cProperties = new ControlProperties();
-        this.cJuego = new ControlJuego();
         this.cSocket = new ControlSocket(this);
 
         // ControlVista recibe esta instancia
@@ -57,72 +52,4 @@ public class ControlGeneral {
         cSocket.enviarMovimiento(comando);
     }
 
-    /**
-     * Delega la generación de frutas al controlador de juego
-     *
-     * @param anchoPanel Ancho del panel
-     * @param altoPanel Alto del panel
-     */
-    public void generarFrutas(int anchoPanel, int altoPanel) {
-        cJuego.generarFrutas(anchoPanel, altoPanel);
-    }
-
-
-    /**
-     * Obtiene las frutas en juego
-     *
-     * @return Lista de frutas
-     */
-    public List<FrutaVO> getFrutasEnJuego() {
-        return cJuego.getFrutasEnJuego();
-    }
-
-    /**
-     * Verifica colisiones entre Pac-Man y frutas
-     *
-     * @param pacmanX Posición X de Pac-Man
-     * @param pacmanY Posición Y de Pac-Man
-     * @param pacmanAncho Ancho de Pac-Man
-     * @param pacmanAlto Alto de Pac-Man
-     * @return Fruta comida o null
-     */
-    public FrutaVO verificarColision(int pacmanX, int pacmanY,
-            int pacmanAncho, int pacmanAlto) {
-        return cJuego.verificarColision(pacmanX, pacmanY,
-                pacmanAncho, pacmanAlto);
-    }
-
-    /**
-     * Verifica si el juego terminó
-     *
-     * @return true si terminó
-     */
-    public boolean juegoTerminado() {
-        return cJuego.juegoTerminado();
-    }
-
-    /**
-     * Obtiene el puntaje total acumulado
-     *
-     * @return Puntaje
-     */
-    public int getPuntajeTotal() {
-        return cJuego.getPuntajeTotal();
-    }
-
-    /**
-     * Obtiene el tiempo transcurrido en milisegundos
-     *
-     * @return Tiempo en ms
-     */
-    public long getTiempoTranscurrido() {
-        return cJuego.getTiempoTranscurrido();
-    }
-
-    /**
-     * Reinicia el estado del juego
-     */
-    public void reiniciarJuego() {
-        cJuego.reiniciar();
-    }
 }
