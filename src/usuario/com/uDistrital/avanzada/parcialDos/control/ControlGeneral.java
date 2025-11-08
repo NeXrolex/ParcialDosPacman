@@ -20,13 +20,26 @@ public class ControlGeneral {
     private ControlVista cVista;
     private ControlProperties cProperties;
     private ControlJuego cJuego;
+    private ControlSocket cSocket;
 
     public ControlGeneral() {
+        this.cSocket = new ControlSocket();
         this.cProperties = new ControlProperties();
         this.cJuego = new ControlJuego();
 
         // ControlVista recibe esta instancia
         this.cVista = new ControlVista(this);
+    }
+
+    public void enviarMovimiento(int x, int y) {
+        try {
+            if (cSocket.estaConectado()) {
+                String comando = "MOVE;" + x + ";" + y;
+                cSocket.enviarUTF(comando);
+            }
+        } catch (RuntimeException e) {
+            System.err.println("Error al enviar movimiento: " + e.getMessage());
+        }
     }
 
     /**
@@ -54,7 +67,6 @@ public class ControlGeneral {
     public void generarFrutas(int anchoPanel, int altoPanel) {
         cJuego.generarFrutas(anchoPanel, altoPanel);
     }
-
 
     /**
      * Obtiene las frutas en juego
