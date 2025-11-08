@@ -6,7 +6,7 @@ package usuario.com.uDistrital.avanzada.parcialDos.modelo.DAO;
 
 import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
-import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
 import usuario.com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;
 import com.uDistrital.avanzada.parcialDos.modelo.interfaces.IRead;
 import java.io.File;
