@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
 import usuario.com.uDistrital.avanzada.parcialDos.vista.VentanaPrincipalUsuario;
@@ -172,7 +176,6 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
                 return;
         }
 
-
         boolean enviado = controlGeneral.enviarMovimiento(movimiento);
 
         if (enviado) {
@@ -195,9 +198,7 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
                 autenticado = false;
                 ventana.setEstadoJuego("✗ Conexión perdida", true);
 
-
                 ventana.mostrarConexionPerdida();
-
 
                 ventana.mostrarPantallaConexion();
                 ventana.setEstadoConexion(false);
