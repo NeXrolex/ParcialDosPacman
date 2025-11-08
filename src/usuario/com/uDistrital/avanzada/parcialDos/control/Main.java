@@ -11,6 +11,6 @@ package usuario.com.uDistrital.avanzada.parcialDos.control;
 public class Main {
 
     public static void main(String[] args) {
-        new ControlGeneral();
+        new ControlGeneralUsuario();
     }
 }
