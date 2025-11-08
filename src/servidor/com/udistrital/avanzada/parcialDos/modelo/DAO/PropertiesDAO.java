@@ -12,15 +12,16 @@ import java.util.Properties;
 import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
 import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionServerSocket;
 
 /**
- * Lee los valores del archivo de propiedades del servidor
- * cumple el contrado de servicios para hacer la conexion
+ * Lee los valores del archivo de propiedades del servidor cumple el contrado de
+ * servicios para hacer la conexion
  *
  * @author Alex
  */
 public class PropertiesDAO implements IRead<String> {
-    
+
     private ConexionProperties conexionProps;
     //Archivo actual
     private File archivoActual;
@@ -83,6 +84,7 @@ public class PropertiesDAO implements IRead<String> {
         }
         return props;
     }
+
     /**
      * Necesario para establecer conexiones a la base de datos, antes de iniciar
      * una comunicacion con la base de datos establece los valores para iniciar
@@ -106,6 +108,17 @@ public class PropertiesDAO implements IRead<String> {
 
         // Se configuran directamente los valores en la clase de conexión
         ConexionBaseDatos.configurar(url.trim(), user.trim(), pass.trim());
+    }
+
+    /**
+     * Configura el puerto por el cual se va a atender a los usuarios
+     *
+     */
+    public void configurarServerSocketDesdeArchivo() {
+        var p = cargarTodas();
+        String port = p.getProperty("PUERTO_SERVIDOR");       
+        int puerto = Integer.parseInt(port.trim());
+        ConexionServerSocket.configurar(puerto);
     }
 
     /**
@@ -148,7 +161,7 @@ public class PropertiesDAO implements IRead<String> {
 
         return frutas;
     }
-    
+
     public ArrayList<String[]> extraerGif() {
         if (this.archivoActual == null) {
             throw new IllegalStateException("El archivo .properties es null");
@@ -169,5 +182,5 @@ public class PropertiesDAO implements IRead<String> {
         }
         return gifDatos;
     }
-    
+
 }
