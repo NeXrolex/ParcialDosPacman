@@ -4,8 +4,8 @@
  */
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
-import com.uDistrital.avanzada.parcialDos.modelo.DAO.UsuarioDAO;
-import com.uDistrital.avanzada.parcialDos.modelo.UsuarioVO;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.DAO.UsuarioDAO;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.UsuarioVO;
 
 /**
  * Maneja todo lo relacionado a la logica de un usuario
