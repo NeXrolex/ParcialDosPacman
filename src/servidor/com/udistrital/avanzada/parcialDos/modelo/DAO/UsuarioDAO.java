@@ -94,7 +94,7 @@ public class UsuarioDAO implements ICreate, IRead, IUpdateDelete {
                 if (rs.next()) {
                     UsuarioVO u = new UsuarioVO(rs.getString("nombre"),
                             rs.getString("contrasena"),
-                            0 /* puntaje en memoria */);
+                            0,0);
                     return u;
                 }
             }
