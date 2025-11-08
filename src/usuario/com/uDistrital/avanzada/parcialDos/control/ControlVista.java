@@ -28,7 +28,7 @@ public class ControlVista implements ActionListener, KeyListener {
 
         ventanaPrincipal.getBtnCargarConfig().addActionListener(this);
         ventanaPrincipal.getBtnSalirInicio().addActionListener(this);
-        
+
         ventanaPrincipal.getPanelJuego().addKeyListener(this);
 
         ventanaPrincipal.setVisible(true);
@@ -85,16 +85,16 @@ public class ControlVista implements ActionListener, KeyListener {
 
         int c = e.getKeyCode();
 
-        if (c == KeyEvent.VK_UP) {
+        if (c == KeyEvent.VK_UP || c == KeyEvent.VK_W) {
             velX = 0;
             velY = -movPixeles;
-        } else if (c == KeyEvent.VK_DOWN) {
+        } else if (c == KeyEvent.VK_DOWN || c == KeyEvent.VK_S) {
             velX = 0;
             velY = movPixeles;
-        } else if (c == KeyEvent.VK_LEFT) {
+        } else if (c == KeyEvent.VK_LEFT || c == KeyEvent.VK_A) {
             velX = -movPixeles;
             velY = 0;
-        } else if (c == KeyEvent.VK_RIGHT) {
+        } else if (c == KeyEvent.VK_RIGHT || c == KeyEvent.VK_D) {
             velX = movPixeles;
             velY = 0;
         }
@@ -111,6 +111,5 @@ public class ControlVista implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }
