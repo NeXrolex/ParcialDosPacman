@@ -7,6 +7,9 @@ import java.io.File;
 
 
 /**
+ * Maneja toda la informacion y delega a los 
+ * controles hacer sus respectivas acciones
+ * 
  * @author Steven, Jard, Alex
  */
 public class ControlGeneralUsuario {
@@ -19,12 +22,16 @@ public class ControlGeneralUsuario {
     public ControlGeneralUsuario() {
         this.cProperties = new ControlProperties();
         this.cSocket = new ControlSocket(this);
-
-        
         this.cVistaUsuario = new ControlVistaUsuario(this);
     }
 
-
+    /**
+     * Por el JFilechooser obtiene el archivo de propiedades
+     * y establece los valores para conectar al socket
+     * 
+     * @param archivo ARchivo
+     * @return True si establece or false si no lo hace
+     */
     public boolean procesarArchivoProperties(File archivo) {
         try {
             cProperties.setArchivoProperties(archivo);
@@ -54,22 +61,17 @@ public class ControlGeneralUsuario {
     public boolean iniciarSesion(String usuario, String contrasena) {
         return cSocket.iniciarSesion(usuario, contrasena);
     }
-
+    
     /**
-     * Envía un movimiento al servidor
+     * Delega al socket enviar el movimeinto que llaga desde
+     * la vista
      * 
-     * @param movimiento Dirección del movimiento (ARRIBA, ABAJO, IZQUIERDA, DERECHA)
-     * @return true si se envió correctamente
+     * @param comando 
      */
-    public boolean enviarMovimiento(String movimiento) {
-        try {
-            String respuesta = cSocket.enviarComando("MOVIMIENTO", movimiento);
-            return respuesta != null && respuesta.toUpperCase().startsWith("OK");
-        } catch (Exception e) {
-            return false;
-        }
+    public void enviarMovimiento(String comando){
+        
+        cSocket.enviarMovimiento(comando);
     }
-
     /**
      * Verifica si está conectado al servidor
      * 
@@ -80,7 +82,8 @@ public class ControlGeneralUsuario {
     }
 
     /**
-     * Cierra la conexión con el servidor
+     * Delega al control socket
+     * que cierre la conexion con el servidor
      */
     public void cerrarConexion() {
         cSocket.cerrar();
