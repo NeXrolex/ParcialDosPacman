@@ -44,26 +44,24 @@ public class ConexionSocket implements IConexion<Socket> {
      */
     @Override
     public Socket conexion() {
-        //Si existe uno abierto nos devolvera el socket actual
         if (socket != null && socket.isConnected() && !socket.isClosed()) {
             return socket;
         }
-        //Si los valores no estan establecidos no iniciara la conexion
         if (ipServidor == null || ipServidor.isEmpty() || puertoServidor <= 0) {
-
+            throw new IllegalStateException("IP/PUERTO de socket"
+                    + " no configurados.");
         }
-
         try {
-            socket = new Socket();
-            socket.connect(new InetSocketAddress(ipServidor, puertoServidor),
-                    5000);//Valor maximo en tiempo para la conexion
-            socket.setTcpNoDelay(true);
+            
+            socket = new Socket(ipServidor, puertoServidor);
+            socket.setTcpNoDelay(true); // opcional, útil para comandos cortos
             return socket;
-        } catch (IOException ex) {
-
+        } catch (IOException e) {
+            throw new RuntimeException("No fue posible conectar al"
+                    + " servidor socket.", e);
         }
-        return null;
     }
+    
     
     /**
      * Cierra la conexion con el socket
