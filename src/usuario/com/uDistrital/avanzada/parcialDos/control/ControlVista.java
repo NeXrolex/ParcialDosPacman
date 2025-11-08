@@ -1,7 +1,7 @@
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
 import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
-import com.uDistrital.avanzada.parcialDos.vista.VentanaPrincipal;
+import usuario.com.uDistrital.avanzada.parcialDos.vista.VentanaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
