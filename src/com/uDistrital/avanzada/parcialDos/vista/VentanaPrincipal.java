@@ -1,37 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.uDistrital.avanzada.parcialDos.vista;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Ventana principal que integra la pantalla de inicio y el juego Maneja
- * únicamente componentes visuales - SIN LÓGICA
+ * únicamente componentes visuales
  *
  * @author Steven
  */
 public class VentanaPrincipal extends JFrame {
 
     private CardLayout cardLayout;
-    private JPanel panelContenedor;
 
-    private JPanel panelInicio;
-    private JButton btnCargarProperties;
-    private JButton btnSalirInicio;
-    private JLabel lblEstado;
+    private JPanel panelInicio, panelBotones, panelJuego, panelContenedor, panelPuntaje, panelCentroPuntaje, panelCentro, panelTitulo, panelBotonesInicio;
+    private JButton btnCargarProperties, botonSalir, botonIniciar, btnSalirInicio;
+    private JLabel lblEstado, lblTextPuntaje, labelPacman, lblPuntaje, lblTiempo, lblMensaje, lblTitulo, placeholderPuntaje;
     private JFileChooser fileChooser;
 
-    private JPanel panelJuego;
-    private JPanel panelBotones;
-    private JLabel labelPacman;
-    private JButton botonIniciar;
-    private JButton botonSalir;
     private List<JLabel> labelsFrutas;
 
     private static final String PANTALLA_INICIO = "INICIO";
@@ -82,18 +72,21 @@ public class VentanaPrincipal extends JFrame {
         panelInicio.setBackground(new Color(0, 0, 20));
         panelInicio.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JPanel panelTitulo = new JPanel();
+        panelTitulo = new JPanel();
         panelTitulo.setBackground(new Color(0, 0, 20));
-        JLabel lblTitulo = new JLabel("PAC-MAN");
+        lblTitulo = new JLabel("PAC-MAN");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 36));
-        lblTitulo.setForeground(new Color(255, 204, 0));
+        lblTitulo.setForeground(Color.BLACK);
+        lblTitulo.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+        lblTitulo.setBackground(new Color(255, 204, 0));
+        lblTitulo.setOpaque(true);
         panelTitulo.add(lblTitulo);
 
-        JPanel panelCentro = new JPanel();
+        panelCentro = new JPanel();
         panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
         panelCentro.setBackground(new Color(0, 0, 20));
 
-        JLabel lblMensaje = new JLabel("Seleccione el archivo de configuración");
+        lblMensaje = new JLabel("Seleccione el archivo de configuración");
         lblMensaje.setFont(new Font("Arial", Font.PLAIN, 16));
         lblMensaje.setForeground(Color.WHITE);
         lblMensaje.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -109,12 +102,12 @@ public class VentanaPrincipal extends JFrame {
         panelCentro.add(lblEstado);
         panelCentro.add(Box.createVerticalGlue());
 
-        JPanel panelBotonesInicio = new JPanel();
+        panelBotonesInicio = new JPanel();
         panelBotonesInicio.setBackground(new Color(0, 0, 20));
         panelBotonesInicio.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
-        btnCargarProperties = crearBotonInicio("Cargar Properties", new Color(255, 204, 0));
-        btnSalirInicio = crearBotonInicio("Salir", new Color(204, 0, 0));
+        btnCargarProperties = crearBotonJuego("Cargar Properties", new Color(255, 204, 0));
+        btnSalirInicio = crearBotonJuego("Salir", new Color(255, 204, 0));
 
         panelBotonesInicio.add(btnCargarProperties);
         panelBotonesInicio.add(btnSalirInicio);
@@ -126,6 +119,39 @@ public class VentanaPrincipal extends JFrame {
 
     private void crearPantallaJuego() {
 
+        panelPuntaje = new JPanel(new BorderLayout());
+        panelPuntaje.setBackground(new Color(0, 0, 20));
+
+        lblTiempo = new JLabel("Tiempo: 0", SwingConstants.LEFT);
+        lblTiempo.setFont(new Font("Arial", Font.BOLD, 16));
+        lblTiempo.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        lblTiempo.setForeground(Color.WHITE);
+
+        panelPuntaje.add(lblTiempo, BorderLayout.WEST);
+        panelCentroPuntaje = new JPanel(new GridLayout(2, 1, 0, 0));
+        panelCentroPuntaje.setBackground(new Color(0, 0, 20));
+
+        lblTextPuntaje = new JLabel("Puntaje", SwingConstants.CENTER);
+        lblTextPuntaje.setFont(new Font("Arial", Font.BOLD, 16));
+        lblTextPuntaje.setForeground(Color.WHITE);
+
+        lblPuntaje = new JLabel("0", SwingConstants.CENTER);
+        lblTextPuntaje.setFont(new Font("Arial", Font.BOLD, 16));
+        lblPuntaje.setForeground(Color.WHITE);
+
+        panelCentroPuntaje.add(lblTextPuntaje);
+        panelCentroPuntaje.add(lblPuntaje);
+
+        panelPuntaje.add(panelCentroPuntaje, BorderLayout.CENTER);
+
+        /**
+         * Este label es para equilibrar el tiempo y el puntaje, pues sin él, el
+         * puntaje no se ve centrado y daña la estetica del programa
+         */
+        placeholderPuntaje = new JLabel("Tiempo: 0");
+        placeholderPuntaje.setForeground(new Color(0, 0, 20)); // invisible
+        panelPuntaje.add(placeholderPuntaje, BorderLayout.EAST);
+
         panelJuego = new JPanel(null);
         panelJuego.setBackground(new Color(0, 0, 20));
         panelJuego.setBorder(BorderFactory.createTitledBorder(
@@ -136,36 +162,24 @@ public class VentanaPrincipal extends JFrame {
                 new Font("Arial", Font.BOLD, 14),
                 new Color(0, 0, 255)
         ));
-        panelJuego.setFocusable(true);
 
-        ImageIcon imgPlaceholder = new ImageIcon(
-                getClass().getResource("/Specs/ImagesAndGifs/placeholder24px.png")
-        );
-        labelPacman = new JLabel(imgPlaceholder);
-        labelPacman.setSize(imgPlaceholder.getIconWidth(),
-                imgPlaceholder.getIconHeight());
+        labelPacman = new JLabel();
         panelJuego.add(labelPacman);
 
         panelBotones = new JPanel();
         panelBotones.setBackground(new Color(0, 0, 20));
-        panelBotones.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(new Color(0, 0, 255), 3),
-                "",
-                0,
-                0,
-                new Font("Arial", Font.BOLD, 14),
-                new Color(0, 0, 255)
-        ));
 
         botonIniciar = crearBotonJuego("Iniciar Juego", new Color(255, 204, 0));
         botonSalir = crearBotonJuego("Salir", new Color(255, 204, 0));
 
         panelBotones.add(botonIniciar);
         panelBotones.add(botonSalir);
+        panelJuego.setFocusable(true);
     }
 
     private JPanel crearPanelJuegoCompleto() {
         JPanel panel = new JPanel(new BorderLayout());
+        panel.add(panelPuntaje, BorderLayout.NORTH);
         panel.add(panelJuego, BorderLayout.CENTER);
         panel.add(panelBotones, BorderLayout.SOUTH);
         return panel;
@@ -179,18 +193,7 @@ public class VentanaPrincipal extends JFrame {
                 "Archivos Properties (*.properties)", "properties"
         );
         fileChooser.setFileFilter(filtro);
-    }
-
-    private JButton crearBotonInicio(String texto, Color color) {
-        JButton boton = new JButton(texto);
-        boton.setFont(new Font("Arial", Font.BOLD, 15));
-        boton.setBackground(color);
-        boton.setForeground(Color.BLACK);
-        boton.setFocusPainted(false);
-        boton.setPreferredSize(new Dimension(200, 45));
-        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        boton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        return boton;
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
 
     private JButton crearBotonJuego(String texto, Color color) {
@@ -283,6 +286,23 @@ public class VentanaPrincipal extends JFrame {
         JOptionPane.showMessageDialog(this, mensaje, titulo, tipoMensaje);
     }
 
+    /**
+     * Establece el gif del pacman
+     *
+     * @param rutaGif ruta de el gif
+     */
+    public void establecerGifPacman(String rutaGif) {
+
+        ImageIcon gif = new ImageIcon(getClass().getResource(rutaGif));
+        labelPacman.setIcon(gif);
+        labelPacman.setSize(gif.getIconWidth(), gif.getIconHeight());
+
+        int x = (getAnchoPanelJuego() - getAnchoPacman()) / 2;
+        int y = (getAltoPanelJuego() - getAltoPacman()) / 2;
+
+        labelPacman.setLocation(x, y);
+    }
+
     public int getAnchoPanelJuego() {
         return panelJuego.getWidth();
     }
@@ -325,5 +345,21 @@ public class VentanaPrincipal extends JFrame {
 
     public JPanel getPanelJuego() {
         return panelJuego;
+    }
+
+    public JLabel getLblPuntaje() {
+        return lblPuntaje;
+    }
+
+    public void limpiarPuntaje() {
+        lblPuntaje.setText("");
+    }
+
+    public JLabel getLblTiempo() {
+        return lblTiempo;
+    }
+
+    public void limpiarTiempo() {
+        lblTiempo.setText("");
     }
 }
