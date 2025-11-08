@@ -332,10 +332,10 @@ public class VentanaPrincipalServidor extends JFrame {
 
     public JButton getBtnCargarConfig() {
         return btnCargarProperties;
-    }
-
     public JButton getBtnSalirInicio() {
         return btnSalirInicio;
+    }
+
     }
 
     public JButton getBotonIniciar() {
