@@ -21,17 +21,6 @@ public class ControlVista implements ActionListener, KeyListener {
     private VentanaPrincipal ventanaPrincipal;
     private ControlGeneral controlGeneral;
 
-    private int velX;
-    private int velY;
-    private int x = 0;
-    private int y = 0;
-    private int maxX;
-    private int maxY;
-    private int movPixeles = 16;
-    private Timer timer;
-    private boolean juegoActivo = false;
-    private Timer timerTiempo;
-
     public ControlVista(ControlGeneral general) {
         this.controlGeneral = general;
         inicializarVentana();
@@ -134,94 +123,7 @@ public class ControlVista implements ActionListener, KeyListener {
         }
     }
 
-    private void iniciarJuego() {
-
-        velX = 0;
-        velY = 0;
-        juegoActivo = true;
-
-        ventanaPrincipal.limpiarFrutas();
-        controlGeneral.reiniciarJuego();
-        actualizarTiempo();
-
-        centrarPacman();
-
-        int anchoPanel = ventanaPrincipal.getAnchoPanelJuego();
-        int altoPanel = ventanaPrincipal.getAltoPanelJuego();
-        controlGeneral.generarFrutas(anchoPanel, altoPanel);
-
-        mostrarFrutas();
-
-        ventanaPrincipal.darFocoPanelJuego();
-        if (timerTiempo != null && timerTiempo.isRunning()) {
-            timerTiempo.stop();
-        }
-
-        timerTiempo = new Timer(1000, e -> actualizarTiempo());
-        timerTiempo.start();
-    }
-
-    private void mostrarFrutas() {
-        List<FrutaVO> frutas = controlGeneral.getFrutasEnJuego();
-
-        for (FrutaVO fruta : frutas) {
-
-            Object objetoFruta = ventanaPrincipal.agregarFruta(
-                    fruta.getRutaImagen(),
-                    fruta.getX(),
-                    fruta.getY()
-            );
-
-            fruta.setLabel(objetoFruta);
-        }
-    }
-
-    private void verificarColisiones() {
-        int anchoPacman = ventanaPrincipal.getAnchoPacman();
-        int altoPacman = ventanaPrincipal.getAltoPacman();
-
-        FrutaVO frutaComida = controlGeneral.verificarColision(
-                x, y,
-                anchoPacman,
-                altoPacman
-        );
-
-        if (frutaComida != null) {
-            ventanaPrincipal.eliminarFruta(frutaComida.getLabel());
-            actualizarPuntaje();
-            if (controlGeneral.juegoTerminado()) {
-                finalizarJuego();
-            }
-        }
-    }
-
-    private void finalizarJuego() {
-        juegoActivo = false;
-        velX = 0;
-        velY = 0;
-        int puntaje = controlGeneral.getPuntajeTotal();
-        long tiempo = controlGeneral.getTiempoTranscurrido();
-        String mensaje = "¡Juego Terminado!\n"
-                + "Puntaje: " + puntaje + "\n"
-                + "Tiempo: " + (tiempo / 1000) + " segundos";
-        
-        if (timerTiempo != null) {
-            timerTiempo.stop();
-        }
-        ventanaPrincipal.mostrarDialogo(mensaje, "Juego Terminado", 1);
-
-    }
-
-    private void actualizarPuntaje() {
-        int puntaje = controlGeneral.getPuntajeTotal();
-        ventanaPrincipal.getLblPuntaje().setText(String.valueOf(puntaje));
-    }
-
-    public void actualizarTiempo() {
-        long tiempo = controlGeneral.getTiempoTranscurrido() / 1000;
-        ventanaPrincipal.getLblTiempo().setText("Tiempo: " + tiempo + " s");
-    }
-
+   
     @Override
     public void keyPressed(KeyEvent e) {
 
@@ -244,57 +146,6 @@ public class ControlVista implements ActionListener, KeyListener {
             velX = movPixeles;
             velY = 0;
         }
-    }
-
-    public void moverPacman() {
-
-        if (ventanaPrincipal == null) {
-            return;
-        }
-
-        x += velX;
-        y += velY;
-
-        int anchoPanel = ventanaPrincipal.getAnchoPanelJuego();
-        int altoPanel = ventanaPrincipal.getAltoPanelJuego();
-        int anchoPacman = ventanaPrincipal.getAnchoPacman();
-        int altoPacman = ventanaPrincipal.getAltoPacman();
-
-        maxX = anchoPanel - anchoPacman;
-        maxY = altoPanel - altoPacman;
-
-        if (x < 0) {
-            x = 0;
-        }
-        if (y < 0) {
-            y = 0;
-        }
-        if (x > maxX) {
-            x = maxX;
-        }
-        if (y > maxY) {
-            y = maxY;
-        }
-
-        ventanaPrincipal.setPosicionPacman(x, y);
-    }
-
-    public void centrarPacman() {
-        int anchoPanel = ventanaPrincipal.getAnchoPanelJuego();
-        int altoPanel = ventanaPrincipal.getAltoPanelJuego();
-
-        if (anchoPanel == 0 || altoPanel == 0) {
-            anchoPanel = 900;
-            altoPanel = 630;
-        }
-
-        int anchoPacman = ventanaPrincipal.getAnchoPacman();
-        int altoPacman = ventanaPrincipal.getAltoPacman();
-
-        x = (anchoPanel - anchoPacman) / 2;
-        y = (altoPanel - altoPacman) / 2;
-
-        ventanaPrincipal.setPosicionPacman(x, y);
     }
 
     public VentanaPrincipal getVentana() {
