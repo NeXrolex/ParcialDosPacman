@@ -38,23 +38,7 @@ public class ControlGeneral {
     public boolean procesarArchivoProperties(File archivo) {
         try {
             cProperties.setArchivoProperties(archivo);
-            cProperties.establecerValoresBaseDatos();
             cProperties.establecerValoresSocket();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
-     * Carga las frutas desde el archivo properties
-     *
-     * @return true si se cargaron correctamente, false si hubo error
-     */
-    public boolean cargarFrutas() {
-        try {
-            List<FrutaVO> frutas = cProperties.cargarFrutas();
-            cJuego.setFrutasDisponibles(frutas);
             return true;
         } catch (Exception e) {
             return false;
@@ -71,13 +55,6 @@ public class ControlGeneral {
         cJuego.generarFrutas(anchoPanel, altoPanel);
     }
 
-    public List<String[]> cargarGif() {
-        try {
-            return cProperties.extraerGif();
-        } catch (Exception e) {
-            return List.of();
-        }
-    }
 
     /**
      * Obtiene las frutas en juego
