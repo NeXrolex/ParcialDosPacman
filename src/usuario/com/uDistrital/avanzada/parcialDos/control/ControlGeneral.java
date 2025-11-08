@@ -20,10 +20,12 @@ public class ControlGeneral {
     private ControlVista cVista;
     private ControlProperties cProperties;
     private ControlJuego cJuego;
+    private ControlSocket cSocket;
 
     public ControlGeneral() {
         this.cProperties = new ControlProperties();
         this.cJuego = new ControlJuego();
+        this.cSocket = new ControlSocket(this);
 
         // ControlVista recibe esta instancia
         this.cVista = new ControlVista(this);
@@ -43,6 +45,16 @@ public class ControlGeneral {
         } catch (Exception e) {
             return false;
         }
+    }
+    
+    /**
+     * Envia un movimiento al controlSocket para que sea 
+     * enviado al server 
+     * 
+     * @param comando Movimeinto a enviar 
+     */
+    public void enviarMovimientos(String comando){
+        cSocket.enviarMovimiento(comando);
     }
 
     /**

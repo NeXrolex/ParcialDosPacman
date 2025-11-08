@@ -14,7 +14,7 @@ import servidor.com.udistrital.avanzada.parcialDos.vista.VentanaPrincipalServido
 
 /**
  *
- * @author santi
+ * @author Steven
  */
 public class ControlVistaServidor implements ActionListener {
 
@@ -53,14 +53,16 @@ public class ControlVistaServidor implements ActionListener {
         int resultado = ventanaPrincipalServidor.abrirSelectorArchivo();
 
         if (resultado != 0) {
-            ventanaPrincipalServidor.setMensajeEstadoError("Debe seleccionar un archivo");
+            ventanaPrincipalServidor.setMensajeEstadoError("Debe seleccionar"
+                    + " un archivo");
             return;
         }
 
         File archivo = ventanaPrincipalServidor.getArchivoSeleccionado();
 
         if (archivo == null) {
-            ventanaPrincipalServidor.setMensajeEstadoError("Debe seleccionar un archivo");
+            ventanaPrincipalServidor.setMensajeEstadoError("Debe seleccionar"
+                    + " un archivo");
             return;
         }
 
@@ -68,17 +70,20 @@ public class ControlVistaServidor implements ActionListener {
     }
 
     private void procesarArchivo(File archivo) {
-        boolean exitoProperties = cGeneralServidor.procesarArchivoProperties(archivo);
+        boolean exitoProperties = cGeneralServidor
+                .procesarArchivoProperties(archivo);
 
         if (!exitoProperties) {
-            ventanaPrincipalServidor.setMensajeEstadoError("Error al cargar properties");
+            ventanaPrincipalServidor.setMensajeEstadoError("Error al cargar"
+                    + " properties");
             return;
         }
 
         boolean exitoFrutas = cGeneralServidor.cargarFrutas();
 
         if (!exitoFrutas) {
-            ventanaPrincipalServidor.setMensajeEstadoError("Error al cargar el properties");
+            ventanaPrincipalServidor.setMensajeEstadoError("Error al cargar"
+                    + " el properties");
             return;
         }
 
@@ -93,7 +98,8 @@ public class ControlVistaServidor implements ActionListener {
             }
         }
 
-        ventanaPrincipalServidor.setMensajeEstadoExito("Properties cargado correctamente");
+        ventanaPrincipalServidor.setMensajeEstadoExito("Properties cargado"
+                + " correctamente");
 
         Timer delay = new Timer(1000, e -> {
             ventanaPrincipalServidor.mostrarPantallaJuego();

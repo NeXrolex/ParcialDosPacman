@@ -44,7 +44,7 @@ public class ControlSocket {
                     || resp.toUpperCase().startsWith("OK"));
         } catch (RuntimeException ex) {
             //Si ocurre algun error termina la conexion
-            cerrar(); 
+            cerrar();
             return false;
         }
     }
@@ -77,10 +77,23 @@ public class ControlSocket {
     }
 
     /**
+     * Metodo encargado de enviar los movimientos del pacman al servidor, recibe
+     * y actua.
+     *
+     * @param comando Movimiento a enviar
+     */
+    public void enviarMovimiento(String comando) {
+        if (comando == null || comando.trim().isEmpty()) {
+            return;
+        }
+        enviarUTF(comando.trim());
+    }
+
+    /**
      * Metodo para enviar comandos genericos
      *
      */
-    public String enviarComando(String...partesCmd) {
+    public String enviarComando(String... partesCmd) {
         String cmd = armar(partesCmd);
         enviarUTF(cmd);
         return leerUTF();
