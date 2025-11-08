@@ -2,25 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialDos.modelo.DAO;
+package servidor.com.udistrital.avanzada.parcialDos.modelo.DAO;
 
-import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
-import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
-import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;
 import com.uDistrital.avanzada.parcialDos.modelo.interfaces.IRead;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
 
 /**
- * Lee los valores del archivo de propiedades
+ * Lee los valores del archivo de propiedades del servidor
  *
  * @author Alex
  */
 public class PropertiesDAO implements IRead<String> {
-
+    
     private ConexionProperties conexionProps;
     //Archivo actual
     private File archivoActual;
@@ -83,7 +82,6 @@ public class PropertiesDAO implements IRead<String> {
         }
         return props;
     }
-
     /**
      * Necesario para establecer conexiones a la base de datos, antes de iniciar
      * una comunicacion con la base de datos establece los valores para iniciar
@@ -149,33 +147,7 @@ public class PropertiesDAO implements IRead<String> {
 
         return frutas;
     }
-
-    /**
-     * Saca los elementos que estan en los properties y asigana los valores para
-     * poder conectar a los socket
-     *
-     */
-    public void configurarConexionSocketDesdeArchivo() {
-        Properties props = cargarTodas();
-
-        String ip = props.getProperty("IP_SOCKET");
-        String port = props.getProperty("PUERTO_SOCKET");
-
-        if (ip == null || port == null || ip.trim().isEmpty() || port.trim()
-                .isEmpty()) {
-            throw new IllegalStateException("Faltan claves de conexión de"
-                    + " socket (IP_SOCKET, PUERTO_SOCKET).");
-        }
-
-        try {
-            int puerto = Integer.parseInt(port.trim());
-            ConexionSocket.configurarSocket(ip.trim(), puerto);
-        } catch (NumberFormatException e) {
-            throw new IllegalStateException("PUERTO_SOCKET no es un"
-                    + " número válido.", e);
-        }
-    }
-
+    
     public ArrayList<String[]> extraerGif() {
         if (this.archivoActual == null) {
             throw new IllegalStateException("El archivo .properties es null");
@@ -196,4 +168,5 @@ public class PropertiesDAO implements IRead<String> {
         }
         return gifDatos;
     }
+    
 }

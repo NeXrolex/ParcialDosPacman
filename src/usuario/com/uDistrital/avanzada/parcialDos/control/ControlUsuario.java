@@ -4,7 +4,7 @@
  */
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
-import com.uDistrital.avanzada.parcialDos.modelo.DAO.UsuarioDAO;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.DAO.UsuarioDAO;
 import servidor.com.udistrital.avanzada.parcialDos.modelo.UsuarioVO;
 
 /**

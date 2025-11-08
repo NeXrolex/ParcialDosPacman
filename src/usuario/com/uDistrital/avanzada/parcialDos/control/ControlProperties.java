@@ -1,6 +1,6 @@
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
-import com.uDistrital.avanzada.parcialDos.modelo.DAO.PropertiesDAO;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.DAO.PropertiesDAO;
 import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 import java.io.File;
 import java.util.List;
@@ -37,14 +37,6 @@ public class ControlProperties {
     public String buscarClave(String clave) {
         return propertiesDAO.consultar(clave);
     }
-
-    /**
-     * Establece los valores de la base de datos
-     *
-     */
-    public void establecerValoresBaseDatos() {
-        propertiesDAO.configurarConexionBDDesdeArchivo();
-    }
     
     /**
      * Establece los valores para conectarse al socket por
@@ -55,11 +47,4 @@ public class ControlProperties {
         propertiesDAO.configurarConexionSocketDesdeArchivo();
     }
 
-    public List<FrutaVO> cargarFrutas() {
-        return propertiesDAO.cargarFrutas();
-    }
-
-    public List<String[]> extraerGif() {
-        return propertiesDAO.extraerGif();
-    }
 }

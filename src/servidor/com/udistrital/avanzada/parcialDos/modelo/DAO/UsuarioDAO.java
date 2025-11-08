@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialDos.modelo.DAO;
+package servidor.com.udistrital.avanzada.parcialDos.modelo.DAO;
 
 import servidor.com.udistrital.avanzada.parcialDos.modelo.UsuarioVO;
 import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
