@@ -4,7 +4,6 @@
  */
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

@@ -1,4 +1,7 @@
-package usuario.com.uDistrital.avanzada.parcialDos.vista;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */package usuario.com.uDistrital.avanzada.parcialDos.vista;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -6,7 +9,7 @@ import java.awt.*;
 import java.io.File;
 
 /**
-
+ *
  * @author Steven,Jard,Alex
  */
 public class VentanaPrincipalUsuario extends JFrame {
@@ -14,13 +17,11 @@ public class VentanaPrincipalUsuario extends JFrame {
     private CardLayout cardLayout;
     private JPanel panelContenedor;
 
-
     private JPanel panelConexion;
     private JButton btnCargarProperties;
     private JButton btnConectar;
     private JLabel lblEstadoConexion;
     private JFileChooser fileChooser;
-
 
     private JPanel panelLogin;
     private JTextField txtUsuario;
@@ -59,7 +60,7 @@ public class VentanaPrincipalUsuario extends JFrame {
         fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Seleccionar archivo Properties");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Archivos Properties (*.properties)", "properties"
+                "Archivos Properties (*.properties)", "properties"
         );
         fileChooser.setFileFilter(filter);
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
@@ -231,8 +232,6 @@ public class VentanaPrincipalUsuario extends JFrame {
         cardLayout.show(panelContenedor, "CONEXION");
     }
 
-
-
     public void mostrarPantallaConexion() {
         cardLayout.show(panelContenedor, "CONEXION");
     }
@@ -247,58 +246,60 @@ public class VentanaPrincipalUsuario extends JFrame {
         txtAreaMovimientos.requestFocus();
     }
 
-
-
     /**
      * Muestra diálogo de advertencia
+     *
      * @param mensaje Mensaje a mostrar
      */
     public void mostrarAdvertencia(String mensaje) {
         JOptionPane.showMessageDialog(
-            this, 
-            mensaje, 
-            "Advertencia", 
-            JOptionPane.WARNING_MESSAGE
+                this,
+                mensaje,
+                "Advertencia",
+                JOptionPane.WARNING_MESSAGE
         );
     }
 
     /**
      * Muestra diálogo de error
+     *
      * @param mensaje Mensaje a mostrar
      */
     public void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(
-            this, 
-            mensaje, 
-            "Error", 
-            JOptionPane.ERROR_MESSAGE
+                this,
+                mensaje,
+                "Error",
+                JOptionPane.ERROR_MESSAGE
         );
     }
 
     /**
      * Muestra diálogo de información/éxito
+     *
      * @param mensaje Mensaje a mostrar
      */
     public void mostrarInformacion(String mensaje) {
         JOptionPane.showMessageDialog(
-            this, 
-            mensaje, 
-            "Información", 
-            JOptionPane.INFORMATION_MESSAGE
+                this,
+                mensaje,
+                "Información",
+                JOptionPane.INFORMATION_MESSAGE
         );
     }
 
     /**
      * Muestra diálogo de éxito al cargar properties
+     *
      * @param nombreArchivo Nombre del archivo cargado
      */
     public void mostrarPropertiesCargado(String nombreArchivo) {
         JOptionPane.showMessageDialog(
-            this,
-            "Properties cargado correctamente\n\nArchivo: " + nombreArchivo + 
-            "\n\nYa puede conectarse al servidor",
-            "Éxito",
-            JOptionPane.INFORMATION_MESSAGE
+                this,
+                "Properties cargado correctamente\n\nArchivo: " + nombreArchivo
+                + "\n\nYa puede conectarse al servidor",
+                "Éxito",
+                JOptionPane.INFORMATION_MESSAGE
         );
     }
 
@@ -307,12 +308,12 @@ public class VentanaPrincipalUsuario extends JFrame {
      */
     public void mostrarConexionExitosa() {
         JOptionPane.showMessageDialog(
-            this,
-            "¡Conexión establecida con éxito!\n\n" +
-            "Ahora se le solicitarán sus credenciales\n" +
-            "para acceder al juego",
-            "Conectado con Éxito",
-            JOptionPane.INFORMATION_MESSAGE
+                this,
+                "¡Conexión establecida con éxito!\n\n"
+                + "Ahora se le solicitarán sus credenciales\n"
+                + "para acceder al juego",
+                "Conectado con Éxito",
+                JOptionPane.INFORMATION_MESSAGE
         );
     }
 
@@ -321,30 +322,31 @@ public class VentanaPrincipalUsuario extends JFrame {
      */
     public void mostrarErrorConexion() {
         JOptionPane.showMessageDialog(
-            this,
-            "No se pudo conectar al servidor\n\n" +
-            "Posibles causas:\n" +
-            "• El servidor no está activo\n" +
-            "• La IP o puerto en el properties son incorrectos\n" +
-            "• Problemas de red o firewall",
-            "Error de Conexión",
-            JOptionPane.ERROR_MESSAGE
+                this,
+                "No se pudo conectar al servidor\n\n"
+                + "Posibles causas:\n"
+                + "• El servidor no está activo\n"
+                + "• La IP o puerto en el properties son incorrectos\n"
+                + "• Problemas de red o firewall",
+                "Error de Conexión",
+                JOptionPane.ERROR_MESSAGE
         );
     }
 
     /**
      * Muestra diálogo de autenticación exitosa
+     *
      * @param usuario Nombre del usuario autenticado
      */
     public void mostrarAutenticacionExitosa(String usuario) {
         JOptionPane.showMessageDialog(
-            this,
-            "¡Autenticación exitosa!\n\n" +
-            "Bienvenido: " + usuario + "\n\n" +
-            "Ya puede comenzar a jugar.\n" +
-            "Use las teclas de flecha para mover su personaje.",
-            "Acceso Concedido",
-            JOptionPane.INFORMATION_MESSAGE
+                this,
+                "¡Autenticación exitosa!\n\n"
+                + "Bienvenido: " + usuario + "\n\n"
+                + "Ya puede comenzar a jugar.\n"
+                + "Use las teclas de flecha para mover su personaje.",
+                "Acceso Concedido",
+                JOptionPane.INFORMATION_MESSAGE
         );
     }
 
@@ -353,11 +355,11 @@ public class VentanaPrincipalUsuario extends JFrame {
      */
     public void mostrarErrorAutenticacion() {
         JOptionPane.showMessageDialog(
-            this,
-            "Las credenciales ingresadas son incorrectas\n\n" +
-            "Verifique su usuario y contraseña e intente nuevamente",
-            "Error de Autenticación",
-            JOptionPane.ERROR_MESSAGE
+                this,
+                "Las credenciales ingresadas son incorrectas\n\n"
+                + "Verifique su usuario y contraseña e intente nuevamente",
+                "Error de Autenticación",
+                JOptionPane.ERROR_MESSAGE
         );
     }
 
@@ -366,15 +368,13 @@ public class VentanaPrincipalUsuario extends JFrame {
      */
     public void mostrarConexionPerdida() {
         JOptionPane.showMessageDialog(
-            this,
-            "Se perdió la conexión con el servidor\n\n" +
-            "La aplicación volverá a la pantalla inicial",
-            "Conexión Perdida",
-            JOptionPane.ERROR_MESSAGE
+                this,
+                "Se perdió la conexión con el servidor\n\n"
+                + "La aplicación volverá a la pantalla inicial",
+                "Conexión Perdida",
+                JOptionPane.ERROR_MESSAGE
         );
     }
-
-
 
     public int abrirSelectorArchivo() {
         return fileChooser.showOpenDialog(this);
@@ -407,10 +407,10 @@ public class VentanaPrincipalUsuario extends JFrame {
 
     public void setEstadoConexion(boolean conectado) {
         if (conectado) {
-            lblEstadoConexion.setText("Estado: ✓ Conectado al Servidor");
+            lblEstadoConexion.setText("Estado:  Conectado al Servidor");
             lblEstadoConexion.setForeground(new Color(34, 139, 34));
         } else {
-            lblEstadoConexion.setText("Estado: ✗ Desconectado");
+            lblEstadoConexion.setText("Estado:  Desconectado");
             lblEstadoConexion.setForeground(Color.RED);
         }
     }
@@ -438,7 +438,6 @@ public class VentanaPrincipalUsuario extends JFrame {
     }
 
     // ==================== GETTERS PARA LISTENERS ====================
-
     public JButton getBtnCargarProperties() {
         return btnCargarProperties;
     }
