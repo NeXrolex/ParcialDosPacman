@@ -5,7 +5,7 @@
 package com.uDistrital.avanzada.parcialDos.modelo.DAO;
 
 import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
-import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionProperties;
 import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;
 import com.uDistrital.avanzada.parcialDos.modelo.interfaces.IRead;
