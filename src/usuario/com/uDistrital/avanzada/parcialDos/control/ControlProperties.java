@@ -1,9 +1,8 @@
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
 import usuario.com.uDistrital.avanzada.parcialDos.modelo.DAO.PropertiesDAO;
-import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 import java.io.File;
-import java.util.List;
+
 
 /**
  * Maneja la logica y flujo de informacion del archivo de propiedades
