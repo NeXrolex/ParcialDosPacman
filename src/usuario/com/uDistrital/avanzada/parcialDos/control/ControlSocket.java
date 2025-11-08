@@ -32,17 +32,19 @@ public class ControlSocket {
 
     public boolean conectar() {
         try {
-            Socket socket = new ConexionSocket().conexion(); /*Solicita la 
-            conexion al servidor */     
-            inicializarStreams(socket);/*Metodo interno que inicializa los
-            Output e input*/                         
-            enviarUTF("PING");//Protocolo para saber si esta conectado al server
+            // Solicita la conexion al servidor 
+            Socket socket = new ConexionSocket().conexion();
+            // Metodo interno que inicializa los Output e input
+            inicializarStreams(socket);
+            //Protocolo para saber si esta conectado al server
+            enviarUTF("PING");
             //Espera una respuesta
-            String resp = leerUTF();                        
-            return resp != null && (resp.equalsIgnoreCase("PONG") ||
-                    resp.toUpperCase().startsWith("OK"));
+            String resp = leerUTF();
+            return resp != null && (resp.equalsIgnoreCase("PONG")
+                    || resp.toUpperCase().startsWith("OK"));
         } catch (RuntimeException ex) {
-            cerrar(); //Si ocurre algun error termina la conexion
+            //Si ocurre algun error termina la conexion
+            cerrar(); 
             return false;
         }
     }
@@ -59,7 +61,7 @@ public class ControlSocket {
             return false;
         }
         try {
-            String cmd = armar("LOGIN", nombre.trim(), contrasena); 
+            String cmd = armar("LOGIN", nombre.trim(), contrasena);
             enviarUTF(cmd);
             String resp = leerUTF();
             boolean ok = resp != null && resp.toUpperCase().startsWith("OK");
@@ -74,23 +76,21 @@ public class ControlSocket {
         }
     }
 
-    
     /**
      * Metodo para enviar comandos genericos
-     * 
+     *
      */
-    public String enviarComando(String... partesCmd) {
-        String cmd = armar(partesCmd);   
-        enviarUTF(cmd);                  
-        return leerUTF();                
+    public String enviarComando(String...partesCmd) {
+        String cmd = armar(partesCmd);
+        enviarUTF(cmd);
+        return leerUTF();
     }
 
-    
     /**
      * Busca si esta conectado en el socket
-     * 
+     *
      * @return True si esta conectado o false
-     * 
+     *
      */
     public boolean estaConectado() {
         return ConexionSocket.estaConectado();//Metodo de ConexionSocket
@@ -98,7 +98,7 @@ public class ControlSocket {
 
     /**
      * Cierra socket y limpia streams
-     * 
+     *
      */
     public void cerrar() {
         try {
@@ -111,10 +111,9 @@ public class ControlSocket {
         }
     }
 
-   
     /**
      * Inicializa los input y output, si no existen los crea
-     * 
+     *
      * @param socket Socket
      */
     public void inicializarStreams(Socket socket) {
@@ -136,9 +135,8 @@ public class ControlSocket {
     }
 
     /**
-     * Escribe cadenas en formato writeUTF
-     * y contiene el fluch para enviar
-     * 
+     * Escribe cadenas en formato writeUTF y contiene el fluch para enviar
+     *
      * @param msg Mensaje
      */
     public void enviarUTF(String msg) {
@@ -157,8 +155,8 @@ public class ControlSocket {
     /**
      * Lee una cadena utf desde el server y bloquea hasta que llega un mensaje
      * valido
-     * 
-     * @return 
+     *
+     * @return
      */
     public String leerUTF() {
         try {
@@ -173,19 +171,19 @@ public class ControlSocket {
     }
 
     /**
-     * Ensambla los comandos que van a ser enviados 
-     * al servidor
-     * 
+     * Ensambla los comandos que van a ser enviados al servidor
+     *
      * se emplea en iniciar sesion
-     * 
+     *
      * @param partes
-     * @return 
+     * @return
      */
     public String armar(String... partes) {
         if (partes == null || partes.length == 0) {//verifica que hayan datos
             return "";
         }
-        StringBuilder sb = new StringBuilder(); /*El string bueilder es mas 
+        StringBuilder sb = new StringBuilder();
+        /*El string bueilder es mas 
         eficiente para concatenar string*/
         for (int i = 0; i < partes.length; i++) {
             sb.append(partes[i] == null ? "" : partes[i].trim());
