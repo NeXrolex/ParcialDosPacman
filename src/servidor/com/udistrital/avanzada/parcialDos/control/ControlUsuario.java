@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package usuario.com.uDistrital.avanzada.parcialDos.control;
+package servidor.com.udistrital.avanzada.parcialDos.control;
 
-import com.uDistrital.avanzada.parcialDos.modelo.DAO.UsuarioDAO;
-import com.uDistrital.avanzada.parcialDos.modelo.UsuarioVO;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.DAO.UsuarioDAO;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.UsuarioVO;
 
 /**
  * Maneja todo lo relacionado a la logica de un usuario

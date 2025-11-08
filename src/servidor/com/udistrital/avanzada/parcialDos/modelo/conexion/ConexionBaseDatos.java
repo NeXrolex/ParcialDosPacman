@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialDos.modelo.conexion;
+package servidor.com.udistrital.avanzada.parcialDos.modelo.conexion;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

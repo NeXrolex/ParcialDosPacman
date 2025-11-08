@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialDos.modelo.DAO;
+package servidor.com.udistrital.avanzada.parcialDos.modelo.DAO;
 
-import com.uDistrital.avanzada.parcialDos.modelo.UsuarioVO;
-import com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.UsuarioVO;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionBaseDatos;
 import com.uDistrital.avanzada.parcialDos.modelo.interfaces.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -94,7 +94,7 @@ public class UsuarioDAO implements ICreate, IRead, IUpdateDelete {
                 if (rs.next()) {
                     UsuarioVO u = new UsuarioVO(rs.getString("nombre"),
                             rs.getString("contrasena"),
-                            0 /* puntaje en memoria */);
+                            0,0);
                     return u;
                 }
             }

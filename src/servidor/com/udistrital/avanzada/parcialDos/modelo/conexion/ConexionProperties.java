@@ -2,8 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.uDistrital.avanzada.parcialDos.modelo.conexion;
+package servidor.com.udistrital.avanzada.parcialDos.modelo.conexion;
 
+/**
+ * Hace la conexion con el archivo de propiedades del servidor
+ *
+ * @author Alex
+ */
 import com.uDistrital.avanzada.parcialDos.modelo.interfaces.IConexion;
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,7 +59,8 @@ public class ConexionProperties implements IConexion {
             }
 
             Properties props = new Properties();
-            //Usamos try para despues de su uso se cierre el archivo, importante para las buenas parcticas
+            //Usamos try para despues de su uso se cierre el archivo, 
+            //importante para las buenas parcticas
             try (FileInputStream aux = new FileInputStream(archivo)) {
                 props.load(aux);
                 return props;
