@@ -17,10 +17,10 @@ public class VentanaPrincipalUsuario extends JFrame {
     private CardLayout cardLayout;
     private JPanel panelContenedor;
 
-    private JPanel panelConexion, panelTitulo, panelBtnConexion;
+    private JPanel panelConexion, panelTituloConexion, panelBtnConexion, panelTituloLogin, panelDatosLogin, panelBtnLogin;
     private JButton btnCargarProperties;
     private JButton btnConectar;
-    private JLabel lblEstadoConexion, lblTitulo;
+    private JLabel lblEstadoConexion, lblTituloConexion, lblTituloLogin, lblInstruccionesLogin;
     private JFileChooser fileChooser;
 
     private JPanel panelLogin;
@@ -70,9 +70,9 @@ public class VentanaPrincipalUsuario extends JFrame {
         panelConexion = new JPanel(new BorderLayout());
         panelConexion.setBackground(new Color(0, 0, 20));
 
-        panelTitulo = new JPanel();
-        panelTitulo.setBackground(new Color(0, 0, 20));
-        panelTitulo.setBorder(BorderFactory.createTitledBorder(
+        panelTituloConexion = new JPanel();
+        panelTituloConexion.setBackground(new Color(0, 0, 20));
+        panelTituloConexion.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(0, 0, 255), 3),
                 "",
                 0,
@@ -80,15 +80,15 @@ public class VentanaPrincipalUsuario extends JFrame {
                 new Font("Arial", Font.BOLD, 14),
                 new Color(0, 0, 255)
         ));
-        panelTitulo.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 20));
+        panelTituloConexion.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 20));
 
-        lblTitulo = new JLabel("CLIENTE PAC-MAN");
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 36));
-        lblTitulo.setForeground(Color.BLACK);
-        lblTitulo.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-        lblTitulo.setBackground(new Color(255, 204, 0));
-        lblTitulo.setOpaque(true);
-        panelTitulo.add(lblTitulo);
+        lblTituloConexion = new JLabel("CLIENTE PAC-MAN");
+        lblTituloConexion.setFont(new Font("Arial", Font.BOLD, 36));
+        lblTituloConexion.setForeground(Color.BLACK);
+        lblTituloConexion.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+        lblTituloConexion.setBackground(new Color(255, 204, 0));
+        lblTituloConexion.setOpaque(true);
+        panelTituloConexion.add(lblTituloConexion);
 
         btnCargarProperties = crearBoton("1. Cargar archivo .properties", new Color(255, 204, 0));
         btnConectar = crearBoton("2. Conectar al servidor", new Color(255, 204, 0));
@@ -114,7 +114,7 @@ public class VentanaPrincipalUsuario extends JFrame {
         panelBtnConexion.add(lblEstadoConexion, gbc);
         panelBtnConexion.setBackground(new Color(0, 0, 20));
 
-        panelConexion.add(panelTitulo, BorderLayout.NORTH);
+        panelConexion.add(panelTituloConexion, BorderLayout.NORTH);
         panelConexion.add(panelBtnConexion, BorderLayout.CENTER);
     }
 
@@ -122,51 +122,91 @@ public class VentanaPrincipalUsuario extends JFrame {
         panelLogin = new JPanel();
         panelLogin.setBackground(new Color(0, 0, 20));
 
-        JLabel lblTitulo = new JLabel("Autenticación de Usuario");
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
-        lblTitulo.setForeground(new Color(34, 139, 34));
-        panelLogin.add(lblTitulo);
+        panelTituloLogin = new JPanel();
+        panelTituloLogin.setBackground(new Color(0, 0, 20));
+        panelTituloLogin.setBorder(BorderFactory.createEmptyBorder(30, 10, 10, 10));
 
-        JLabel lblConexionExitosa = new JLabel("Conexión establecida con el servidor");
-        lblConexionExitosa.setFont(new Font("Arial", Font.BOLD, 13));
+        lblTituloLogin = new JLabel("Autenticación de Usuario");
+        lblTituloLogin.setFont(new Font("Arial", Font.BOLD, 36));
+        lblTituloLogin.setForeground(Color.BLACK);
+        lblTituloLogin.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+        lblTituloLogin.setBackground(new Color(255, 204, 0));
+        lblTituloLogin.setOpaque(true);
+        panelTituloLogin.add(lblTituloLogin);
+
+        panelDatosLogin = new JPanel(new GridBagLayout());
+        panelDatosLogin.setBackground(new Color(0, 0, 20));
+        panelDatosLogin.setBorder(BorderFactory.createEmptyBorder(60, 10, 0, 10));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+
+        JLabel lblConexionExitosa = new JLabel("Conexión establecida con el servidor", SwingConstants.CENTER);
+        lblConexionExitosa.setFont(new Font("Arial", Font.BOLD, 16));
         lblConexionExitosa.setForeground(new Color(34, 139, 34));
-        panelLogin.add(lblConexionExitosa);
+        panelDatosLogin.add(lblConexionExitosa, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+
+        lblInstruccionesLogin = new JLabel("Ingrese su usuario y contraseña", SwingConstants.CENTER);
+        lblInstruccionesLogin.setFont(new Font("Arial", Font.BOLD, 16));
+        lblInstruccionesLogin.setForeground(Color.WHITE);
+        panelDatosLogin.add(lblInstruccionesLogin, gbc);
+
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        gbc.gridwidth = 1;
         JLabel lblUsuario = new JLabel("Usuario:");
-        lblUsuario.setFont(new Font("Arial", Font.BOLD, 14));
-        panelLogin.add(lblUsuario);
+        lblUsuario.setFont(new Font("Arial", Font.BOLD, 16));
+        lblUsuario.setForeground(Color.WHITE);
+        panelDatosLogin.add(lblUsuario, gbc);
 
-        txtUsuario = new JTextField();
-        txtUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelLogin.add(txtUsuario);
+        gbc.gridy = 2;
+        gbc.gridx = 1;
+        txtUsuario = new JTextField(15);
+        txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
+        panelDatosLogin.add(txtUsuario, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         JLabel lblContrasena = new JLabel("Contraseña:");
-        lblContrasena.setFont(new Font("Arial", Font.BOLD, 14));
-        panelLogin.add(lblContrasena);
+        lblContrasena.setFont(new Font("Arial", Font.BOLD, 16));
+        lblContrasena.setForeground(Color.WHITE);
+        panelDatosLogin.add(lblContrasena, gbc);
 
-        txtContrasena = new JPasswordField();
-        txtContrasena.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelLogin.add(txtContrasena);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        txtContrasena = new JPasswordField(15);
+        txtContrasena.setFont(new Font("Arial", Font.PLAIN, 16));
+        panelDatosLogin.add(txtContrasena, gbc);
 
+        panelBtnLogin = new JPanel(new BorderLayout());
+        panelBtnLogin.setBackground(new Color(0, 0, 20));
+        panelBtnLogin.setBorder(BorderFactory.createEmptyBorder(30, 10, 10, 10));
+        
         btnIniciarSesion = crearBoton("Iniciar Sesión", new Color(255, 204, 0));
-        panelLogin.add(btnIniciarSesion);
-
+        
         lblMensajeLogin = new JLabel("");
-        lblMensajeLogin.setFont(new Font("Arial", Font.BOLD, 12));
+        lblMensajeLogin.setFont(new Font("Arial", Font.BOLD, 16));
         lblMensajeLogin.setHorizontalAlignment(SwingConstants.CENTER);
-        panelLogin.add(lblMensajeLogin);
+        
+        panelBtnLogin.add(btnIniciarSesion, BorderLayout.NORTH);
+        panelBtnLogin.add(lblMensajeLogin, BorderLayout.SOUTH);
 
-        JTextArea txtInstrucciones = new JTextArea();
-        txtInstrucciones.setText("Ingrese su usuario y contraseña");
-        txtInstrucciones.setFont(new Font("Arial", Font.PLAIN, 12));
-        txtInstrucciones.setBackground(new Color(230, 245, 255));
-        txtInstrucciones.setEditable(false);
-        txtInstrucciones.setBorder(BorderFactory.createLineBorder(new Color(150, 200, 220), 2));
-        panelLogin.add(txtInstrucciones);
+        panelLogin.add(panelTituloLogin, BorderLayout.NORTH);
+        panelLogin.add(panelDatosLogin, BorderLayout.CENTER);
+        panelLogin.add(panelBtnLogin, BorderLayout.SOUTH);
+
+
     }
 
     private void inicializarPanelJuego() {
-        panelJuego = new JPanel();
+        panelJuego = new JPanel(new BorderLayout());
         panelJuego.setBackground(new Color(0, 0, 20));
 
         JLabel lblTitulo = new JLabel("Pac-Man - Modo Juego");
@@ -429,7 +469,6 @@ public class VentanaPrincipalUsuario extends JFrame {
         btnConectar.setEnabled(habilitado);
     }
 
-    // ==================== GETTERS PARA LISTENERS ====================
     public JButton getBtnCargarProperties() {
         return btnCargarProperties;
     }
