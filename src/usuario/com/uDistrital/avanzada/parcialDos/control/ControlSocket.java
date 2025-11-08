@@ -4,11 +4,12 @@
  */
 package usuario.com.uDistrital.avanzada.parcialDos.control;
 
-import usuario.com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import usuario.com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket;
 
 /**
  * Maneja la logica de los sockets
@@ -17,7 +18,7 @@ import java.net.Socket;
  */
 public class ControlSocket {
 
-    private ControlGeneral cGeneral;
+    private ControlGeneralUsuario cGeneral;
     private DataInputStream dInput;
     private DataOutputStream dOutPut;
 
@@ -26,25 +27,24 @@ public class ControlSocket {
      *
      * @param cGeneral Control General
      */
-    public ControlSocket(ControlGeneral cGeneral) {
+    public ControlSocket(ControlGeneralUsuario cGeneral) {
         this.cGeneral = cGeneral;
     }
 
     public boolean conectar() {
         try {
-            // Solicita la conexion al servidor 
             Socket socket = new ConexionSocket().conexion();
-            // Metodo interno que inicializa los Output e input
-            inicializarStreams(socket);
-            //Protocolo para saber si esta conectado al server
-            enviarUTF("PING");
+            /*Solicita la 
+            conexion al servidor */
+            inicializarStreams(socket);/*Metodo interno que inicializa los
+            Output e input*/
+            enviarUTF("PING");//Protocolo para saber si esta conectado al server
             //Espera una respuesta
             String resp = leerUTF();
             return resp != null && (resp.equalsIgnoreCase("PONG")
                     || resp.toUpperCase().startsWith("OK"));
         } catch (RuntimeException ex) {
-            //Si ocurre algun error termina la conexion
-            cerrar(); 
+            cerrar(); //Si ocurre algun error termina la conexion
             return false;
         }
     }
@@ -80,7 +80,7 @@ public class ControlSocket {
      * Metodo para enviar comandos genericos
      *
      */
-    public String enviarComando(String...partesCmd) {
+    public String enviarComando(String... partesCmd) {
         String cmd = armar(partesCmd);
         enviarUTF(cmd);
         return leerUTF();
