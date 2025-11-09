@@ -17,10 +17,19 @@ public class VentanaPrincipalUsuario extends JFrame {
     private CardLayout cardLayout;
     private JPanel panelContenedor;
 
-    private JPanel panelConexion, panelTituloConexion, panelBtnConexion, panelTituloLogin, panelDatosLogin, panelBtnLogin;
+    private JPanel panelConexion;
+    private JPanel panelTituloConexion;
+    private JPanel panelBtnConexion;
+    private JPanel panelTituloLogin;
+    private JPanel panelDatosLogin;
+    private JPanel panelBtnLogin;
+
     private JButton btnCargarProperties;
     private JButton btnConectar;
-    private JLabel lblEstadoConexion, lblTituloConexion, lblTituloLogin, lblInstruccionesLogin;
+    private JLabel lblEstadoConexion;
+    private JLabel lblTituloConexion;
+    private JLabel lblTituloLogin;
+    private JLabel lblInstruccionesLogin;
     private JFileChooser fileChooser;
 
     private JPanel panelLogin;
@@ -119,7 +128,7 @@ public class VentanaPrincipalUsuario extends JFrame {
     }
 
     private void inicializarPanelLogin() {
-        panelLogin = new JPanel();
+        panelLogin = new JPanel(new BorderLayout());
         panelLogin.setBackground(new Color(0, 0, 20));
 
         panelTituloLogin = new JPanel();
@@ -187,21 +196,21 @@ public class VentanaPrincipalUsuario extends JFrame {
 
         panelBtnLogin = new JPanel(new BorderLayout());
         panelBtnLogin.setBackground(new Color(0, 0, 20));
-        panelBtnLogin.setBorder(BorderFactory.createEmptyBorder(30, 10, 10, 10));
-        
+        panelBtnLogin.setBorder(BorderFactory
+                .createEmptyBorder(30, 10, 10, 10));
+
         btnIniciarSesion = crearBoton("Iniciar Sesión", new Color(255, 204, 0));
-        
+
         lblMensajeLogin = new JLabel("");
         lblMensajeLogin.setFont(new Font("Arial", Font.BOLD, 16));
         lblMensajeLogin.setHorizontalAlignment(SwingConstants.CENTER);
-        
+
         panelBtnLogin.add(btnIniciarSesion, BorderLayout.NORTH);
         panelBtnLogin.add(lblMensajeLogin, BorderLayout.SOUTH);
 
         panelLogin.add(panelTituloLogin, BorderLayout.NORTH);
         panelLogin.add(panelDatosLogin, BorderLayout.CENTER);
         panelLogin.add(panelBtnLogin, BorderLayout.SOUTH);
-
 
     }
 
@@ -239,7 +248,8 @@ public class VentanaPrincipalUsuario extends JFrame {
         scrollMovimientos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         panelJuego.add(scrollMovimientos);
 
-        JLabel lblControles = new JLabel("Use las teclas de flecha (↑ ↓ ← →) para mover su personaje");
+        JLabel lblControles = new JLabel("Use las teclas de flecha"
+                + "(↑ ↓ ← →) para mover su personaje");
         lblControles.setFont(new Font("Arial", Font.ITALIC, 12));
         lblControles.setForeground(new Color(100, 100, 100));
         panelJuego.add(lblControles);
@@ -253,7 +263,8 @@ public class VentanaPrincipalUsuario extends JFrame {
         boton.setFocusPainted(false);
         boton.setPreferredSize(new Dimension(300, 45));
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        boton.setBorder(BorderFactory.createLineBorder(new Color(204, 0, 0), 3));
+        boton.setBorder(BorderFactory
+                .createLineBorder(new Color(204, 0, 0), 3));
         return boton;
     }
 
@@ -430,7 +441,8 @@ public class VentanaPrincipalUsuario extends JFrame {
 
     public void agregarMovimiento(String mensaje) {
         txtAreaMovimientos.append(mensaje + "\n");
-        txtAreaMovimientos.setCaretPosition(txtAreaMovimientos.getDocument().getLength());
+        txtAreaMovimientos.setCaretPosition(txtAreaMovimientos
+                .getDocument().getLength());
     }
 
     public void limpiarMovimientos() {

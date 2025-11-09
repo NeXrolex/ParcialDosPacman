@@ -8,7 +8,7 @@ package usuario.com.uDistrital.avanzada.parcialDos.control;
  *
  * @author Steven
  */
-public class Main {
+public class LauncherUsuario {
 
     public static void main(String[] args) {
         new ControlGeneralUsuario();
