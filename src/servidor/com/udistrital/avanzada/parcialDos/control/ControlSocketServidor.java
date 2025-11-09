@@ -41,20 +41,14 @@ public class ControlSocketServidor {
 
                 sc = servidor.accept();
 
-                dInput = new DataInputStream(sc.getInputStream());
-                dOutput = new DataOutputStream(sc.getOutputStream());
+                inicializarStreams();
 
-                String comando = dInput.readUTF();
-                if (comando.equalsIgnoreCase("PING")) {
-                    dOutput.writeUTF("PONG");
-                    dOutput.flush();
-                } else {
-                    // Aqui se podrian procesar los movimientos
-                    dOutput.writeUTF("OK;Comando recibido");
-                    dOutput.flush();
-                }
+                enviarUTF("PING");//Protocolo para saber si esta conectado al server
+                //Espera una respuesta
+                String resp = leerUTF();
+                return resp != null && (resp.equalsIgnoreCase("PONG")
+                        || resp.toUpperCase().startsWith("OK"));
             }
-
         } catch (IOException ex) {
 
         } finally {
@@ -82,8 +76,67 @@ public class ControlSocketServidor {
         } catch (IOException e) {
         }
     }
-//Para llamar luego desde el properties
 
+    /**
+     * Inicializa los input y output, si no existen los crea
+     *
+     * @param socket Socket
+     */
+    public void inicializarStreams() {
+        try {
+            if (sc == null) {
+                throw new IllegalStateException("Socket nulo al"
+                        + " inicializar streams.");
+            }
+            if (dInput == null) {
+                dInput = new DataInputStream(sc.getInputStream());
+            }
+            if (dOutput == null) {
+                dOutput = new DataOutputStream(sc.getOutputStream());
+            }
+        } catch (IOException es) {
+            throw new RuntimeException("No fue posible inicializar los"
+                    + " flujos del socket.", es);
+        }
+    }
+
+    /**
+     * Lee una cadena utf desde el server y bloquea hasta que llega un mensaje
+     * valido
+     *
+     * @return
+     */
+    public String leerUTF() {
+        try {
+            if (dInput == null) {
+                throw new IllegalStateException("InputStream no inicializado.");
+            }
+            return dInput.readUTF();//lee el mensaje
+        } catch (IOException e) {
+            throw new RuntimeException("Error leyendo datos desde"
+                    + " el socket.", e);
+        }
+    }
+
+    /**
+     * Escribe cadenas en formato writeUTF y contiene el fluch para enviar
+     *
+     * @param msg Mensaje
+     */
+    public void enviarUTF(String msg) {
+        try {
+            if (dOutput == null) {
+                throw new IllegalStateException("OutputStream no"
+                        + " inicializado.");
+            }
+            dOutput.writeUTF(msg != null ? msg : "");
+            dOutput.flush();//Todo lo escrito se envia 
+        } catch (IOException e) {
+            throw new RuntimeException("Error enviando datos por socket.", e);
+        }
+    }
+
+//Para llamar luego desde el properties
     /**
      * Configura la dirección IP y el puerto del servidor.
      *

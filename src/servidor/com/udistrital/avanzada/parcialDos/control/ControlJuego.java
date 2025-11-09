@@ -32,6 +32,10 @@ public class ControlJuego {
         this.frutasDisponibles = frutas;
     }
 
+    public void eliminarFruta(FrutaVO fruta) {
+        frutasEnJuego.remove(fruta);
+    }
+
     /**
      * Genera 4 frutas aleatorias en posiciones aleatorias del panel
      *
