@@ -48,7 +48,6 @@ public class ControlSocket {
         }
     }
 
-    /*
     /**
      * Envía LOGIN;nombre;contrasena. Si falla, cierra el socket .
      *
