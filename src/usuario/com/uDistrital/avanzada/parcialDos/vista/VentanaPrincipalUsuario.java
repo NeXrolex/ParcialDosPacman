@@ -22,14 +22,12 @@ public class VentanaPrincipalUsuario extends JFrame {
     private JPanel panelBtnConexion;
     private JPanel panelTituloLogin;
     private JPanel panelDatosLogin;
-    private JPanel panelBtnLogin;
 
     private JButton btnCargarProperties;
     private JButton btnConectar;
     private JLabel lblEstadoConexion;
     private JLabel lblTituloConexion;
     private JLabel lblTituloLogin;
-    private JLabel lblInstruccionesLogin;
     private JFileChooser fileChooser;
 
     private JPanel panelLogin;
@@ -133,23 +131,24 @@ public class VentanaPrincipalUsuario extends JFrame {
 
         panelTituloLogin = new JPanel();
         panelTituloLogin.setBackground(new Color(0, 0, 20));
-        panelTituloLogin.setBorder(BorderFactory.createEmptyBorder(30, 10, 10, 10));
 
-        lblTituloLogin = new JLabel("Autenticación de Usuario");
+        lblTituloLogin = new JLabel("Autenticación de Usuario", SwingConstants.CENTER);
         lblTituloLogin.setFont(new Font("Arial", Font.BOLD, 36));
         lblTituloLogin.setForeground(Color.BLACK);
         lblTituloLogin.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
         lblTituloLogin.setBackground(new Color(255, 204, 0));
         lblTituloLogin.setOpaque(true);
+
+        panelTituloLogin.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
         panelTituloLogin.add(lblTituloLogin);
+        panelLogin.add(panelTituloLogin, BorderLayout.NORTH);
 
         panelDatosLogin = new JPanel(new GridBagLayout());
         panelDatosLogin.setBackground(new Color(0, 0, 20));
-        panelDatosLogin.setBorder(BorderFactory.createEmptyBorder(60, 10, 0, 10));
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -159,58 +158,50 @@ public class VentanaPrincipalUsuario extends JFrame {
         lblConexionExitosa.setForeground(new Color(34, 139, 34));
         panelDatosLogin.add(lblConexionExitosa, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy++;
+        JLabel lblInstrucciones = new JLabel("Ingrese su usuario y contraseña", SwingConstants.CENTER);
+        lblInstrucciones.setFont(new Font("Arial", Font.BOLD, 16));
+        lblInstrucciones.setForeground(Color.WHITE);
+        panelDatosLogin.add(lblInstrucciones, gbc);
 
-        lblInstruccionesLogin = new JLabel("Ingrese su usuario y contraseña", SwingConstants.CENTER);
-        lblInstruccionesLogin.setFont(new Font("Arial", Font.BOLD, 16));
-        lblInstruccionesLogin.setForeground(Color.WHITE);
-        panelDatosLogin.add(lblInstruccionesLogin, gbc);
-
-        gbc.gridy = 2;
-        gbc.gridx = 0;
         gbc.gridwidth = 1;
+        gbc.gridy++;
+        gbc.gridx = 0;
         JLabel lblUsuario = new JLabel("Usuario:");
         lblUsuario.setFont(new Font("Arial", Font.BOLD, 16));
         lblUsuario.setForeground(Color.WHITE);
         panelDatosLogin.add(lblUsuario, gbc);
 
-        gbc.gridy = 2;
         gbc.gridx = 1;
         txtUsuario = new JTextField(15);
         txtUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
         panelDatosLogin.add(txtUsuario, gbc);
 
+        gbc.gridy++;
         gbc.gridx = 0;
-        gbc.gridy = 3;
         JLabel lblContrasena = new JLabel("Contraseña:");
         lblContrasena.setFont(new Font("Arial", Font.BOLD, 16));
         lblContrasena.setForeground(Color.WHITE);
         panelDatosLogin.add(lblContrasena, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 3;
         txtContrasena = new JPasswordField(15);
         txtContrasena.setFont(new Font("Arial", Font.PLAIN, 16));
         panelDatosLogin.add(txtContrasena, gbc);
 
-        panelBtnLogin = new JPanel(new BorderLayout());
-        panelBtnLogin.setBackground(new Color(0, 0, 20));
-        panelBtnLogin.setBorder(BorderFactory
-                .createEmptyBorder(30, 10, 10, 10));
-
+        gbc.gridwidth = 2;
+        gbc.gridy++;
+        gbc.gridx = 0;
         btnIniciarSesion = crearBoton("Iniciar Sesión", new Color(255, 204, 0));
+        panelDatosLogin.add(btnIniciarSesion, gbc);
 
-        lblMensajeLogin = new JLabel("");
+        gbc.gridy++;
+        lblMensajeLogin = new JLabel("", SwingConstants.CENTER);
         lblMensajeLogin.setFont(new Font("Arial", Font.BOLD, 16));
-        lblMensajeLogin.setHorizontalAlignment(SwingConstants.CENTER);
+        panelDatosLogin.add(lblMensajeLogin, gbc);
 
-        panelBtnLogin.add(btnIniciarSesion, BorderLayout.NORTH);
-        panelBtnLogin.add(lblMensajeLogin, BorderLayout.SOUTH);
-
-        panelLogin.add(panelTituloLogin, BorderLayout.NORTH);
+        panelDatosLogin.setBorder(BorderFactory.createEmptyBorder(0, 0, 40, 0));
         panelLogin.add(panelDatosLogin, BorderLayout.CENTER);
-        panelLogin.add(panelBtnLogin, BorderLayout.SOUTH);
 
     }
 
@@ -249,7 +240,7 @@ public class VentanaPrincipalUsuario extends JFrame {
         panelJuego.add(scrollMovimientos);
 
         JLabel lblControles = new JLabel("Use las teclas de flecha"
-                + "(↑ ↓ ← →) para mover su personaje");
+                + "(↑ ↓ ← →) para mover su personaje", SwingConstants.CENTER);
         lblControles.setFont(new Font("Arial", Font.ITALIC, 12));
         lblControles.setForeground(new Color(100, 100, 100));
         panelJuego.add(lblControles);
@@ -449,32 +440,34 @@ public class VentanaPrincipalUsuario extends JFrame {
         txtAreaMovimientos.setText("");
     }
 
-    public void setEstadoConexion(boolean conectado) {
-        if (conectado) {
-            lblEstadoConexion.setText("Estado:  Conectado al Servidor");
-            lblEstadoConexion.setForeground(new Color(34, 139, 34));
-        } else {
-            lblEstadoConexion.setText("Estado:  Desconectado");
-            lblEstadoConexion.setForeground(Color.RED);
-        }
+    public void estadoConexionExitosa() {
+        lblEstadoConexion.setText("Estado: Conectado al Servidor");
+        lblEstadoConexion.setForeground(new Color(34, 139, 34));
     }
 
-    public void setEstadoJuego(String mensaje, boolean esError) {
+    public void estadoErrorConexion() {
+        lblEstadoConexion.setText("Estado: Desconectado");
+        lblEstadoConexion.setForeground(Color.RED);
+    }
+
+    public void estadoJuegoExitoso(String mensaje, boolean esError) {
         lblEstadoJuego.setText("Estado: " + mensaje);
-        if (esError) {
-            lblEstadoJuego.setForeground(Color.RED);
-        } else {
-            lblEstadoJuego.setForeground(new Color(34, 139, 34));
-        }
+        lblEstadoJuego.setForeground(new Color(34, 139, 34));
     }
 
-    public void setMensajeLogin(String mensaje, boolean esError) {
+    public void estadoErrorJuego(String mensaje, boolean esError) {
+        lblEstadoJuego.setText("Estado: " + mensaje);
+        lblEstadoJuego.setForeground(Color.RED);
+    }
+
+    public void mensajeLoginExitoso(String mensaje) {
         lblMensajeLogin.setText(mensaje);
-        if (esError) {
-            lblMensajeLogin.setForeground(Color.RED);
-        } else {
-            lblMensajeLogin.setForeground(new Color(34, 139, 34));
-        }
+        lblMensajeLogin.setForeground(new Color(34, 139, 34));
+    }
+
+    public void mensajeErrorLogin(String mensaje) {
+        lblMensajeLogin.setText(mensaje);
+        lblMensajeLogin.setForeground(Color.RED);
     }
 
     public void setBotonConectarHabilitado(boolean habilitado) {
