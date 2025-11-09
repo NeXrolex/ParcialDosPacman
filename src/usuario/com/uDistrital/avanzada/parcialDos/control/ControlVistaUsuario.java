@@ -39,6 +39,7 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.getTxtAreaMovimientos().addKeyListener(this);
 
         ventana.setVisible(true);
+        ventana.mostrarPantallaLogin();
     }
 
     @Override
@@ -144,72 +145,72 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.getTxtAreaMovimientos().requestFocus();
     }
 
-    @Override
     public void keyPressed(KeyEvent e) {
-
         if (!conectado || !autenticado) {
             return;
         }
 
-        int keyCode = e.getKeyCode();
         String movimiento = "";
-        String tecla = "";
-
-        switch (keyCode) {
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 movimiento = "ARRIBA";
-                tecla = "↑";
                 break;
             case KeyEvent.VK_DOWN:
                 movimiento = "ABAJO";
-                tecla = "↓";
                 break;
             case KeyEvent.VK_LEFT:
                 movimiento = "IZQUIERDA";
-                tecla = "←";
                 break;
             case KeyEvent.VK_RIGHT:
                 movimiento = "DERECHA";
-                tecla = "→";
                 break;
             default:
                 return;
         }
 
-        boolean enviado = controlGeneral.enviarMovimiento(movimiento);
-
-        if (enviado) {
-
-            String timestamp = java.time.LocalTime.now().format(
-                    java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss")
-            );
-            ventana.agregarMovimiento(
-                    String.format("[%s] Tecla: %s | Movimiento: %-10s | Enviado ✓",
-                            timestamp, tecla, movimiento)
-            );
-        } else {
-
-            ventana.agregarMovimiento(
-                    String.format("[ERROR] No se pudo enviar: %s", movimiento)
-            );
-
-            if (!controlGeneral.estaConectado()) {
-                conectado = false;
-                autenticado = false;
-                ventana.setEstadoJuego("✗ Conexión perdida", true);
-
-                ventana.mostrarConexionPerdida();
-
-                ventana.mostrarPantallaConexion();
-                ventana.setEstadoConexion(false);
-                ventana.limpiarMovimientos();
-            }
-        }
+        controlGeneral.enviarMovimiento(movimiento);
     }
 
-    @Override
     public void keyTyped(KeyEvent e) {
 
+        // Ignorar si no hay conexión o autenticación
+        if (!conectado || !autenticado) {
+            return;
+        }
+
+        char tecla = e.getKeyChar();
+        String movimiento = "";
+
+        // Mapeo de teclas WASD y flechas
+        switch (Character.toLowerCase(tecla)) {
+            case 'w':
+                movimiento = "ARRIBA";
+                break;
+            case 's':
+                movimiento = "ABAJO";
+                break;
+            case 'a':
+                movimiento = "IZQUIERDA";
+                break;
+            case 'd':
+                movimiento = "DERECHA";
+                break;
+            default:
+                return; // ignora cualquier otra tecla
+        }
+
+        // Envía el movimiento al servidor
+        controlGeneral.enviarMovimiento(movimiento);
+
+        // Actualiza visualmente la ventana (solo decorativo, no afecta red)
+        String timestamp = java.time.LocalTime.now().format(
+                java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss")
+        );
+
+        ventana.agregarMovimiento(String.format(
+                "[%s] Movimiento: %-10s | Enviado ✓",
+                timestamp, movimiento
+        ));
     }
 
     @Override
