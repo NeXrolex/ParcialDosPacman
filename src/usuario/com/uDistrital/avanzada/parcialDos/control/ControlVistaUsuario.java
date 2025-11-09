@@ -12,6 +12,9 @@ import java.awt.event.KeyListener;
 import java.io.File;
 
 /**
+ * Maneja la logica de la vista y todo el proceso
+ * de acciones, ya se de teclado y botones
+ * 
  * @author Steven,Jard,Alex
  */
 public class ControlVistaUsuario implements ActionListener, KeyListener {
@@ -28,7 +31,7 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
     }
 
     private void inicializarVentana() {
-        ventana = new VentanaPrincipalUsuario();
+        this.ventana = new VentanaPrincipalUsuario();
 
         ventana.getBtnCargarProperties().addActionListener(this);
         ventana.getBtnConectar().addActionListener(this);
@@ -37,9 +40,10 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.getTxtUsuario().addKeyListener(this);
         ventana.getTxtContrasena().addKeyListener(this);
         ventana.getTxtAreaMovimientos().addKeyListener(this);
-
+        
+        ventana.setBotonConectarHabilitado(false);
         ventana.setVisible(true);
-        ventana.mostrarPantallaLogin();
+        ventana.mostrarPantallaConexion();
     }
 
     @Override
@@ -98,9 +102,7 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
 
         conectado = true;
         ventana.setEstadoConexion(true);
-
         ventana.mostrarConexionExitosa();
-
         ventana.mostrarPantallaLogin();
     }
 
@@ -110,7 +112,8 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         String contrasena = ventana.getContrasena();
 
         if (usuario.trim().isEmpty() || contrasena.trim().isEmpty()) {
-            ventana.setMensajeLogin("Por favor ingrese usuario y contraseña", true);
+            ventana.setMensajeLogin("Por favor ingrese usuario y contraseña",
+                    true);
             return;
         }
 
@@ -145,6 +148,7 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.getTxtAreaMovimientos().requestFocus();
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {
         if (!conectado || !autenticado) {
             return;
