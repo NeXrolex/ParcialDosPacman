@@ -12,9 +12,9 @@ import java.awt.event.KeyListener;
 import java.io.File;
 
 /**
- * Maneja la logica de la vista y todo el proceso
- * de acciones, ya se de teclado y botones
- * 
+ * Maneja la logica de la vista y todo el proceso de acciones, ya se de teclado
+ * y botones
+ *
  * @author Steven,Jard,Alex
  */
 public class ControlVistaUsuario implements ActionListener, KeyListener {
@@ -40,7 +40,7 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.getTxtUsuario().addKeyListener(this);
         ventana.getTxtContrasena().addKeyListener(this);
         ventana.getTxtAreaMovimientos().addKeyListener(this);
-        
+
         ventana.setBotonConectarHabilitado(false);
         ventana.setVisible(true);
         ventana.mostrarPantallaConexion();
@@ -96,12 +96,12 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         if (!conexionExitosa) {
 
             ventana.mostrarErrorConexion();
-            ventana.setEstadoConexion(false);
+            ventana.estadoErrorConexion();
             return;
         }
 
         conectado = true;
-        ventana.setEstadoConexion(true);
+        ventana.estadoConexionExitosa();
         ventana.mostrarConexionExitosa();
         ventana.mostrarPantallaLogin();
     }
@@ -112,18 +112,14 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         String contrasena = ventana.getContrasena();
 
         if (usuario.trim().isEmpty() || contrasena.trim().isEmpty()) {
-            ventana.setMensajeLogin("Por favor ingrese usuario y contraseña",
-                    true);
+            ventana.mensajeErrorLogin("Por favor ingrese usuario y contraseña");
             return;
         }
-
-        ventana.setMensajeLogin("Verificando usuario", false);
-
+        ventana.mensajeLoginExitoso("Verificando usuario...");
         boolean loginExitoso = controlGeneral.iniciarSesion(usuario, contrasena);
 
         if (!loginExitoso) {
-            ventana.setMensajeLogin("Usuario o contraseña incorrectos", true);
-
+            ventana.mensajeErrorLogin("Usuario o contraseña incorrectos");
             ventana.mostrarErrorAutenticacion();
             return;
         }
@@ -132,10 +128,9 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         usuarioActual = usuario;
 
         ventana.mostrarAutenticacionExitosa(usuario);
-
         ventana.mostrarPantallaJuego();
         ventana.setUsuarioActual(usuarioActual);
-        ventana.setEstadoJuego(" Conectado ", false);
+        ventana.estadoJuegoExitoso("Conectado", false);
 
         ventana.agregarMovimiento("═══════════════════════════════════════════════════");
         ventana.agregarMovimiento("  SESIÓN INICIADA");
