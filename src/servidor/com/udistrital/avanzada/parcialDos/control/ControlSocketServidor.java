@@ -35,11 +35,10 @@ public class ControlSocketServidor implements Runnable {
     }
 
     public void run() {
-        ServerSocket server = null;
 
         try {
-            server = new ConexionServerSocket().conexion();
-            servidor = new ServerSocket(puertoServidor);
+            ConexionServerSocket.configurar(puertoServidor);
+            servidor = new ConexionServerSocket().conexion();
 
             while (servidorActivo) {
                 sc = servidor.accept();
