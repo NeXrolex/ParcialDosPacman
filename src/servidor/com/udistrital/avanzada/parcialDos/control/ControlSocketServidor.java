@@ -37,10 +37,9 @@ public class ControlSocketServidor implements Runnable{
     public void run() {
         try {
             servidor = new ServerSocket(puertoServidor);
-            System.out.println("Servidor en linea");
+            
             while (servidorActivo) {
                 sc = servidor.accept();
-                System.out.println("Cliente conectado");
                 ControlHilo manejador = new ControlHilo(sc, cGeneralServidor);
                 Thread hiloCliente = new Thread(manejador);
                 hiloCliente.start();
