@@ -11,22 +11,41 @@ import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 /**
  * Maneja la informacion del servidor
  *
- * @author Alex
+ * @author Alex,steven,jard
  */
-public class ControlGeneralServidor {
-    
+public class ControlGeneralServidor{
+
     private ControlVistaServidor cVista;
     private ControlProperties cProperties;
     private ControlJuego cJuego;
+    private ControlUsuario cUsuario;
+    private ControlSocketServidor cSocket;
 
     public ControlGeneralServidor() {
         this.cProperties = new ControlProperties();
         this.cJuego = new ControlJuego();
-
+        this.cUsuario = new ControlUsuario();
+        this.cSocket = new ControlSocketServidor(this);
         // ControlVista recibe esta instancia
         this.cVista = new ControlVistaServidor(this);
     }
-    
+
+    /**
+     * Inicia el servidor de sockets en un hilo separado
+     */
+    public void iniciarServidor() {
+        Thread hiloServidor = new Thread(cSocket);
+        hiloServidor.setName("ServidorSockets");
+        hiloServidor.start();
+    }
+
+    /**
+     * Autentica un usuario
+     */
+    public boolean autenticarUsuario(String nombre, String contrasena) {
+        return cUsuario.iniciarSesion(nombre, contrasena);
+    }
+
     /**
      * Procesa el archivo properties seleccionado por el usuario
      *
@@ -37,11 +56,28 @@ public class ControlGeneralServidor {
         try {
             cProperties.setArchivoProperties(archivo);
             cProperties.establecerValoresBaseDatos();
+            cProperties.establecerValoresServerSocket();
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+    
+    /**
+     * Aplica el movieminto del usuario
+     * 
+     * @param movimiento 
+     */
+    public void aplicarMovimiento(String movimiento){
+        
+        if(movimiento == null){
+            return;
+        }
+        if(cVista != null){
+            cVista.aplicarMovimiento(movimiento);
+        }
+    }
+
     /**
      * Carga las frutas desde el archivo properties
      *
@@ -56,7 +92,7 @@ public class ControlGeneralServidor {
             return false;
         }
     }
-    
+
     public List<String[]> cargarGif() {
         try {
             return cProperties.extraerGif();
@@ -74,7 +110,6 @@ public class ControlGeneralServidor {
     public void generarFrutas(int anchoPanel, int altoPanel) {
         cJuego.generarFrutas(anchoPanel, altoPanel);
     }
-
 
     /**
      * Obtiene las frutas en juego
@@ -132,5 +167,11 @@ public class ControlGeneralServidor {
      */
     public void reiniciarJuego() {
         cJuego.reiniciar();
+    }
+
+    public void detenerServidor() {
+        if (cSocket != null) {
+            cSocket.detenerServidor();
+        }
     }
 }

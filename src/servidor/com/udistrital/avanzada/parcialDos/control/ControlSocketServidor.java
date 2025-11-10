@@ -9,19 +9,20 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionServerSocket;
 
 /**
  *
  * @author Steven
  */
-public class ControlSocketServidor {
+public class ControlSocketServidor implements Runnable {
 
     private ControlGeneralServidor cGeneralServidor;
     private DataInputStream dInput;
     private DataOutputStream dOutput;
     private ServerSocket servidor;
     private Socket sc;
-    private String ipServidor = "localhost";
+    private boolean servidorActivo = true;
     private int puertoServidor = 5555;
 
     /**
@@ -33,27 +34,25 @@ public class ControlSocketServidor {
         this.cGeneralServidor = cGeneralServidor;
     }
 
-    public boolean conectar() {
+    public void run() {
+        ServerSocket server = null;
+
         try {
+            server = new ConexionServerSocket().conexion();
             servidor = new ServerSocket(puertoServidor);
-            while (true) {
 
+            while (servidorActivo) {
                 sc = servidor.accept();
-
-                inicializarStreams();
-
-                enviarUTF("PING");//Protocolo para saber si esta conectado al server
-                //Espera una respuesta
-                String resp = leerUTF();
-                return resp != null && (resp.equalsIgnoreCase("PONG")
-                        || resp.toUpperCase().startsWith("OK"));
+                ControlHilo manejador = new ControlHilo(sc, cGeneralServidor);
+                new Thread(manejador, "Cliente-" + sc.getPort()).start();
             }
         } catch (IOException ex) {
+            if (servidorActivo) {
 
+            }
         } finally {
-            cerrarConexion();
+            detenerServidor(); // cierra server socket
         }
-        return false;
     }
 
     /**
@@ -136,18 +135,9 @@ public class ControlSocketServidor {
         }
     }
 
-//Para llamar luego desde el properties
-    /**
-     * Configura la dirección IP y el puerto del servidor.
-     *
-     * Este método será invocado desde la lectura del archivo properties para
-     * establecer los valores de la ip y el puerto
-     *
-     * @param ip Dirección IP en la que el servidor debe escuchar.
-     * @param puerto Puerto en el que el servidor atenderá las conexiones.
-     */
-    public void configurarServidor(String ip, int puerto) {
-        this.ipServidor = ip;
-        this.puertoServidor = puerto;
+    public void detenerServidor() {
+        servidorActivo = false;
+        ConexionServerSocket.cerrar();
+
     }
 }
