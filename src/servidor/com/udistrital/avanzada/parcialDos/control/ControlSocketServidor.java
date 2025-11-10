@@ -15,7 +15,7 @@ import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionServe
  *
  * @author Steven
  */
-public class ControlSocketServidor implements Runnable{
+public class ControlSocketServidor implements Runnable {
 
     private ControlGeneralServidor cGeneralServidor;
     private DataInputStream dInput;
@@ -23,7 +23,6 @@ public class ControlSocketServidor implements Runnable{
     private ServerSocket servidor;
     private Socket sc;
     private boolean servidorActivo = true;
-    private int puertoServidor= 5555;
 
     /**
      * Constructor que recibe la inyeccion del control general
@@ -34,14 +33,11 @@ public class ControlSocketServidor implements Runnable{
         this.cGeneralServidor = cGeneralServidor;
     }
 
-    
     public void run() {
-        ServerSocket server = null;
-       
+
         try {
-             server = new ConexionServerSocket().conexion();
-            servidor = new ServerSocket(puertoServidor);
-            
+            servidor = new ConexionServerSocket().conexion();
+
             while (servidorActivo) {
                 sc = servidor.accept();
                 ControlHilo manejador = new ControlHilo(sc, cGeneralServidor);
@@ -49,7 +45,7 @@ public class ControlSocketServidor implements Runnable{
             }
         } catch (IOException ex) {
             if (servidorActivo) {
-                
+
             }
         } finally {
             detenerServidor(); // cierra server socket
@@ -136,10 +132,9 @@ public class ControlSocketServidor implements Runnable{
         }
     }
 
-
     public void detenerServidor() {
         servidorActivo = false;
         ConexionServerSocket.cerrar();
-        
+
     }
 }
