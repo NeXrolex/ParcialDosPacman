@@ -85,8 +85,8 @@ public class ControlSocket {
     }
 
     /**
-     * Envia un mensaje de movimeientos al servidor para que lo traduzca 
-     * y lo representa en en ltablero del pacman
+     * Envia un mensaje de movimeientos al servidor para que lo traduzca y lo
+     * representa en en ltablero del pacman
      *
      * @param comando Movimientos a enviar
      */
@@ -107,10 +107,7 @@ public class ControlSocket {
         return ConexionSocket.estaConectado();//Metodo de ConexionSocket
     }
 
-    /**
-     * Cierra socket y limpia streams
-     *
-     */
+    // Cierra socket y limpia streams
     public void cerrar() {
         try {
             dInput = null;
