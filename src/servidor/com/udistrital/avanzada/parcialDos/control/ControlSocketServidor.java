@@ -33,10 +33,9 @@ public class ControlSocketServidor {
         this.cGeneralServidor = cGeneralServidor;
     }
 
-    public void run() {
+    public boolean conectar() {
         try {
             servidor = new ServerSocket(puertoServidor);
-
             while (true) {
 
                 sc = servidor.accept();
@@ -54,6 +53,7 @@ public class ControlSocketServidor {
         } finally {
             cerrarConexion();
         }
+        return false;
     }
 
     /**
