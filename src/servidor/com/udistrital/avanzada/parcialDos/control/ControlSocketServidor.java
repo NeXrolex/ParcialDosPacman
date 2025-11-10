@@ -23,6 +23,7 @@ public class ControlSocketServidor implements Runnable{
     private ServerSocket servidor;
     private Socket sc;
     private boolean servidorActivo = true;
+    private int puertoServidor= 5555;
 
     /**
      * Constructor que recibe la inyeccion del control general
@@ -36,7 +37,9 @@ public class ControlSocketServidor implements Runnable{
     
     public void run() {
         ServerSocket server = null;
+       
         try {
+             server = new ConexionServerSocket().conexion();
             servidor = new ServerSocket(puertoServidor);
             
             while (servidorActivo) {
@@ -46,7 +49,7 @@ public class ControlSocketServidor implements Runnable{
             }
         } catch (IOException ex) {
             if (servidorActivo) {
-                System.err.println("Error en servidor: " + ex.getMessage());
+                
             }
         } finally {
             detenerServidor(); // cierra server socket
