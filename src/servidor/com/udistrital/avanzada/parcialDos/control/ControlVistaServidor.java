@@ -139,7 +139,7 @@ public class ControlVistaServidor implements ActionListener {
         velY = 0;
         juegoActivo = true;
 
-        ventanaPrincipalServidor.limpiarFrutas();
+        limpiarFrutas();
         cGeneralServidor.reiniciarJuego();
         actualizarTiempo();
 
@@ -158,6 +158,14 @@ public class ControlVistaServidor implements ActionListener {
 
         timerTiempo = new Timer(1000, e -> actualizarTiempo());
         timerTiempo.start();
+    }
+
+    private void limpiarFrutas() {
+        List<Object> frutasVisuales = ventanaPrincipalServidor.getFrutasVisuales();
+        for (Object fruta : frutasVisuales) {
+            ventanaPrincipalServidor.removerLabel(fruta);
+        }
+        ventanaPrincipalServidor.limpiarLista();
     }
 
     private void mostrarFrutas() {
@@ -186,11 +194,18 @@ public class ControlVistaServidor implements ActionListener {
         );
 
         if (frutaComida != null) {
-            ventanaPrincipalServidor.eliminarFruta(frutaComida.getLabel());
+            eliminarFruta(frutaComida.getLabel());
             actualizarPuntaje();
             if (cGeneralServidor.juegoTerminado()) {
                 finalizarJuego();
             }
+        }
+    }
+
+    private void eliminarFruta(Object objetoFruta) {
+        if (objetoFruta != null) {
+            ventanaPrincipalServidor.removerLabel(objetoFruta);
+            ventanaPrincipalServidor.removerDeLista(objetoFruta);
         }
     }
 
@@ -276,7 +291,7 @@ public class ControlVistaServidor implements ActionListener {
 
     /**
      * Aplica un paso de movimiento enviado por un cliente:
-     * ARRIBA/ABAJO/IZQUIERDA/DERECHA. 
+     * ARRIBA/ABAJO/IZQUIERDA/DERECHA.
      */
     public void aplicarMovimiento(String movimiento) {
         if (movimiento == null || movimiento.isBlank()) {
