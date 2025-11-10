@@ -9,6 +9,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionServerSocket;
 
 /**
  *
@@ -21,8 +22,6 @@ public class ControlSocketServidor implements Runnable{
     private DataOutputStream dOutput;
     private ServerSocket servidor;
     private Socket sc;
-    private String ipServidor = "localhost";
-    private int puertoServidor = 5555;
     private boolean servidorActivo = true;
 
     /**
@@ -34,21 +33,28 @@ public class ControlSocketServidor implements Runnable{
         this.cGeneralServidor = cGeneralServidor;
     }
 
+    
     public void run() {
+        ServerSocket server = null;
         try {
-            servidor = new ServerSocket(puertoServidor);
-            System.out.println("Servidor en linea");
+            // Crear/recuperar el ServerSocket con el PUERTO_SERVIDOR ya configurado por properties
+            server = new ConexionServerSocket().conexion();
+       
+
             while (servidorActivo) {
-                sc = servidor.accept();
-                System.out.println("Cliente conectado");
+                Socket sc = server.accept();
+                System.out.println("Cliente conectado: " +
+                        sc.getRemoteSocketAddress());
+
                 ControlHilo manejador = new ControlHilo(sc, cGeneralServidor);
-                Thread hiloCliente = new Thread(manejador);
-                hiloCliente.start();
+                new Thread(manejador, "Cliente-" + sc.getPort()).start();
             }
         } catch (IOException ex) {
-
+            if (servidorActivo) {
+                System.err.println("Error en servidor: " + ex.getMessage());
+            }
         } finally {
-            cerrarConexion();
+            detenerServidor(); // cierra server socket
         }
     }
 
@@ -132,29 +138,10 @@ public class ControlSocketServidor implements Runnable{
         }
     }
 
-//Para llamar luego desde el properties
-    /**
-     * Configura la dirección IP y el puerto del servidor.
-     *
-     * Este método será invocado desde la lectura del archivo properties para
-     * establecer los valores de la ip y el puerto
-     *
-     * @param ip Dirección IP en la que el servidor debe escuchar.
-     * @param puerto Puerto en el que el servidor atenderá las conexiones.
-     */
-    public void configurarServidor(String ip, int puerto) {
-        this.ipServidor = ip;
-        this.puertoServidor = puerto;
-    }
 
     public void detenerServidor() {
         servidorActivo = false;
-        try {
-            if (servidor != null && !servidor.isClosed()) {
-                servidor.close();
-            }
-        } catch (IOException e) {
-            System.err.println("Error al detener servidor: " + e.getMessage());
-        }
+        ConexionServerSocket.cerrar();
+        
     }
 }

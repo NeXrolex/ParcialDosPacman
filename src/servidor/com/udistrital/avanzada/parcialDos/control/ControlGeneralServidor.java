@@ -11,7 +11,7 @@ import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
 /**
  * Maneja la informacion del servidor
  *
- * @author Alex
+ * @author Alex,steven,jard
  */
 public class ControlGeneralServidor{
 
@@ -56,9 +56,25 @@ public class ControlGeneralServidor{
         try {
             cProperties.setArchivoProperties(archivo);
             cProperties.establecerValoresBaseDatos();
+            cProperties.establecerValoresServerSocket();
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+    
+    /**
+     * Aplica el movieminto del usuario
+     * 
+     * @param movimiento 
+     */
+    public void aplicarMovimiento(String movimiento){
+        
+        if(movimiento == null){
+            return;
+        }
+        if(cVista != null){
+            cVista.aplicarMovimiento(movimiento);
         }
     }
 
