@@ -41,7 +41,14 @@ public class ConexionServerSocket implements IConexion<ServerSocket> {
         if (puerto <= 0) {
             throw new IllegalStateException("PUERTO_SERVIDOR no configurado.");
         }
-        return null;
+        try {
+            //Crea el serverSocket con el puerto previamente configurado
+            serverSocket = new ServerSocket(puerto);
+            return serverSocket;
+        } catch (IOException e) {
+            throw new RuntimeException("No fue posible iniciar "
+                    + "el ServerSocket.", e);
+        }
     }
 
     /**
@@ -58,20 +65,21 @@ public class ConexionServerSocket implements IConexion<ServerSocket> {
         }
 
     }
-
+    
     /**
-     * Comprueba si el server socket se encuentra activo o en su defecto cerrado
-     *
+     * Comprueba si el server socket se encuentra activo
+     * o en su defecto cerrado
      * @return True or false
      */
     public static boolean activo() {
         return serverSocket != null && !serverSocket.isClosed();
     }
-
+    
     /**
-     * Obtiene el puerto por el que se conectan los usuarios
-     *
-     * @return
+     * Obtiene el puerto por el que se conectan los 
+     * usuarios
+     * 
+     * @return 
      */
     public static int getPuerto() {
         return puerto;

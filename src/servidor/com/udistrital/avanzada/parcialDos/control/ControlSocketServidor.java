@@ -23,7 +23,6 @@ public class ControlSocketServidor implements Runnable {
     private ServerSocket servidor;
     private Socket sc;
     private boolean servidorActivo = true;
-    private int puertoServidor = 5555;
 
     /**
      * Constructor que recibe la inyeccion del control general
@@ -37,7 +36,6 @@ public class ControlSocketServidor implements Runnable {
     public void run() {
 
         try {
-            ConexionServerSocket.configurar(puertoServidor);
             servidor = new ConexionServerSocket().conexion();
 
             while (servidorActivo) {
