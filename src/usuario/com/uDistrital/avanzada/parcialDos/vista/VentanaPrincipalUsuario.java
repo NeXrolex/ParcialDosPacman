@@ -9,6 +9,7 @@ import java.awt.*;
 import java.io.File;
 
 /**
+ * Mustra elementos graficos del programa
  *
  * @author Steven,Jard,Alex
  */
