@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package servidor.com.udistrital.avanzada.parcialDos.vista;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -17,7 +18,7 @@ import java.util.List;
  * @author Steven
  */
 public class VentanaPrincipalServidor extends JFrame {
-    
+
     private CardLayout cardLayout;
 
     private JPanel panelInicio, panelBotones, panelJuego, panelContenedor, panelPuntaje, panelCentroPuntaje, panelCentro, panelTitulo, panelBotonesInicio;
@@ -268,21 +269,20 @@ public class VentanaPrincipalServidor extends JFrame {
         return labelFruta;
     }
 
-    public void eliminarFruta(Object objetoFruta) {
-        if (objetoFruta instanceof JLabel) {
-            JLabel labelFruta = (JLabel) objetoFruta;
-            panelJuego.remove(labelFruta);
-            labelsFrutas.remove(labelFruta);
-            panelJuego.repaint();
-        }
+    public void removerLabel(Object label) {
+        panelJuego.remove((Component) label);
+        panelJuego.repaint();
     }
 
-    public void limpiarFrutas() {
-        for (JLabel label : labelsFrutas) {
-            panelJuego.remove(label);
-        }
+    public void removerDeLista(Object label) {
+        labelsFrutas.remove(label);
+    }
+
+    public void limpiarLista() {
         labelsFrutas.clear();
-        panelJuego.repaint();
+    }
+    public List<Object> getFrutasVisuales() {
+        return new ArrayList<>(labelsFrutas);
     }
 
     public void mostrarDialogo(String mensaje, String titulo, int tipoMensaje) {
