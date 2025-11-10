@@ -264,12 +264,73 @@ public class ControlVistaServidor implements ActionListener {
 
     private void actualizarPuntaje() {
         int puntaje = cGeneralServidor.getPuntajeTotal();
-        ventanaPrincipalServidor.getLblPuntaje().setText(String.valueOf(puntaje));
+        ventanaPrincipalServidor.getLblPuntaje().
+                setText(String.valueOf(puntaje));
     }
 
     public void actualizarTiempo() {
         long tiempo = cGeneralServidor.getTiempoTranscurrido() / 1000;
-        ventanaPrincipalServidor.getLblTiempo().setText("Tiempo: " + tiempo + " s");
+        ventanaPrincipalServidor.getLblTiempo()
+                .setText("Tiempo: " + tiempo + " s");
+    }
+
+    /**
+     * Aplica un paso de movimiento enviado por un cliente:
+     * ARRIBA/ABAJO/IZQUIERDA/DERECHA. 
+     */
+    public void aplicarMovimiento(String movimiento) {
+        if (movimiento == null || movimiento.isBlank()) {
+            return;
+        }
+
+        int dx = 0, dy = 0;
+        switch (movimiento.trim().toUpperCase()) {
+            case "ARRIBA":
+                dy = -movPixeles;
+                break;
+            case "ABAJO":
+                dy = movPixeles;
+                break;
+            case "IZQUIERDA":
+                dx = -movPixeles;
+                break;
+            case "DERECHA":
+                dx = movPixeles;
+                break;
+            default:
+                return;
+        }
+
+        moverPacmanUnPaso(dx, dy);
+        verificarColisiones();
+    }
+
+    private void moverPacmanUnPaso(int dx, int dy) {
+        x += dx;
+        y += dy;
+
+        int anchoPanel = ventanaPrincipalServidor.getAnchoPanelJuego();
+        int altoPanel = ventanaPrincipalServidor.getAltoPanelJuego();
+        int anchoPac = ventanaPrincipalServidor.getAnchoPacman();
+        int altoPac = ventanaPrincipalServidor.getAltoPacman();
+
+        int maxX = Math.max(0, anchoPanel - anchoPac);
+        int maxY = Math.max(0, altoPanel - altoPac);
+
+        if (x < 0) {
+            x = 0;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+        if (x > maxX) {
+            x = maxX;
+        }
+        if (y > maxY) {
+            y = maxY;
+        }
+
+        ventanaPrincipalServidor.setPosicionPacman(x, y);
     }
 
 }

@@ -29,9 +29,27 @@ public class ControlProperties {
     public void setArchivoProperties(File archivo) {
         propertiesDAO.setArchivoProperties(archivo);
     }
+    
+    /**
+     * Busca algo en el archivo de propiedades
+     * por la clave
+     * 
+     * @param clave Clave a buscar
+     * @return consulta
+     */
     public String buscarClave(String clave) {
         return propertiesDAO.consultar(clave);
     }
+    
+    /**
+     * Establece los valores para que los usuarios
+     * se conecten 
+     * 
+     */
+    public void establecerValoresServerSocket(){
+        propertiesDAO.configurarServerSocketDesdeArchivo();
+    }
+    
     /**
      * Establece los valores de la base de datos
      *

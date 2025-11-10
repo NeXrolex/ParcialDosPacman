@@ -62,7 +62,8 @@ public class ControlHilo implements Runnable {
 
                     if (mensaje.startsWith("LOGIN")) {
                         procesarLogin(mensaje);
-                    } else if (mensaje.startsWith("SALIR") || mensaje.startsWith("DISCONNECT")) {
+                    } else if (mensaje.startsWith("SALIR")
+                            || mensaje.startsWith("DISCONNECT")) {
                         clienteConectado = false;
                     } else {
                         if (usuarioAutenticado != null) {
@@ -86,48 +87,58 @@ public class ControlHilo implements Runnable {
     /**
      * Procesa el comando LOGIN Formato: LOGIN;usuario;contraseña
      */
-    private void procesarLogin(String mensaje) {
-        try {
-            String[] partes = mensaje.split(";");
-            if (partes.length != 3) {
-                output.writeUTF("ERROR;Formato inválido");
-                output.flush();
-                return;
-            }
-
-            String usuario = partes[1].trim();
-            String contrasena = partes[2];
-
-            System.out.println("  → Autenticando: " + usuario);
-
-            // Verificar credenciales
-            boolean autenticado = cGeneralServidor.autenticarUsuario(usuario, contrasena);
-
-            if (autenticado) {
-                usuarioAutenticado = usuario;
-                output.writeUTF("OK;Autenticación exitosa");
-                output.flush();
-            } else {
-                output.writeUTF("ERROR;Usuario o contraseña incorrectos");
-                output.flush();
-            }
-
-        } catch (IOException e) {
-            System.err.println("  ✗ Error en LOGIN: " + e.getMessage());
+    public void procesarLogin(String mensaje) {
+    try {
+        String[] partes = mensaje.split(";");
+        if (partes.length != 3) {
+            output.writeUTF("ERROR;Formato inválido");
+            output.flush();
+            return;
         }
+
+        String usuario = partes[1].trim();
+        String contrasena = partes[2];
+
+        boolean autenticado = cGeneralServidor
+                .autenticarUsuario(usuario, contrasena);
+        if (autenticado) {
+            usuarioAutenticado = usuario;
+            
+        } else {
+            
+        }
+        output.flush();
+    } catch (IOException e) {
+        cerrarConexion(); 
     }
+}
 
     /**
      * Procesa otros comandos
      */
     private void procesarComando(String comando) {
-        try {
-            System.out.println("  → Comando: " + comando);
-            output.writeUTF("OK;Comando recibido");
+    try {
+        String mov = comando == null ? "" : comando.trim().toUpperCase();
+
+        
+        if ("ARRIBA".equals(mov) || "ABAJO".equals(mov)
+                || "IZQUIERDA".equals(mov) || "DERECHA".equals(mov)) {
+
+           
+            cGeneralServidor.aplicarMovimiento(mov);
+
+            
             output.flush();
-        } catch (IOException e) {
+            return;
         }
+
+    
+        output.flush();
+    } catch (IOException e) {
+        // logging simple y continuo
+       
     }
+}
 
     /**
      * Cierra la conexión
@@ -142,7 +153,7 @@ public class ControlHilo implements Runnable {
             }
             if (socket != null && !socket.isClosed()) {
                 socket.close();
-                System.out.println("  → Conexión cerrada");
+               
             }
         } catch (IOException e) {
             
