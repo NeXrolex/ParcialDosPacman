@@ -14,7 +14,7 @@ import java.net.Socket;
  *
  * @author Steven
  */
-public class ControlSocketServidor {
+public class ControlSocketServidor implements Runnable{
 
     private ControlGeneralServidor cGeneralServidor;
     private DataInputStream dInput;
@@ -23,6 +23,7 @@ public class ControlSocketServidor {
     private Socket sc;
     private String ipServidor = "localhost";
     private int puertoServidor = 5555;
+    private boolean servidorActivo = true;
 
     /**
      * Constructor que recibe la inyeccion del control general
@@ -36,18 +37,13 @@ public class ControlSocketServidor {
     public void run() {
         try {
             servidor = new ServerSocket(puertoServidor);
-
-            while (true) {
-
+            System.out.println("Servidor en linea");
+            while (servidorActivo) {
                 sc = servidor.accept();
-
-                inicializarStreams();
-
-                enviarUTF("PING");//Protocolo para saber si esta conectado al server
-                //Espera una respuesta
-                String resp = leerUTF();
-                return resp != null && (resp.equalsIgnoreCase("PONG")
-                        || resp.toUpperCase().startsWith("OK"));
+                System.out.println("Cliente conectado");
+                ControlHilo manejador = new ControlHilo(sc, cGeneralServidor);
+                Thread hiloCliente = new Thread(manejador);
+                hiloCliente.start();
             }
         } catch (IOException ex) {
 
@@ -149,5 +145,16 @@ public class ControlSocketServidor {
     public void configurarServidor(String ip, int puerto) {
         this.ipServidor = ip;
         this.puertoServidor = puerto;
+    }
+
+    public void detenerServidor() {
+        servidorActivo = false;
+        try {
+            if (servidor != null && !servidor.isClosed()) {
+                servidor.close();
+            }
+        } catch (IOException e) {
+            System.err.println("Error al detener servidor: " + e.getMessage());
+        }
     }
 }

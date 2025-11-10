@@ -81,7 +81,7 @@ public class ControlVistaServidor implements ActionListener {
             ventanaPrincipalServidor.setMensajeEstadoError("Error al cargar el properties");
             return;
         }
-
+        cGeneralServidor.iniciarServidor();
         List<String[]> recursos = cGeneralServidor.cargarGif();
 
         for (String[] recurso : recursos) {
