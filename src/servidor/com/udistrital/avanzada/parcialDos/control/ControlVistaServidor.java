@@ -95,23 +95,9 @@ public class ControlVistaServidor implements ActionListener {
 
         ventanaPrincipalServidor.setMensajeEstadoExito("Properties cargado correctamente");
 
-        Timer delay = new Timer(1000, e -> {
-            ventanaPrincipalServidor.mostrarPantallaJuego();
-            inicializarTimer();
-        });
+        Timer delay = new Timer(1000, e -> ventanaPrincipalServidor.mostrarPantallaJuego());
         delay.setRepeats(false);
         delay.start();
-    }
-
-    private void inicializarTimer() {
-        this.timer = new Timer(50, e -> {
-            // LÓGICA: Solo mover si el juego está activo
-            if (juegoActivo) {
-                moverPacman();
-                verificarColisiones();
-            }
-        });
-        this.timer.start();
     }
 
     @Override
@@ -297,26 +283,25 @@ public class ControlVistaServidor implements ActionListener {
         if (movimiento == null || movimiento.isBlank()) {
             return;
         }
+        
+        int desplazamiento = movPixeles * 4;
 
-        int dx = 0, dy = 0;
         switch (movimiento.trim().toUpperCase()) {
             case "ARRIBA":
-                dy = -movPixeles;
+                moverPacmanUnPaso(0, -desplazamiento);
                 break;
             case "ABAJO":
-                dy = movPixeles;
+                moverPacmanUnPaso(0, desplazamiento);
                 break;
             case "IZQUIERDA":
-                dx = -movPixeles;
+                moverPacmanUnPaso(-desplazamiento, 0);
                 break;
             case "DERECHA":
-                dx = movPixeles;
+                moverPacmanUnPaso(desplazamiento, 0);
                 break;
             default:
                 return;
         }
-
-        moverPacmanUnPaso(dx, dy);
         verificarColisiones();
     }
 
