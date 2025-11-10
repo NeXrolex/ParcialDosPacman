@@ -37,15 +37,10 @@ public class ControlSocketServidor implements Runnable{
     public void run() {
         ServerSocket server = null;
         try {
-            // Crear/recuperar el ServerSocket con el PUERTO_SERVIDOR ya configurado por properties
-            server = new ConexionServerSocket().conexion();
-       
-
+            servidor = new ServerSocket(puertoServidor);
+            
             while (servidorActivo) {
-                Socket sc = server.accept();
-                System.out.println("Cliente conectado: " +
-                        sc.getRemoteSocketAddress());
-
+                sc = servidor.accept();
                 ControlHilo manejador = new ControlHilo(sc, cGeneralServidor);
                 new Thread(manejador, "Cliente-" + sc.getPort()).start();
             }
