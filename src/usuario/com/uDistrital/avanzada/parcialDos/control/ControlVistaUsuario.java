@@ -24,12 +24,23 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
     private boolean conectado = false;
     private boolean autenticado = false;
     private String usuarioActual = "";
-
+    
+    /**
+     * Constructor que revibe la inyeccion del coontrol general
+     * e inicializa la ventana
+     * 
+     * @param controlGeneral ControlGeneral
+     */
     public ControlVistaUsuario(ControlGeneralUsuario controlGeneral) {
         this.controlGeneral = controlGeneral;
         inicializarVentana();
     }
-
+    
+    /**
+     * Metodo que inicializa el panel principal
+     * e intancia la vista 
+     * 
+     */
     private void inicializarVentana() {
         this.ventana = new VentanaPrincipalUsuario();
 
@@ -45,7 +56,13 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.setVisible(true);
         ventana.mostrarPantallaConexion();
     }
-
+    
+    /**
+     * Acciones de los botones principales
+     * del usuario
+     * 
+     * @param e Evento
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
@@ -58,7 +75,12 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
             iniciarSesion();
         }
     }
-
+    
+    /**
+     * Carga el archivo de propiedades para 
+     * continuar con el open close
+     * 
+     */
     private void cargarArchivoProperties() {
         int resultado = ventana.abrirSelectorArchivo();
 
@@ -88,7 +110,13 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
             ventana.mostrarError("Error al cargar el archivo properties");
         }
     }
-
+    
+    /**
+     * Delega para conectarse al servidor
+     * y despues del accept muestra para 
+     * iniciar sesion
+     * 
+     */
     private void conectarAlServidor() {
 
         boolean conexionExitosa = controlGeneral.conectarAlServidor();
@@ -105,7 +133,12 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.mostrarConexionExitosa();
         ventana.mostrarPantallaLogin();
     }
-
+    
+    /**
+     * Obtiene los datos del nombre y la contrasena
+     * para enviarlo al socket e inicar session
+     * 
+     */
     private void iniciarSesion() {
 
         String usuario = ventana.getUsuario();
@@ -132,17 +165,26 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.setUsuarioActual(usuarioActual);
         ventana.estadoJuegoExitoso("Conectado", false);
 
-        ventana.agregarMovimiento("═══════════════════════════════════════════════════");
+        ventana.agregarMovimiento("══════════════════════════"
+                + "═════════════════════════");
         ventana.agregarMovimiento("  SESIÓN INICIADA");
         ventana.agregarMovimiento("  Usuario: " + usuarioActual);
-        ventana.agregarMovimiento("═══════════════════════════════════════════════════");
+        ventana.agregarMovimiento("═════════════════════════════════════"
+                + "══════════════");
         ventana.agregarMovimiento("");
-        ventana.agregarMovimiento("Listo para jugar. Use las flechas (↑ ↓ ← →)");
+        ventana.agregarMovimiento("Listo para jugar. Use las"
+                + " flechas (↑ ↓ ← →)");
         ventana.agregarMovimiento("");
 
         ventana.getTxtAreaMovimientos().requestFocus();
     }
-
+    
+    /**
+     * Recibe los eventos del teclado para mover al pacman
+     * por el movimeinto del las flechas
+     * 
+     * @param e Evento de teclado
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if (!conectado || !autenticado) {
@@ -169,7 +211,14 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
 
         controlGeneral.enviarMovimiento(movimiento);
     }
-
+    
+    /**
+     * Envia los eventos de las teclas awsd para
+     * mover al pacman
+     * 
+     * 
+     * @param e Evento del teclado
+     */
     public void keyTyped(KeyEvent e) {
 
         // Ignorar si no hay conexión o autenticación
@@ -216,7 +265,12 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
 
     }
-
+    
+    /**
+     * Obtiene la ventana principal
+     * 
+     * @return 
+     */
     public VentanaPrincipalUsuario getVentana() {
         return ventana;
     }
