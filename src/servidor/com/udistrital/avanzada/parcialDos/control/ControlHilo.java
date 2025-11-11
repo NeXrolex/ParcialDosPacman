@@ -88,57 +88,53 @@ public class ControlHilo implements Runnable {
      * Procesa el comando LOGIN Formato: LOGIN;usuario;contraseña
      */
     public void procesarLogin(String mensaje) {
-    try {
-        String[] partes = mensaje.split(";");
-        if (partes.length != 3) {
-            output.writeUTF("ERROR;Formato inválido");
+        try {
+            String[] partes = mensaje.split(";");
+            if (partes.length != 3) {
+                output.writeUTF("ERROR;Formato inválido");
+                output.flush();
+                return;
+            }
+
+            String usuario = partes[1].trim();
+            String contrasena = partes[2];
+
+            boolean autenticado = cGeneralServidor
+                    .autenticarUsuario(usuario, contrasena);
+            if (autenticado) {
+                usuarioAutenticado = usuario;
+                output.writeUTF("OK;Login exitoso");
+            } else {
+                output.writeUTF("ERROR;Credenciales inválidas");
+            }
             output.flush();
-            return;
+        } catch (IOException e) {
+            cerrarConexion();
         }
-
-        String usuario = partes[1].trim();
-        String contrasena = partes[2];
-
-        boolean autenticado = cGeneralServidor
-                .autenticarUsuario(usuario, contrasena);
-        if (autenticado) {
-            usuarioAutenticado = usuario;
-            
-        } else {
-            
-        }
-        output.flush();
-    } catch (IOException e) {
-        cerrarConexion(); 
     }
-}
 
     /**
      * Procesa otros comandos
      */
     private void procesarComando(String comando) {
-    try {
-        String mov = comando == null ? "" : comando.trim().toUpperCase();
+        try {
+            String mov = comando == null ? "" : comando.trim().toUpperCase();
 
-        
-        if ("ARRIBA".equals(mov) || "ABAJO".equals(mov)
-                || "IZQUIERDA".equals(mov) || "DERECHA".equals(mov)) {
+            if ("ARRIBA".equals(mov) || "ABAJO".equals(mov)
+                    || "IZQUIERDA".equals(mov) || "DERECHA".equals(mov)) {
 
-           
-            cGeneralServidor.aplicarMovimiento(mov);
+                cGeneralServidor.aplicarMovimiento(mov);
 
-            
+                output.flush();
+                return;
+            }
+
             output.flush();
-            return;
-        }
+        } catch (IOException e) {
+            // logging simple y continuo
 
-    
-        output.flush();
-    } catch (IOException e) {
-        // logging simple y continuo
-       
+        }
     }
-}
 
     /**
      * Cierra la conexión
@@ -153,10 +149,10 @@ public class ControlHilo implements Runnable {
             }
             if (socket != null && !socket.isClosed()) {
                 socket.close();
-               
+
             }
         } catch (IOException e) {
-            
+
         }
     }
 }
