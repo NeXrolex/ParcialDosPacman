@@ -31,7 +31,8 @@ public class ControlRAF {
      * @param tiempoSegundos tiempo transcurrido
      * @return 
      */
-    public boolean guardarPuntuacion(String nombreJugador, int puntaje, long tiempoSegundos) {
+    public boolean guardarPuntuacion(String nombreJugador,
+            int puntaje, long tiempoSegundos) {
         if (rafDAO == null) {
             return false;
         }

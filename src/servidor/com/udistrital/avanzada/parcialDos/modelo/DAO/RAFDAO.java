@@ -55,7 +55,8 @@ public class RAFDAO implements ICreate {
     @Override
     public void insertar(Object elemento) {
         if (!(elemento instanceof String[])) {
-            throw new IllegalArgumentException("Debe ser String[] con {nombre, puntaje, tiempo}");
+            throw new IllegalArgumentException("Debe ser String[] con {nombre,"
+                    + " puntaje, tiempo}");
         }
 
         String[] datos = (String[]) elemento;
@@ -74,7 +75,8 @@ public class RAFDAO implements ICreate {
             raf.writeChar('\n');
 
         } catch (IOException e) {
-            throw new RuntimeException("Error al guardar puntuación: " + e.getMessage(), e);
+            throw new RuntimeException("Error al guardar puntuación: " +
+                    e.getMessage(), e);
         } finally {
             cerrar(raf);
         }

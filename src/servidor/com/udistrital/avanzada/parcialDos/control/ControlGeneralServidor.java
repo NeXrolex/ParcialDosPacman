@@ -22,7 +22,13 @@ public class ControlGeneralServidor {
     private ControlSocketServidor cSocket;
     private ControlRAF cRAF;
     private String usuarioConectado = "Jugador";
-
+    
+    /**
+     * Constructor qie intancia los
+     * controles principales y se inyecta
+     * en ControlSocketServiodor y ControlVista
+     * 
+     */
     public ControlGeneralServidor() {
         this.cProperties = new ControlProperties();
         this.cJuego = new ControlJuego();
@@ -44,6 +50,9 @@ public class ControlGeneralServidor {
 
     /**
      * Autentica un usuario
+     * 
+     * @param nombre Nombre del usuario a registrar
+     * @param contrasena Contrasena del usuario
      */
     public boolean autenticarUsuario(String nombre, String contrasena) {
         return cUsuario.iniciarSesion(nombre, contrasena);
@@ -96,6 +105,12 @@ public class ControlGeneralServidor {
         }
     }
 
+    /**
+     * Estrae la ruta del gif para mostrar el gif
+     * en la vista 
+     * 
+     * @return ruta del gif
+     */
     public List<String[]> cargarGif() {
         try {
             return cProperties.extraerGif();
@@ -190,15 +205,27 @@ public class ControlGeneralServidor {
      * @param tiempoSegundos
      * @return
      */
-    public boolean guardarPuntuacion(File archivo, int puntaje, long tiempoSegundos) {
+    public boolean guardarPuntuacion(File archivo, int puntaje, 
+            long tiempoSegundos) {
         cRAF.configurarArchivo(archivo);
-        return cRAF.guardarPuntuacion(usuarioConectado, puntaje, tiempoSegundos);
+        return cRAF.guardarPuntuacion(usuarioConectado, puntaje,
+                tiempoSegundos);
     }
-
+    
+    /**
+     * Asigna el isuario conectado
+     * 
+     * @param nombreUsuario Nombre del usuario conectado
+     */
     public void setUsuarioConectado(String nombreUsuario) {
         this.usuarioConectado = nombreUsuario;
     }
-
+    
+    /**
+     * Obtiene el usuario conectado
+     * 
+     * @return Usuario conectado
+     */
     public String getUsuarioConectado() {
         return usuarioConectado;
     }

@@ -41,7 +41,8 @@ public class ControlUsuario {
         if (usuarioBD == null) {
             return false; // usuario no encontrado
         }
-
+        
+        //Valor para saber si existe en la base de datos 
         return contrasena.equals(usuarioBD.getContrasena());
     }
     

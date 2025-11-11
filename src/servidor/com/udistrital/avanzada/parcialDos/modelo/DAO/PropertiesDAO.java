@@ -161,7 +161,13 @@ public class PropertiesDAO implements IRead<String> {
 
         return frutas;
     }
-
+    
+    /**
+     * Extrae la ruta del pacman desde el archivo de 
+     * propiedades
+     * 
+     * @return Ruta del gif de pacman
+     */
     public ArrayList<String[]> extraerGif() {
         if (this.archivoActual == null) {
             throw new IllegalStateException("El archivo .properties es null");
