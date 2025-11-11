@@ -32,12 +32,12 @@ public class ControlSocket {
 
     public boolean conectar() {
         try {
+            // Solicita la conexion al servidor 
             Socket socket = new ConexionSocket().conexion();
-            /*Solicita la 
-            conexion al servidor */
-            inicializarStreams(socket);/*Metodo interno que inicializa los
-            Output e input*/
-            enviarUTF("PING");//Protocolo para saber si esta conectado al server
+            //Metodo interno que inicializa losOutput e input
+            inicializarStreams(socket);
+            //Protocolo para saber si esta conectado al server
+            enviarUTF("PING");
             //Espera una respuesta
             String resp = leerUTF();
             return resp != null && (resp.equalsIgnoreCase("PONG")
