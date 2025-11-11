@@ -42,13 +42,23 @@ public class VentanaPrincipalUsuario extends JFrame {
     private JScrollPane scrollMovimientos;
     private JLabel lblUsuarioActual;
     private JLabel lblEstadoJuego;
-
+    
+    /**
+     * Inicia los elementos principales 
+     * de la ventana
+     * 
+     */
     public VentanaPrincipalUsuario() {
         inicializarVentana();
         inicializarComponentes();
         ensamblarComponentes();
     }
-
+    
+    /**
+     * Inicia los compoenentes principales 
+     * de la ventana
+     * 
+     */
     private void inicializarVentana() {
         setTitle("Cliente Pac-Man - Usuario");
         setSize(550, 650);
