@@ -305,6 +305,29 @@ public class VentanaPrincipalServidor extends JFrame {
 
         labelPacman.setLocation(x, y);
     }
+    public File solicitarArchivoGuardar() {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Guardar Puntuaciones");
+    fileChooser.setSelectedFile(new File("puntuaciones.dat"));
+    
+    FileNameExtensionFilter filtro = new FileNameExtensionFilter(
+        "Archivos de datos (*.dat)", "dat"
+    );
+    fileChooser.setFileFilter(filtro);
+    
+    int resultado = fileChooser.showSaveDialog(this);
+    
+    if (resultado == JFileChooser.APPROVE_OPTION) {
+        File archivo = fileChooser.getSelectedFile();
+        // Asegurar extensión .dat
+        if (!archivo.getName().endsWith(".dat")) {
+            archivo = new File(archivo.getAbsolutePath() + ".dat");
+        }
+        return archivo;
+    }
+    
+    return null;
+}
 
     public int getAnchoPanelJuego() {
         return panelJuego.getWidth();

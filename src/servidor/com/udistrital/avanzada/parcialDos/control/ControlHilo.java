@@ -103,6 +103,7 @@ public class ControlHilo implements Runnable {
                     .autenticarUsuario(usuario, contrasena);
             if (autenticado) {
                 usuarioAutenticado = usuario;
+                cGeneralServidor.setUsuarioConectado(usuario);
                 output.writeUTF("OK;Login exitoso");
             } else {
                 output.writeUTF("ERROR;Credenciales inválidas");
