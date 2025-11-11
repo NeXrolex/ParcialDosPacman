@@ -13,19 +13,22 @@ import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
  *
  * @author Alex,steven,jard
  */
-public class ControlGeneralServidor{
+public class ControlGeneralServidor {
 
     private ControlVistaServidor cVista;
     private ControlProperties cProperties;
     private ControlJuego cJuego;
     private ControlUsuario cUsuario;
     private ControlSocketServidor cSocket;
+    private ControlRAF cRAF;
+    private String usuarioConectado = "Jugador";
 
     public ControlGeneralServidor() {
         this.cProperties = new ControlProperties();
         this.cJuego = new ControlJuego();
         this.cUsuario = new ControlUsuario();
         this.cSocket = new ControlSocketServidor(this);
+        this.cRAF = new ControlRAF();
         // ControlVista recibe esta instancia
         this.cVista = new ControlVistaServidor(this);
     }
@@ -62,18 +65,18 @@ public class ControlGeneralServidor{
             return false;
         }
     }
-    
+
     /**
      * Aplica el movieminto del usuario
-     * 
-     * @param movimiento 
+     *
+     * @param movimiento
      */
-    public void aplicarMovimiento(String movimiento){
-        
-        if(movimiento == null){
+    public void aplicarMovimiento(String movimiento) {
+
+        if (movimiento == null) {
             return;
         }
-        if(cVista != null){
+        if (cVista != null) {
             cVista.aplicarMovimiento(movimiento);
         }
     }
@@ -169,9 +172,34 @@ public class ControlGeneralServidor{
         cJuego.reiniciar();
     }
 
+    /**
+     * Detiene al servidor
+     */
     public void detenerServidor() {
         if (cSocket != null) {
             cSocket.detenerServidor();
         }
+    }
+
+    /**
+     * metodo encargado de guardar los datos en el archivo de acceso aleatorio
+     *
+     * @param archivo
+     * @param nombreJugador
+     * @param puntaje
+     * @param tiempoSegundos
+     * @return
+     */
+    public boolean guardarPuntuacion(File archivo, int puntaje, long tiempoSegundos) {
+        cRAF.configurarArchivo(archivo);
+        return cRAF.guardarPuntuacion(usuarioConectado, puntaje, tiempoSegundos);
+    }
+
+    public void setUsuarioConectado(String nombreUsuario) {
+        this.usuarioConectado = nombreUsuario;
+    }
+
+    public String getUsuarioConectado() {
+        return usuarioConectado;
     }
 }

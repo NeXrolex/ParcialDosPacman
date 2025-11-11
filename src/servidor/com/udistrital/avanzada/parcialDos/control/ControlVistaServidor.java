@@ -209,7 +209,31 @@ public class ControlVistaServidor implements ActionListener {
             timerTiempo.stop();
         }
         ventanaPrincipalServidor.mostrarDialogo(mensaje, "Juego Terminado", 1);
+        guardarPuntuacionAutomatica(puntaje, tiempo);
+    }
 
+    private void guardarPuntuacionAutomatica(int puntaje, long tiempoSegundos) {
+        File archivo = ventanaPrincipalServidor.solicitarArchivoGuardar();
+
+        if (archivo == null) {
+            return; // Usuario canceló
+        }
+
+        boolean guardado = cGeneralServidor.guardarPuntuacion(
+                archivo,
+                puntaje,
+                tiempoSegundos
+        );
+
+        if (guardado) {
+            String nombreUsuario = cGeneralServidor.getUsuarioConectado();
+            ventanaPrincipalServidor.setMensajeEstadoExito("Puntuación de "
+                    + nombreUsuario + " guardada exitosamente en:\n"
+                    + archivo.getAbsolutePath()
+            );
+        } else {
+            ventanaPrincipalServidor.setMensajeEstadoError("Error al guardar");
+        }
     }
 
     public void moverPacman() {
@@ -283,7 +307,7 @@ public class ControlVistaServidor implements ActionListener {
         if (movimiento == null || movimiento.isBlank()) {
             return;
         }
-        
+
         int desplazamiento = movPixeles * 4;
 
         switch (movimiento.trim().toUpperCase()) {
