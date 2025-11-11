@@ -79,7 +79,7 @@ public class ConexionServerSocket implements IConexion<ServerSocket> {
      * Obtiene el puerto por el que se conectan los 
      * usuarios
      * 
-     * @return 
+     * @return Puerto
      */
     public static int getPuerto() {
         return puerto;

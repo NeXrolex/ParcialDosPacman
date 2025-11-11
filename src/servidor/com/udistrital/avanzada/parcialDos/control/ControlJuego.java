@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * Controla el estado de las frutas y elementos del jueg o
  *
  * @author Alex,Jard,Stiven
  */
@@ -20,18 +21,34 @@ public class ControlJuego {
     private int puntajeTotal;
     private long tiempoInicio;
     private int frutasComidas;
-
+    
+    /**
+     * Constructo que deja los estados del juego
+     * limpio
+     * 
+     */
     public ControlJuego() {
         this.frutasEnJuego = new ArrayList<>();
         this.frutasDisponibles = new ArrayList<>();
         this.puntajeTotal = 0;
         this.frutasComidas = 0;
     }
-
+    
+    /**
+     * Asigna un catalogo de frutas cargado desde
+     * properties
+     * 
+     * @param frutas Lista de frutas disponibles
+     */
     public void setFrutasDisponibles(List<FrutaVO> frutas) {
         this.frutasDisponibles = frutas;
     }
-
+    
+    /**
+     * Elimina una fruta del tablero
+     * 
+     * @param fruta 
+     */
     public void eliminarFruta(FrutaVO fruta) {
         frutasEnJuego.remove(fruta);
     }
@@ -75,7 +92,8 @@ public class ControlJuego {
                 y = 50 + rand.nextInt(altoPanel - 100);
 
                 // Verificar que NO esté dentro de la zona central
-                posicionValida = !(x > zonaX1 && x < zonaX2 && y > zonaY1 && y < zonaY2);
+                posicionValida = !(x > zonaX1 && x < zonaX2 && y > zonaY1
+                        && y < zonaY2);
 
             } while (!posicionValida); // Reintentar si cae en el centro
 
@@ -93,10 +111,21 @@ public class ControlJuego {
             fruta.setY(y);
             frutasEnJuego.add(fruta);
         }
-
+        //Arranca el cronometro de partida
         tiempoInicio = System.currentTimeMillis();
     }
-
+    
+    /**
+     * Verifica la colicion entre el pacman y cada fruta
+     * al colocionar marca la fruta como comida, suma puntos y retorna
+     * la fruta afectada
+     * 
+     * @param pacmanX X de pacman
+     * @param pacmanY Y de pacman
+     * @param pacmanAncho ancho de pacman
+     * @param pacmanAlto alto de pacman
+     * @return 
+     */
     public FrutaVO verificarColision(int pacmanX, int pacmanY,
             int pacmanAncho, int pacmanAlto) {
 
@@ -121,30 +150,60 @@ public class ControlJuego {
 
         return null;
     }
-
+    
+    /**
+     * indica si la partida termino
+     * 
+     * @return True si se comieron las 4 frutasS
+     */
     public boolean juegoTerminado() {
         return frutasComidas >= 4;
     }
-
+    
+    /**
+     * Tiempo trasncurrido desde el ultimo arranque de partida
+     * 
+     * @return milisegundos transcurridos
+     */
     public long getTiempoTranscurrido() {
         return System.currentTimeMillis() - tiempoInicio;
     }
-
+    
+    /**
+     * Reinicia todos los valores
+     * de la partida
+     * 
+     */
     public void reiniciar() {
         tiempoInicio = System.currentTimeMillis();
         frutasEnJuego.clear();
         puntajeTotal = 0;
         frutasComidas = 0;
     }
-
+    
+    /**
+     * obtiene la lista de frutas activas
+     * 
+     * @return Lista de frutas
+     */
     public List<FrutaVO> getFrutasEnJuego() {
         return frutasEnJuego;
     }
-
+    
+    /**
+     * Obtiene el puntaje total
+     * 
+     * @return Puntaje total
+     */
     public int getPuntajeTotal() {
         return puntajeTotal;
     }
-
+    
+    /**
+     * Obtiene las frutas comidas
+     * 
+     * @return Frutas comidas
+     */
     public int getFrutasComidas() {
         return frutasComidas;
     }

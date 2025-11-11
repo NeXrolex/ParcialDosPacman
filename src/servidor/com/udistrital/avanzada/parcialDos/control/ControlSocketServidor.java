@@ -12,8 +12,9 @@ import java.net.Socket;
 import servidor.com.udistrital.avanzada.parcialDos.modelo.conexion.ConexionServerSocket;
 
 /**
+ * Maneja el control de los sockets del servidor
  *
- * @author Steven
+ * @author Steven, Alex
  */
 public class ControlSocketServidor implements Runnable {
 
@@ -27,12 +28,13 @@ public class ControlSocketServidor implements Runnable {
     /**
      * Constructor que recibe la inyeccion del control general
      *
-     * @param cGeneral Control General
+     * @param cGeneralServidor  Control General
      */
     public ControlSocketServidor(ControlGeneralServidor cGeneralServidor) {
         this.cGeneralServidor = cGeneralServidor;
     }
 
+    @Override
     public void run() {
 
         try {
@@ -131,7 +133,12 @@ public class ControlSocketServidor implements Runnable {
             throw new RuntimeException("Error enviando datos por socket.", e);
         }
     }
-
+    
+    /**
+     * Cierra la conexion del 
+     * server socket
+     * 
+     */
     public void detenerServidor() {
         servidorActivo = false;
         ConexionServerSocket.cerrar();

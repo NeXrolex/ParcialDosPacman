@@ -21,9 +21,13 @@ public class VentanaPrincipalServidor extends JFrame {
 
     private CardLayout cardLayout;
 
-    private JPanel panelInicio, panelBotones, panelJuego, panelContenedor, panelPuntaje, panelCentroPuntaje, panelCentro, panelTitulo, panelBotonesInicio;
-    private JButton btnCargarProperties, botonSalir, botonIniciar, btnSalirInicio;
-    private JLabel lblEstado, lblTextPuntaje, labelPacman, lblPuntaje, lblTiempo, lblMensaje, lblTitulo, placeholderPuntaje;
+    private JPanel panelInicio, panelBotones, panelJuego,
+            panelContenedor, panelPuntaje, panelCentroPuntaje,
+            panelCentro, panelTitulo, panelBotonesInicio;
+    private JButton btnCargarProperties, botonSalir, botonIniciar,
+            btnSalirInicio;
+    private JLabel lblEstado, lblTextPuntaje, labelPacman, lblPuntaje,
+            lblTiempo, lblMensaje, lblTitulo, placeholderPuntaje;
     private JFileChooser fileChooser;
 
     private List<JLabel> labelsFrutas;

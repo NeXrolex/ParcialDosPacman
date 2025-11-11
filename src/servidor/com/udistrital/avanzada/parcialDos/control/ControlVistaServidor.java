@@ -31,12 +31,23 @@ public class ControlVistaServidor implements ActionListener {
     private Timer timer;
     private boolean juegoActivo = false;
     private Timer timerTiempo;
-
+    
+    /**
+     * Constructor que recibe la inyeccion del control general
+     * e incia la ventana
+     * 
+     * @param cGeneralServidor ConTrol General del Servidor
+     */
     public ControlVistaServidor(ControlGeneralServidor cGeneralServidor) {
         this.cGeneralServidor = cGeneralServidor;
         inicializarVentana();
     }
-
+    
+    /**
+     * Inicia la ventana y configura los botones 
+     * que se usan en la vista
+     * 
+     */
     private void inicializarVentana() {
         ventanaPrincipalServidor = new VentanaPrincipalServidor();
 
@@ -48,37 +59,53 @@ public class ControlVistaServidor implements ActionListener {
 
         ventanaPrincipalServidor.setVisible(true);
     }
-
+    
+    /**
+     * pide el archivo de propiedaes para cumplir con el 
+     * open close
+     * 
+     */
     private void solicitarArchivoProperties() {
         int resultado = ventanaPrincipalServidor.abrirSelectorArchivo();
 
         if (resultado != 0) {
-            ventanaPrincipalServidor.setMensajeEstadoError("Debe seleccionar un archivo");
+            ventanaPrincipalServidor.setMensajeEstadoError("Debe seleccionar"
+                    + " un archivo");
             return;
         }
 
         File archivo = ventanaPrincipalServidor.getArchivoSeleccionado();
 
         if (archivo == null) {
-            ventanaPrincipalServidor.setMensajeEstadoError("Debe seleccionar un archivo");
+            ventanaPrincipalServidor.setMensajeEstadoError("Debe seleccionar"
+                    + " un archivo");
             return;
         }
 
-        procesarArchivo(archivo);
+        procesarArchivo(archivo);//Delega a un metodo privado
     }
-
+    
+    /**
+     * Metodo privado que delega para cargar los properties
+     * y comprabar que sea el archivo correcto
+     * 
+     * @param archivo 
+     */
     private void procesarArchivo(File archivo) {
-        boolean exitoProperties = cGeneralServidor.procesarArchivoProperties(archivo);
+        boolean exitoProperties = cGeneralServidor
+                .procesarArchivoProperties(archivo);
 
         if (!exitoProperties) {
-            ventanaPrincipalServidor.setMensajeEstadoError("Error al cargar properties");
+            ventanaPrincipalServidor.setMensajeEstadoError("Error al"
+                    + " cargar properties");
             return;
         }
 
         boolean exitoFrutas = cGeneralServidor.cargarFrutas();
 
         if (!exitoFrutas) {
-            ventanaPrincipalServidor.setMensajeEstadoError("Error al cargar el properties");
+            ventanaPrincipalServidor.setMensajeEstadoError("Error al cargar"
+                    + " el properties");
             return;
         }
         cGeneralServidor.iniciarServidor();
@@ -90,16 +117,24 @@ public class ControlVistaServidor implements ActionListener {
 
             if ("GIF_PACMAN".equalsIgnoreCase(clave)) {
                 ventanaPrincipalServidor.establecerGifPacman(ruta);
+                //Desde el dao toma la ruta y la establece
             }
         }
 
-        ventanaPrincipalServidor.setMensajeEstadoExito("Properties cargado correctamente");
+        ventanaPrincipalServidor.setMensajeEstadoExito("Properties cargado"
+                + " correctamente");
 
-        Timer delay = new Timer(1000, e -> ventanaPrincipalServidor.mostrarPantallaJuego());
+        Timer delay = new Timer(1000, e -> ventanaPrincipalServidor
+                .mostrarPantallaJuego());
         delay.setRepeats(false);
         delay.start();
     }
-
+    
+    /**
+     * Acciones de los botones 
+     * 
+     * @param e evento
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
@@ -118,7 +153,11 @@ public class ControlVistaServidor implements ActionListener {
             System.exit(0);
         }
     }
-
+    
+    /**
+     * Inicia el juego de pacman
+     * 
+     */
     private void iniciarJuego() {
 
         velX = 0;
@@ -145,9 +184,14 @@ public class ControlVistaServidor implements ActionListener {
         timerTiempo = new Timer(1000, e -> actualizarTiempo());
         timerTiempo.start();
     }
-
+    
+    /**
+     * Limpia laas frutas en el campo
+     * 
+     */
     private void limpiarFrutas() {
-        List<Object> frutasVisuales = ventanaPrincipalServidor.getFrutasVisuales();
+        List<Object> frutasVisuales = ventanaPrincipalServidor
+                .getFrutasVisuales();
         for (Object fruta : frutasVisuales) {
             ventanaPrincipalServidor.removerLabel(fruta);
         }
@@ -168,7 +212,12 @@ public class ControlVistaServidor implements ActionListener {
             fruta.setLabel(objetoFruta);
         }
     }
-
+    
+    /**
+     * Verifica las colociones entres elementos para
+     * que recoger las frutas
+     * 
+     */
     private void verificarColisiones() {
         int anchoPacman = ventanaPrincipalServidor.getAnchoPacman();
         int altoPacman = ventanaPrincipalServidor.getAltoPacman();
@@ -187,14 +236,24 @@ public class ControlVistaServidor implements ActionListener {
             }
         }
     }
-
+   
+    /**
+     * elimina una fruta del mapa
+     * 
+     * @param objetoFruta Fruta
+     */
     private void eliminarFruta(Object objetoFruta) {
         if (objetoFruta != null) {
             ventanaPrincipalServidor.removerLabel(objetoFruta);
             ventanaPrincipalServidor.removerDeLista(objetoFruta);
         }
     }
-
+    
+    /**
+     * Finaliza el juego e informa de los puntajes
+     * y tiempos obtenidos
+     * 
+     */
     private void finalizarJuego() {
         juegoActivo = false;
         velX = 0;
@@ -211,7 +270,13 @@ public class ControlVistaServidor implements ActionListener {
         ventanaPrincipalServidor.mostrarDialogo(mensaje, "Juego Terminado", 1);
         guardarPuntuacionAutomatica(puntaje, tiempo);
     }
-
+    
+    /**
+     * Guarda las puntaciones del jugador
+     * 
+     * @param puntaje Puntaje del usario
+     * @param tiempoSegundos Tiempo del usuario
+     */
     private void guardarPuntuacionAutomatica(int puntaje, long tiempoSegundos) {
         File archivo = ventanaPrincipalServidor.solicitarArchivoGuardar();
 
@@ -235,7 +300,12 @@ public class ControlVistaServidor implements ActionListener {
             ventanaPrincipalServidor.setMensajeEstadoError("Error al guardar");
         }
     }
-
+    
+     /**
+      * Actualiza la posicion del pacman 
+      * y garantiza que el pacman no salma de los limetes del mapa
+      * 
+      */
     public void moverPacman() {
 
         if (ventanaPrincipalServidor == null) {
@@ -249,10 +319,12 @@ public class ControlVistaServidor implements ActionListener {
         int altoPanel = ventanaPrincipalServidor.getAltoPanelJuego();
         int anchoPacman = ventanaPrincipalServidor.getAnchoPacman();
         int altoPacman = ventanaPrincipalServidor.getAltoPacman();
-
+        
+        //Calcula los limetes maximos permitidos
         maxX = anchoPanel - anchoPacman;
         maxY = altoPanel - altoPacman;
-
+        
+        //Mantiene al pacman dentro de los limites
         if (x < 0) {
             x = 0;
         }
@@ -265,14 +337,21 @@ public class ControlVistaServidor implements ActionListener {
         if (y > maxY) {
             y = maxY;
         }
-
+        
+        //Actializa la posicion en la vista
         ventanaPrincipalServidor.setPosicionPacman(x, y);
     }
-
+    
+    /**
+     * Centra al pacman en el panel de juego
+     * se utuliza para iniciar 
+     * 
+     */
     public void centrarPacman() {
         int anchoPanel = ventanaPrincipalServidor.getAnchoPanelJuego();
         int altoPanel = ventanaPrincipalServidor.getAltoPanelJuego();
-
+        
+        //valores por defecto del panel
         if (anchoPanel == 0 || altoPanel == 0) {
             anchoPanel = 900;
             altoPanel = 630;
@@ -283,16 +362,26 @@ public class ControlVistaServidor implements ActionListener {
 
         x = (anchoPanel - anchoPacman) / 2;
         y = (altoPanel - altoPacman) / 2;
-
+        
+        //Actualiza la posicion inicial del pacman
         ventanaPrincipalServidor.setPosicionPacman(x, y);
     }
-
+    
+    /**
+     * Actualiza el puntaje del usuario
+     * 
+     */
     private void actualizarPuntaje() {
         int puntaje = cGeneralServidor.getPuntajeTotal();
         ventanaPrincipalServidor.getLblPuntaje().
                 setText(String.valueOf(puntaje));
     }
-
+    
+    /**
+     * Actualiza el tiempo
+     * trabajados en segundos
+     * 
+     */
     public void actualizarTiempo() {
         long tiempo = cGeneralServidor.getTiempoTranscurrido() / 1000;
         ventanaPrincipalServidor.getLblTiempo()
@@ -300,8 +389,10 @@ public class ControlVistaServidor implements ActionListener {
     }
 
     /**
-     * Aplica un paso de movimiento enviado por un cliente:
-     * ARRIBA/ABAJO/IZQUIERDA/DERECHA.
+     * Aplica el movimiento en la direccion indicada 
+     * por el cliente
+     * 
+     * @param movimiento Direccion a la que se dirige el pacman
      */
     public void aplicarMovimiento(String movimiento) {
         if (movimiento == null || movimiento.isBlank()) {
@@ -326,9 +417,17 @@ public class ControlVistaServidor implements ActionListener {
             default:
                 return;
         }
+        //Verifica si realizo una colicion con una frutaS
         verificarColisiones();
     }
-
+    
+    /**
+     * Desplaza al pacman una cantidad de pixeles 
+     * y garantiza que se mantengan los limites del mapa
+     * 
+     * @param dx Desplazmiento en el eje X
+     * @param dy Desplazamiento en el eje Y
+     */
     private void moverPacmanUnPaso(int dx, int dy) {
         x += dx;
         y += dy;
@@ -353,7 +452,8 @@ public class ControlVistaServidor implements ActionListener {
         if (y > maxY) {
             y = maxY;
         }
-
+        
+        //Refleja una nueva posicion del pacman
         ventanaPrincipalServidor.setPosicionPacman(x, y);
     }
 
