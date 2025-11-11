@@ -46,6 +46,7 @@ public class ConexionBaseDatos implements IConexion {
         try {
             cn = DriverManager.getConnection(URLBD, usuario, contrasena);
         } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return cn;
     }
@@ -103,12 +104,12 @@ public class ConexionBaseDatos implements IConexion {
     public static void setURLBD(String url) {
         URLBD = url;
     }
-    
+
     /**
      * Obtiene la conexion
-     * 
+     *
      * @return conexion
-     * @throws SQLException 
+     * @throws SQLException
      */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URLBD, usuario, contrasena);
