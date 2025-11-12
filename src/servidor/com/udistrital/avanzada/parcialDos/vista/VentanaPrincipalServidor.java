@@ -337,30 +337,20 @@ public class VentanaPrincipalServidor extends JFrame {
         return labelFruta;
     }
 
-    /**
-     * remueve un label
-     *
-     * @param label label a remover
-     */
     public void removerLabel(Object label) {
         panelJuego.remove((Component) label);
         panelJuego.repaint();
     }
 
-    /**
-     * Remueve una fruta de la lista interna de frutas visuales
-     *
-     * @param label fruta a remover de la lista
-     */
     public void removerDeLista(Object label) {
         labelsFrutas.remove(label);
     }
 
-    /**
-     * Limpia completamente la lista de frutas visuales
-     */
     public void limpiarLista() {
         labelsFrutas.clear();
+    }
+    public List<Object> getFrutasVisuales() {
+        return new ArrayList<>(labelsFrutas);
     }
 
     /**

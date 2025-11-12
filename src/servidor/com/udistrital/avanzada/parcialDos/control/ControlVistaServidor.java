@@ -198,6 +198,14 @@ public class ControlVistaServidor implements ActionListener {
         ventanaPrincipalServidor.limpiarLista();
     }
 
+    private void limpiarFrutas() {
+        List<Object> frutasVisuales = ventanaPrincipalServidor.getFrutasVisuales();
+        for (Object fruta : frutasVisuales) {
+            ventanaPrincipalServidor.removerLabel(fruta);
+        }
+        ventanaPrincipalServidor.limpiarLista();
+    }
+
     private void mostrarFrutas() {
         List<FrutaVO> frutas = cGeneralServidor.getFrutasEnJuego();
 
@@ -236,24 +244,14 @@ public class ControlVistaServidor implements ActionListener {
             }
         }
     }
-   
-    /**
-     * elimina una fruta del mapa
-     * 
-     * @param objetoFruta Fruta
-     */
+
     private void eliminarFruta(Object objetoFruta) {
         if (objetoFruta != null) {
             ventanaPrincipalServidor.removerLabel(objetoFruta);
             ventanaPrincipalServidor.removerDeLista(objetoFruta);
         }
     }
-    
-    /**
-     * Finaliza el juego e informa de los puntajes
-     * y tiempos obtenidos
-     * 
-     */
+
     private void finalizarJuego() {
         juegoActivo = false;
         velX = 0;
@@ -389,10 +387,8 @@ public class ControlVistaServidor implements ActionListener {
     }
 
     /**
-     * Aplica el movimiento en la direccion indicada 
-     * por el cliente
-     * 
-     * @param movimiento Direccion a la que se dirige el pacman
+     * Aplica un paso de movimiento enviado por un cliente:
+     * ARRIBA/ABAJO/IZQUIERDA/DERECHA.
      */
     public void aplicarMovimiento(String movimiento) {
         if (movimiento == null || movimiento.isBlank()) {
