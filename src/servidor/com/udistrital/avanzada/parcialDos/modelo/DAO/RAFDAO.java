@@ -89,7 +89,8 @@ public class RAFDAO implements ICreate {
      * @param longitud longitud que se va a escribir
      * @throws IOException Si ocurre un error al escribir el archivo
      */
-    private void escribirCadenaFija(RandomAccessFile raf, String texto, int longitud)
+    private void escribirCadenaFija(RandomAccessFile raf, String texto,
+            int longitud)
             throws IOException {
         if (texto == null) {
             texto = "";
