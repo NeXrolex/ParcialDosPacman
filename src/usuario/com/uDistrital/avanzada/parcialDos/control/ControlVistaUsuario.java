@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
 /**
  * Maneja la logica de la vista y todo el proceso de acciones, ya se de teclado
@@ -24,22 +26,21 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
     private boolean conectado = false;
     private boolean autenticado = false;
     private String usuarioActual = "";
-    
+
     /**
-     * Constructor que revibe la inyeccion del coontrol general
-     * e inicializa la ventana
-     * 
+     * Constructor que revibe la inyeccion del coontrol general e inicializa la
+     * ventana
+     *
      * @param controlGeneral ControlGeneral
      */
     public ControlVistaUsuario(ControlGeneralUsuario controlGeneral) {
         this.controlGeneral = controlGeneral;
         inicializarVentana();
     }
-    
+
     /**
-     * Metodo que inicializa el panel principal
-     * e intancia la vista 
-     * 
+     * Metodo que inicializa el panel principal e intancia la vista
+     *
      */
     private void inicializarVentana() {
         this.ventana = new VentanaPrincipalUsuario();
@@ -50,17 +51,21 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
 
         ventana.getTxtUsuario().addKeyListener(this);
         ventana.getTxtContrasena().addKeyListener(this);
+        
         ventana.getTxtAreaMovimientos().addKeyListener(this);
+        ventana.getTxtAreaMovimientos().getInputMap().put(KeyStroke.getKeyStroke("UP"), "none");
+        ventana.getTxtAreaMovimientos().getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "none");
+        ventana.getTxtAreaMovimientos().getInputMap().put(KeyStroke.getKeyStroke("LEFT"), "none");
+        ventana.getTxtAreaMovimientos().getInputMap().put(KeyStroke.getKeyStroke("RIGHT"), "none");
 
         ventana.setBotonConectarHabilitado(false);
         ventana.setVisible(true);
         ventana.mostrarPantallaConexion();
     }
-    
+
     /**
-     * Acciones de los botones principales
-     * del usuario
-     * 
+     * Acciones de los botones principales del usuario
+     *
      * @param e Evento
      */
     @Override
@@ -75,11 +80,10 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
             iniciarSesion();
         }
     }
-    
+
     /**
-     * Carga el archivo de propiedades para 
-     * continuar con el open close
-     * 
+     * Carga el archivo de propiedades para continuar con el open close
+     *
      */
     private void cargarArchivoProperties() {
         int resultado = ventana.abrirSelectorArchivo();
@@ -110,12 +114,11 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
             ventana.mostrarError("Error al cargar el archivo properties");
         }
     }
-    
+
     /**
-     * Delega para conectarse al servidor
-     * y despues del accept muestra para 
+     * Delega para conectarse al servidor y despues del accept muestra para
      * iniciar sesion
-     * 
+     *
      */
     private void conectarAlServidor() {
 
@@ -133,11 +136,11 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.mostrarConexionExitosa();
         ventana.mostrarPantallaLogin();
     }
-    
+
     /**
-     * Obtiene los datos del nombre y la contrasena
-     * para enviarlo al socket e inicar session
-     * 
+     * Obtiene los datos del nombre y la contrasena para enviarlo al socket e
+     * inicar session
+     *
      */
     private void iniciarSesion() {
 
@@ -178,11 +181,11 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
 
         ventana.getTxtAreaMovimientos().requestFocus();
     }
-    
+
     /**
-     * Recibe los eventos del teclado para mover al pacman
-     * por el movimeinto del las flechas
-     * 
+     * Recibe los eventos del teclado para mover al pacman por el movimeinto del
+     * las flechas
+     *
      * @param e Evento de teclado
      */
     @Override
@@ -211,12 +214,11 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
 
         controlGeneral.enviarMovimiento(movimiento);
     }
-    
+
     /**
-     * Envia los eventos de las teclas awsd para
-     * mover al pacman
-     * 
-     * 
+     * Envia los eventos de las teclas awsd para mover al pacman
+     *
+     *
      * @param e Evento del teclado
      */
     public void keyTyped(KeyEvent e) {
@@ -227,7 +229,7 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         }
 
         char tecla = e.getKeyChar();
-        String movimiento = "";
+        String movimiento;
 
         // Mapeo de teclas WASD y flechas
         switch (Character.toLowerCase(tecla)) {
@@ -250,26 +252,26 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         // Envía el movimiento al servidor
         controlGeneral.enviarMovimiento(movimiento);
 
+        String movFinal = movimiento;
         // Actualiza visualmente la ventana (solo decorativo, no afecta red)
-        String timestamp = java.time.LocalTime.now().format(
-                java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss")
-        );
-
-        ventana.agregarMovimiento(String.format(
-                "[%s] Movimiento: %-10s | Enviado ✓",
-                timestamp, movimiento
-        ));
+        SwingUtilities.invokeLater(() -> {
+            String timestamp = java.time.LocalTime.now()
+                    .format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
+            ventana.agregarMovimiento(
+                    String.format("[%s] Movimiento: %-10s | Enviado ✓", timestamp, movFinal)
+            );
+        });
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
 
     }
-    
+
     /**
      * Obtiene la ventana principal
-     * 
-     * @return 
+     *
+     * @return
      */
     public VentanaPrincipalUsuario getVentana() {
         return ventana;
