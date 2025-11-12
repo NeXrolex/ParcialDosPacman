@@ -57,10 +57,23 @@ public class ControlProperties {
     public void establecerValoresBaseDatos() {
         propertiesDAO.configurarConexionBDDesdeArchivo();
     }
+    
+    /**
+     * Obtiene las frutas para utulizar
+     * en el programa
+     * 
+     * @return Lista de frutas
+     */
     public List<FrutaVO> cargarFrutas() {
         return propertiesDAO.cargarFrutas();
     }
-
+    
+    /**
+     * Dese properties extre el gif para 
+     * usarlo en la vista
+     * 
+     * @return 
+     */
     public List<String[]> extraerGif() {
         return propertiesDAO.extraerGif();
     }

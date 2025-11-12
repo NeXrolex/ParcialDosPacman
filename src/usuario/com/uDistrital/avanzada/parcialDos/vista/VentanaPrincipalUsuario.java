@@ -9,7 +9,8 @@ import java.awt.*;
 import java.io.File;
 
 /**
- * Mustra elementos graficos del programa
+ * Ventana encargada de mostrar la panatalla del usuario implementato
+ * cardslayout para lograr un cambio en el panel
  *
  * @author Steven,Jard,Alex
  */
@@ -43,12 +44,19 @@ public class VentanaPrincipalUsuario extends JFrame {
     private JLabel lblUsuarioActual;
     private JLabel lblEstadoJuego;
 
+    /**
+     * Metodo encargado de inicializar la ventana del usuario y los componentes}
+     * que la conforman
+     */
     public VentanaPrincipalUsuario() {
         inicializarVentana();
         inicializarComponentes();
         ensamblarComponentes();
     }
 
+    /**
+     * metodo encargado de establecer las configuraciones de la ventana
+     */
     private void inicializarVentana() {
         setTitle("Cliente Pac-Man - Usuario");
         setSize(550, 650);
@@ -57,6 +65,9 @@ public class VentanaPrincipalUsuario extends JFrame {
         setResizable(false);
     }
 
+    /**
+     * metodo que establece los componentes de la ventana
+     */
     private void inicializarComponentes() {
         cardLayout = new CardLayout();
         panelContenedor = new JPanel(cardLayout);
@@ -74,6 +85,9 @@ public class VentanaPrincipalUsuario extends JFrame {
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
 
+    /**
+     * Establece el panel de la conexion
+     */
     private void inicializarPanelConexion() {
         panelConexion = new JPanel(new BorderLayout());
         panelConexion.setBackground(new Color(0, 0, 20));
@@ -126,6 +140,9 @@ public class VentanaPrincipalUsuario extends JFrame {
         panelConexion.add(panelBtnConexion, BorderLayout.CENTER);
     }
 
+    /**
+     * Establece el panel que permite hacer login al usuario
+     */
     private void inicializarPanelLogin() {
         panelLogin = new JPanel(new BorderLayout());
         panelLogin.setBackground(new Color(0, 0, 20));
@@ -206,6 +223,9 @@ public class VentanaPrincipalUsuario extends JFrame {
 
     }
 
+    /**
+     * establece el panel que permite la jugabilidad
+     */
     private void inicializarPanelJuego() {
         panelJuego = new JPanel(new BorderLayout());
         panelJuego.setBackground(new Color(0, 0, 20));
@@ -247,6 +267,13 @@ public class VentanaPrincipalUsuario extends JFrame {
         panelJuego.add(lblControles);
     }
 
+    /**
+     * Se encarga de crear un boton
+     *
+     * @param texto texto correspondiente del boton
+     * @param color color del boton
+     * @return un boton
+     */
     private JButton crearBoton(String texto, Color color) {
         JButton boton = new JButton(texto);
         boton.setFont(new Font("Arial", Font.BOLD, 16));
@@ -260,6 +287,10 @@ public class VentanaPrincipalUsuario extends JFrame {
         return boton;
     }
 
+    /**
+     * Ensambla los paneles que se van a mostrar y asigna una palabra clave para
+     * reconocelos con el CardLayout
+     */
     private void ensamblarComponentes() {
         panelContenedor.add(panelConexion, "CONEXION");
         panelContenedor.add(panelLogin, "LOGIN");
@@ -267,15 +298,24 @@ public class VentanaPrincipalUsuario extends JFrame {
         add(panelContenedor);
     }
 
+    /**
+     * muestra la pantalla de conexion al servidor
+     */
     public void mostrarPantallaConexion() {
         cardLayout.show(panelContenedor, "CONEXION");
     }
 
+    /**
+     * Muestra la pantalla de autenticacion o login
+     */
     public void mostrarPantallaLogin() {
         cardLayout.show(panelContenedor, "LOGIN");
         txtUsuario.requestFocus();
     }
 
+    /**
+     * Mustra la pantalla de juego(en donde se dan las direcciones)
+     */
     public void mostrarPantallaJuego() {
         cardLayout.show(panelContenedor, "JUEGO");
         txtAreaMovimientos.requestFocus();
@@ -411,90 +451,154 @@ public class VentanaPrincipalUsuario extends JFrame {
         );
     }
 
+    /**
+     * abre el selector de archivos para que el usuario elija el properties
+     *
+     * @return
+     */
     public int abrirSelectorArchivo() {
         return fileChooser.showOpenDialog(this);
     }
 
+    /**
+     * Obtiene el archivo seleccionado
+     *
+     * @return archivo seleccionado
+     */
     public File getArchivoSeleccionado() {
         return fileChooser.getSelectedFile();
     }
-
+    /**
+     * Obtiene el nombre del usuario en el campo de texto 
+     * @return String con el nombre del usuario
+     */
     public String getUsuario() {
         return txtUsuario.getText();
     }
-
+    /**
+     * obtiene la contraseña de el usuario
+     * @return String con la contraseña
+     */
     public String getContrasena() {
         return new String(txtContrasena.getPassword());
     }
-
+    /**
+     * Establece el nombre del usuario
+     * @param usuario 
+     */
     public void setUsuarioActual(String usuario) {
         lblUsuarioActual.setText("Usuario: " + usuario);
     }
-
+    /**
+     * Agrega un registro de movimiento
+     * @param mensaje 
+     */
     public void agregarMovimiento(String mensaje) {
         txtAreaMovimientos.append(mensaje + "\n");
         txtAreaMovimientos.setCaretPosition(txtAreaMovimientos
                 .getDocument().getLength());
     }
-
+    /**
+     * Limpia el area de texto
+     */
     public void limpiarMovimientos() {
         txtAreaMovimientos.setText("");
     }
-
+    /**
+     * Actualiza la etiqueta de de estado de conexion
+     */
     public void estadoConexionExitosa() {
         lblEstadoConexion.setText("Estado: Conectado al Servidor");
         lblEstadoConexion.setForeground(new Color(34, 139, 34));
     }
-
+    /**
+     * Actualiza la etiqueta de estado a error de conexión
+     * Cambia el color a rojo y el texto apropiado
+     */
     public void estadoErrorConexion() {
         lblEstadoConexion.setText("Estado: Desconectado");
         lblEstadoConexion.setForeground(Color.RED);
     }
-
+    /**
+     * Actualiza el estado del juego
+     * @param mensaje Mensaje de estado
+     * @param esError 
+     */
     public void estadoJuegoExitoso(String mensaje, boolean esError) {
         lblEstadoJuego.setText("Estado: " + mensaje);
         lblEstadoJuego.setForeground(new Color(34, 139, 34));
     }
-
+    /**
+     * Muestra exito en la pantalla login
+     * @param mensaje Mensaje de estado
+     * @param esError 
+     */
     public void estadoErrorJuego(String mensaje, boolean esError) {
         lblEstadoJuego.setText("Estado: " + mensaje);
         lblEstadoJuego.setForeground(Color.RED);
     }
-
+    /**
+     * Muestra una pantalla de exito en la pantalla de login
+     * @param mensaje  mensaje de exito
+     */
     public void mensajeLoginExitoso(String mensaje) {
         lblMensajeLogin.setText(mensaje);
         lblMensajeLogin.setForeground(new Color(34, 139, 34));
     }
-
+    /**
+     * Muestra una pantalla de error en el login
+     * @param mensaje mensaje de error
+     */
     public void mensajeErrorLogin(String mensaje) {
         lblMensajeLogin.setText(mensaje);
         lblMensajeLogin.setForeground(Color.RED);
     }
-
+    /**
+     * Habilita o desabilita el boton de conectar al servidor
+     * @param habilitado 
+     */
     public void setBotonConectarHabilitado(boolean habilitado) {
         btnConectar.setEnabled(habilitado);
     }
-
+    /**
+     * Obtiene el boton de cargar properties
+     * @return boton de carga de archivos 
+     */
     public JButton getBtnCargarProperties() {
         return btnCargarProperties;
     }
-
+    /**
+     * Obtiene el boton de conectar con el servidor
+     * @return boton de conectar
+     */
     public JButton getBtnConectar() {
         return btnConectar;
     }
-
+    /**
+     * Obtiene el boton de iniciar sesion
+     * @return boton de iniciar sesion
+     */
     public JButton getBtnIniciarSesion() {
         return btnIniciarSesion;
     }
-
+    /**
+     * Obtiene el campo de texto del usuario
+     * @return txt usuario
+     */
     public JTextField getTxtUsuario() {
         return txtUsuario;
     }
-
+    /**
+     * Obtiene la contraseña del usuario
+     * @return contraseña dek usuario
+     */
     public JPasswordField getTxtContrasena() {
         return txtContrasena;
     }
-
+    /**
+     * Obtiene el area de movimientos del juego
+     * @return area de juego
+     */
     public JTextArea getTxtAreaMovimientos() {
         return txtAreaMovimientos;
     }

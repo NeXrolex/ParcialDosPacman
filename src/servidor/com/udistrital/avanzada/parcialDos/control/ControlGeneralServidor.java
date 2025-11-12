@@ -13,19 +13,28 @@ import servidor.com.udistrital.avanzada.parcialDos.modelo.FrutaVO;
  *
  * @author Alex,steven,jard
  */
-public class ControlGeneralServidor{
+public class ControlGeneralServidor {
 
     private ControlVistaServidor cVista;
     private ControlProperties cProperties;
     private ControlJuego cJuego;
     private ControlUsuario cUsuario;
     private ControlSocketServidor cSocket;
-
+    private ControlRAF cRAF;
+    private String usuarioConectado = "Jugador";
+    
+    /**
+     * Constructor qie intancia los
+     * controles principales y se inyecta
+     * en ControlSocketServiodor y ControlVista
+     * 
+     */
     public ControlGeneralServidor() {
         this.cProperties = new ControlProperties();
         this.cJuego = new ControlJuego();
         this.cUsuario = new ControlUsuario();
         this.cSocket = new ControlSocketServidor(this);
+        this.cRAF = new ControlRAF();
         // ControlVista recibe esta instancia
         this.cVista = new ControlVistaServidor(this);
     }
@@ -41,6 +50,9 @@ public class ControlGeneralServidor{
 
     /**
      * Autentica un usuario
+     * 
+     * @param nombre Nombre del usuario a registrar
+     * @param contrasena Contrasena del usuario
      */
     public boolean autenticarUsuario(String nombre, String contrasena) {
         return cUsuario.iniciarSesion(nombre, contrasena);
@@ -62,18 +74,18 @@ public class ControlGeneralServidor{
             return false;
         }
     }
-    
+
     /**
      * Aplica el movieminto del usuario
-     * 
-     * @param movimiento 
+     *
+     * @param movimiento
      */
-    public void aplicarMovimiento(String movimiento){
-        
-        if(movimiento == null){
+    public void aplicarMovimiento(String movimiento) {
+
+        if (movimiento == null) {
             return;
         }
-        if(cVista != null){
+        if (cVista != null) {
             cVista.aplicarMovimiento(movimiento);
         }
     }
@@ -93,6 +105,12 @@ public class ControlGeneralServidor{
         }
     }
 
+    /**
+     * Estrae la ruta del gif para mostrar el gif
+     * en la vista 
+     * 
+     * @return ruta del gif
+     */
     public List<String[]> cargarGif() {
         try {
             return cProperties.extraerGif();
@@ -169,9 +187,46 @@ public class ControlGeneralServidor{
         cJuego.reiniciar();
     }
 
+    /**
+     * Detiene al servidor
+     */
     public void detenerServidor() {
         if (cSocket != null) {
             cSocket.detenerServidor();
         }
+    }
+
+    /**
+     * metodo encargado de guardar los datos en el archivo de acceso aleatorio
+     *
+     * @param archivo
+     * @param nombreJugador
+     * @param puntaje
+     * @param tiempoSegundos
+     * @return
+     */
+    public boolean guardarPuntuacion(File archivo, int puntaje, 
+            long tiempoSegundos) {
+        cRAF.configurarArchivo(archivo);
+        return cRAF.guardarPuntuacion(usuarioConectado, puntaje,
+                tiempoSegundos);
+    }
+    
+    /**
+     * Asigna el isuario conectado
+     * 
+     * @param nombreUsuario Nombre del usuario conectado
+     */
+    public void setUsuarioConectado(String nombreUsuario) {
+        this.usuarioConectado = nombreUsuario;
+    }
+    
+    /**
+     * Obtiene el usuario conectado
+     * 
+     * @return Usuario conectado
+     */
+    public String getUsuarioConectado() {
+        return usuarioConectado;
     }
 }
