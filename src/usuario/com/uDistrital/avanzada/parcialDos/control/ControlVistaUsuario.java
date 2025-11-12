@@ -167,6 +167,7 @@ public class ControlVistaUsuario implements ActionListener, KeyListener {
         ventana.mostrarPantallaJuego();
         ventana.setUsuarioActual(usuarioActual);
         ventana.estadoJuegoExitoso("Conectado", false);
+        controlGeneral.iniciarRecepcionStream();
 
         ventana.agregarMovimiento("══════════════════════════"
                 + "═════════════════════════");

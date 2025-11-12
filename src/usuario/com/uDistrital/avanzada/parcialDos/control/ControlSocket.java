@@ -18,6 +18,7 @@ import usuario.com.uDistrital.avanzada.parcialDos.modelo.conexion.ConexionSocket
 public class ControlSocket {
 
     private ControlGeneralUsuario cGeneral;
+    private Socket socket;
     private DataInputStream dInput;
     private DataOutputStream dOutPut;
 
@@ -33,7 +34,7 @@ public class ControlSocket {
     public boolean conectar() {
         try {
             // Solicita la conexion al servidor 
-            Socket socket = new ConexionSocket().conexion();
+           socket = new ConexionSocket().conexion();
             //Metodo interno que inicializa losOutput e input
             inicializarStreams(socket);
             //Protocolo para saber si esta conectado al server
@@ -140,6 +141,10 @@ public class ControlSocket {
             throw new RuntimeException("No fue posible inicializar los"
                     + " flujos del socket.", es);
         }
+    }
+
+    public Socket getSocket() {
+        return this.socket; // asegúrate de guardar la instancia en la clase
     }
 
     /**

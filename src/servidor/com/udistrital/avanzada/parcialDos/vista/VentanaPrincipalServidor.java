@@ -82,8 +82,9 @@ public class VentanaPrincipalServidor extends JFrame {
 
         mostrarPantallaInicio();
     }
+
     /**
-     *  Construlle a pantalla de inicio del servidor
+     * Construlle a pantalla de inicio del servidor
      */
     private void crearPantallaInicio() {
         panelInicio = new JPanel();
@@ -135,8 +136,9 @@ public class VentanaPrincipalServidor extends JFrame {
         panelInicio.add(panelCentro, BorderLayout.CENTER);
         panelInicio.add(panelBotonesInicio, BorderLayout.SOUTH);
     }
+
     /**
-     * Construlle la pantalla del juego 
+     * Construlle la pantalla del juego
      */
     private void crearPantallaJuego() {
 
@@ -197,8 +199,10 @@ public class VentanaPrincipalServidor extends JFrame {
         panelBotones.add(botonSalir);
         panelJuego.setFocusable(true);
     }
+
     /**
      * Crea el panel completo de la pantalla de juego ensamblando
+     *
      * @return Panel con la estructura completa
      */
     private JPanel crearPanelJuegoCompleto() {
@@ -208,8 +212,9 @@ public class VentanaPrincipalServidor extends JFrame {
         panel.add(panelBotones, BorderLayout.SOUTH);
         return panel;
     }
+
     /**
-     * Configura el selector de arcvhivos 
+     * Configura el selector de arcvhivos
      */
     private void configurarFileChooser() {
         fileChooser = new JFileChooser();
@@ -221,8 +226,10 @@ public class VentanaPrincipalServidor extends JFrame {
         fileChooser.setFileFilter(filtro);
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
     }
+
     /**
      * Crea un boton
+     *
      * @param texto texto del boton
      * @param color color del boton
      * @return JButton boton configurado
@@ -238,6 +245,7 @@ public class VentanaPrincipalServidor extends JFrame {
         boton.setBorder(BorderFactory.createLineBorder(new Color(204, 0, 0), 3));
         return boton;
     }
+
     /**
      * muestra la pantalla de inicio
      */
@@ -245,6 +253,7 @@ public class VentanaPrincipalServidor extends JFrame {
         cardLayout.show(panelContenedor, PANTALLA_INICIO);
         setTitle("Pac-Man - Configuración Inicial del Servidor");
     }
+
     /**
      * muestra la pantalla del juego
      */
@@ -253,40 +262,50 @@ public class VentanaPrincipalServidor extends JFrame {
         setTitle("Pac-Man");
         panelJuego.requestFocusInWindow();
     }
+
     /**
      * abre el selector de archivos
-     * @return 
+     *
+     * @return
      */
     public int abrirSelectorArchivo() {
         return fileChooser.showOpenDialog(this);
     }
+
     /**
      * Obtiene el archivo seleccionado por el usuario en el selector de archivos
+     *
      * @return Archivo seleccionado
      */
     public java.io.File getArchivoSeleccionado() {
         return fileChooser.getSelectedFile();
     }
+
     /**
-     * Muestra nensaje de error 
+     * Muestra nensaje de error
+     *
      * @param mensaje mensaje a mostrar
      */
     public void setMensajeEstadoError(String mensaje) {
         lblEstado.setText(mensaje);
         lblEstado.setForeground(new Color(255, 100, 100));
     }
+
     /**
      * muestra mensaje de exito
+     *
      * @param mensaje mensaje a mostrar
      */
     public void setMensajeEstadoExito(String mensaje) {
         lblEstado.setText(mensaje);
         lblEstado.setForeground(new Color(100, 255, 100));
     }
+
     /**
-     * Agrega una fruta visual al panel de juego en las coordenadas especificadas.
-     * Intenta cargar la imagen desde la ruta proporcionada
-     * @param x coordenada en x 
+     * Agrega una fruta visual al panel de juego en las coordenadas
+     * especificadas. Intenta cargar la imagen desde la ruta proporcionada
+     *
+     * @param x coordenada en x
      * @param y coordenada en y
      * @return label con la fruta
      */
@@ -317,36 +336,45 @@ public class VentanaPrincipalServidor extends JFrame {
 
         return labelFruta;
     }
+
     /**
      * remueve un label
+     *
      * @param label label a remover
      */
     public void removerLabel(Object label) {
         panelJuego.remove((Component) label);
         panelJuego.repaint();
     }
+
     /**
      * Remueve una fruta de la lista interna de frutas visuales
+     *
      * @param label fruta a remover de la lista
      */
     public void removerDeLista(Object label) {
         labelsFrutas.remove(label);
     }
+
     /**
-     * Limpia completamente la lista de frutas visuales     
+     * Limpia completamente la lista de frutas visuales
      */
     public void limpiarLista() {
         labelsFrutas.clear();
     }
+
     /**
      * Obtiene una copia de la lista de frutas visuales actualmente en pantalla
+     *
      * @return lista de frutas
      */
     public List<Object> getFrutasVisuales() {
         return new ArrayList<>(labelsFrutas);
     }
+
     /**
      * Muestra un dialogo con un mensaje personalizado
+     *
      * @param mensaje mensaje a mostrar
      * @param titulo titulo del mensaje
      * @param tipoMensaje tipo de mensaje
@@ -357,6 +385,7 @@ public class VentanaPrincipalServidor extends JFrame {
 
     /**
      * Establece el gif del pacman
+     *
      * @param rutaGif ruta de el gif
      */
     public void establecerGifPacman(String rutaGif) {
@@ -370,8 +399,10 @@ public class VentanaPrincipalServidor extends JFrame {
 
         labelPacman.setLocation(x, y);
     }
+
     /**
      * Abre un file choseer para seleccionar el archivo a guardar
+     *
      * @return archivo seleccionado
      */
     public File solicitarArchivoGuardar() {
@@ -397,104 +428,132 @@ public class VentanaPrincipalServidor extends JFrame {
 
         return null;
     }
+
     /**
      * obtiene el ancho del panel
+     *
      * @return alto del panel
      */
     public int getAnchoPanelJuego() {
         return panelJuego.getWidth();
     }
+
     /**
-     * obtiene el alto del panel 
+     * obtiene el alto del panel
+     *
      * @return alto del panel
      */
     public int getAltoPanelJuego() {
         return panelJuego.getHeight();
     }
+
     /**
      * obtiene el ancho de pacman
+     *
      * @return ancho de pacman
      */
     public int getAnchoPacman() {
         return labelPacman.getWidth();
     }
+
     /**
      * obtiene el alto de pacman
+     *
      * @return alto de pacman
      */
     public int getAltoPacman() {
         return labelPacman.getHeight();
     }
+
     /**
      * establece la posicion de pacman
+     *
      * @param x coordenada en x
      * @param y coordenada en y
      */
     public void setPosicionPacman(int x, int y) {
         labelPacman.setLocation(x, y);
     }
+
     /**
-     *Solicita el foco del teclado para el panel del juego
-     * @return 
+     * Solicita el foco del teclado para el panel del juego
+     *
+     * @return
      */
     public void darFocoPanelJuego() {
         panelJuego.requestFocusInWindow();
     }
+
     /**
      * Obtiene el boton de cargar properties
+     *
      * @return boton de cargar
      */
     public JButton getBtnCargarConfig() {
         return btnCargarProperties;
     }
+
     /**
      * Obtiene el boton de salir
+     *
      * @return boton de salir
      */
     public JButton getBtnSalirInicio() {
         return btnSalirInicio;
     }
+
     /**
-     * Obtiene el boton de  iniciar
+     * Obtiene el boton de iniciar
+     *
      * @return boton de iniciar
      */
     public JButton getBotonIniciar() {
         return botonIniciar;
     }
+
     /**
      * Obtiene el boton de salir
+     *
      * @return boton de salir
      */
     public JButton getBotonSalir() {
         return botonSalir;
     }
+
     /**
      * Obtiene el panel del juego
+     *
      * @return panel del juego
      */
     public JPanel getPanelJuego() {
         return panelJuego;
     }
+
     /**
-     * Obtiene el label del puntaje 
+     * Obtiene el label del puntaje
+     *
      * @return boron de puntaje
      */
     public JLabel getLblPuntaje() {
         return lblPuntaje;
     }
+
     /**
      * Limpia el texto de la etiqueta de puntaje
      */
     public void limpiarPuntaje() {
         lblPuntaje.setText("");
     }
+
     /**
      * Obtiene la etiqueta del tiempo
-     * @return lbl del  tiempo
+     *
+     * @return lbl del tiempo
      */
     public JLabel getLblTiempo() {
         return lblTiempo;
     }
+
     /**
      * limpia el lbl del tiempo
      */

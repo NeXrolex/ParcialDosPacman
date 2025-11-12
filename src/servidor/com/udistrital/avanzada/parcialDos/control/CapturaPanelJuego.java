@@ -24,15 +24,15 @@ public class CapturaPanelJuego {
     private Rectangle areaCaptura;
 
     public CapturaPanelJuego(VentanaPrincipalServidor vistaServidor) {
-        this.vistaServidor = vistaServidor;
         try {
-            this.robot = new Robot(); // Debes instanciar el Robot aquí
+            this.vistaServidor = vistaServidor;
+            this.robot = new Robot(); // <--- inicializar correctamente
+            Dimension size = vistaServidor.getPanelJuego().getSize();
+            Point location = vistaServidor.getPanelJuego().getLocationOnScreen();
+            this.areaCaptura = new Rectangle(location.x, location.y, size.width, size.height);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Dimension size = vistaServidor.getPanelJuego().getSize();
-        Point location = vistaServidor.getPanelJuego().getLocationOnScreen();
-        this.areaCaptura = new Rectangle(location.x, location.y, size.width, size.height);
     }
 
     /**

@@ -9,6 +9,7 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
+import servidor.com.udistrital.avanzada.parcialDos.vista.VentanaPrincipalServidor;
 
 /**
  * Maneja la comunicación con UN cliente específico Se ejecuta en un hilo
@@ -18,6 +19,7 @@ import java.net.Socket;
  */
 public class ControlHilo implements Runnable {
 
+    private VentanaPrincipalServidor ventanaServidor;
     private Socket socket;
     private DataInputStream input;
     private DataOutputStream output;
@@ -53,6 +55,7 @@ public class ControlHilo implements Runnable {
 
             // PASO 2: Bucle de procesamiento de mensajes
             boolean clienteConectado = true;
+            CapturaPanelJuego captura = new CapturaPanelJuego(ventanaServidor);
             while (clienteConectado) {
                 try {
                     String mensaje = input.readUTF();
@@ -71,6 +74,17 @@ public class ControlHilo implements Runnable {
                         } else {
                             output.writeUTF("ERROR;No autenticado");
                             output.flush();
+                        }
+                    }
+                    byte[] bytesImagen = captura.capturarImagen();
+                    if (bytesImagen != null && bytesImagen.length > 0) {
+                        try {
+                            output.writeInt(bytesImagen.length); // tamaño primero
+                            output.write(bytesImagen);            // luego datos
+                            output.flush();
+                        } catch (IOException e) {
+                            clienteConectado = false;
+                            break;
                         }
                     }
                 } catch (EOFException e) {
