@@ -65,20 +65,19 @@ public class ConexionServerSocket implements IConexion<ServerSocket> {
         }
 
     }
-    
+
     /**
-     * Comprueba si el server socket se encuentra activo
-     * o en su defecto cerrado
+     * Comprueba si el server socket se encuentra activo o en su defecto cerrado
+     *
      * @return True or false
      */
     public static boolean activo() {
         return serverSocket != null && !serverSocket.isClosed();
     }
-    
+
     /**
-     * Obtiene el puerto por el que se conectan los 
-     * usuarios
-     * 
+     * Obtiene el puerto por el que se conectan los usuarios
+     *
      * @return Puerto
      */
     public static int getPuerto() {
